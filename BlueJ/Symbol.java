@@ -8,14 +8,21 @@
 public class Symbol {
     private int posirionX;
     private int positionY;
+    private boolean isVisible;
     private Triangle symbolShape;
 
-    public Symbol() {
+    public Symbol(String color, int pos) {
     }
-    
+
     public void changePositionX(int newPosX) {
     }
-    
+
     public void changePositionY(int newPosX) {
+    }
+
+    public void makeVisible() {
+    }
+
+    public void makeInvisible() {
     }
 }

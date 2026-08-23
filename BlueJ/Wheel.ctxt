@@ -1,8 +1,11 @@
 #BlueJ class context
-#Sun Aug 23 15:30:43 COT 2026
+#Sun Aug 23 18:12:41 COT 2026
 comment0.target=Wheel
 comment0.text=\r\n Write a description of class Wheel here.\r\n\r\n @author (your name)\r\n @version (a version number or a date)\r\n
 comment1.target=Wheel()
+comment10.target=void makeVisible()
+comment11.target=java.lang.String[] symbols()
+comment12.target=java.lang.String selecSymbol()
 comment2.params=color
 comment2.target=void changeColor(java.lang.String)
 comment3.params=newPosX
@@ -11,9 +14,9 @@ comment4.params=newPosX
 comment4.target=void changePositionY(int)
 comment5.params=symbol
 comment5.target=void addSymbol(java.lang.String)
-comment6.params=aymbol
+comment6.params=symbol
 comment6.target=void delSymbol(java.lang.String)
 comment7.target=void spin()
 comment8.target=void makeInvisible()
 comment9.target=void addShape()
-numComments=10
+numComments=13

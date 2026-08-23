@@ -11,54 +11,54 @@ public class SlotMachine {
 
     public SlotMachine() {
     }
-    
+
     public void addWheel(int pos) {
     }
-    
+
     public void delWheel(int pos) {
     }
-    
+
     public void addSymbol(int pos, String color) {
     }
-    
+
     public void delSymbol(String symbol) {
     }
-    
+
     public void placeSymbol(int wheel, String symbol) {
     }
-    
+
     public void spin(int wheel) {
     }
-    
+
     public void spin() {
     }
-    
+
     public String[] symbols() {
-        return new String[]{"a"};
+        return null;
     }
-    
+
     public int distincSymbols() {
-        return 2;
+        return 0;
     }
-    
+
     public String[] configuration() {
-        return new String[]{"a"};
+        return null;
     }
-    
+
     public boolean isJackpot() {
-        return true;
+        return false;
     }
-    
+
     public void makeVisible() {
     }
-    
+
+    public void makeInvisible() {
+    }
+
     public void exit() {
     }
-    
+
     public boolean ok() {
-        return true;
-    }
-    
-    private void ticTac() {
+        return false;
     }
 }

@@ -1,5 +1,5 @@
 #BlueJ class context
-#Sun Aug 23 15:30:43 COT 2026
+#Sun Aug 23 18:12:41 COT 2026
 comment0.target=SlotMachine
 comment0.text=\r\n Write a description of class SlotMachine here.\r\n\r\n @author (your name)\r\n @version (a version number or a date)\r\n
 comment1.target=SlotMachine()
@@ -7,9 +7,9 @@ comment10.target=int distincSymbols()
 comment11.target=java.lang.String[] configuration()
 comment12.target=boolean isJackpot()
 comment13.target=void makeVisible()
-comment14.target=void exit()
-comment15.target=boolean ok()
-comment16.target=void ticTac()
+comment14.target=void makeInvisible()
+comment15.target=void exit()
+comment16.target=boolean ok()
 comment2.params=pos
 comment2.target=void addWheel(int)
 comment3.params=pos
