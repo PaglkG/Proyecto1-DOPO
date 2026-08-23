@@ -177,4 +177,4 @@ cd DOPOG01/Laboratorios/slotMachine
 
 ---
 
-*Documentación y README.md generados automáticamente por Claude.*
+*README.md generados automáticamente por Claude.*
