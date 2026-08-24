@@ -1,6 +1,7 @@
-package BlueJ;
+package BlueJ.slotMachine;
+
 import java.util.LinkedList;
-import java.util.List;
+
 /**
  * Wheel class, this is the wheel that will be installed on slot machine.
  *

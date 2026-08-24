@@ -1,7 +1,6 @@
-package BlueJ;
+package BlueJ.slotMachine;
 
-import java.util.List;
-import java.util.*;
+import java.util.ArrayList;
 
 /**
  * This is slot machine game, this is a variant of I problem - SlotMachine ICPC competition

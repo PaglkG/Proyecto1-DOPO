@@ -1,0 +1,11 @@
+# Ignorar los binarios
+*.class
+
+# Ignorar los ctxt
+*.ctxt
+
+# Ignorar los respaldos
+*.java~
+
+# Ignorar los paquetes (cuando trabajemos con eclipse)
+#*.pkg
