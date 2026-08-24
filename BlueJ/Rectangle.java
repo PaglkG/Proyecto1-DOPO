@@ -1,4 +1,4 @@
-package BlueJ.shapes;
+package BlueJ;
 
 import java.awt.*;
 
@@ -21,7 +21,15 @@ public class Rectangle{
     private int yPosition;
     private String color;
     private boolean isVisible;
-
+    
+    public void setxPosition(int x) {
+        xPosition = x;
+    }
+    
+    public void setyPosition(int y) {
+        yPosition = y;
+    }
+    
     /**
      * Create a new rectangle at default position with default color.
      */

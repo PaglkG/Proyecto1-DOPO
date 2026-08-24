@@ -1,12 +1,12 @@
 package BlueJ;
-import BlueJ.shapes.Triangle; 
+//import BlueJ.shapes.Triangle; 
 import java.awt.*;
 /**
- * The class symbol has every logical of figures of wheels.
- * Visually, it is a triangle.
+ * this class is the Symbol in the slotMachine
+ * this class is the Symbol in the Wheel
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Steveen-Gualdron
+ * @version 0.1
  */
 public class Symbol {
     private int positionX;
@@ -24,8 +24,11 @@ public class Symbol {
         this.color = color;
         symbolShape = new Triangle();
         symbolShape.changeColor(color);
-        symbolShape.makeVisible();
         positionWheel = pos;
+    }
+    
+    public int getPositionWheel() {
+        return positionWheel;
     }
 
     /**Sets a new X position to this symbol.
@@ -33,6 +36,9 @@ public class Symbol {
      */
     public void changePositionX(int newPosX) {
         positionX = newPosX;
+        if (symbolShape.getIsVisible()) {
+            symbolShape.makeVisible();
+        }
     }
 
     /**Sets a new Y position  to this symbol.
@@ -40,6 +46,9 @@ public class Symbol {
      */
     public void changePositionY(int newPosY) {
         positionX = newPosY;
+        if (symbolShape.getIsVisible()) {
+            symbolShape.makeVisible();
+        }
     }
 
     /**Makes this symbol visible.
