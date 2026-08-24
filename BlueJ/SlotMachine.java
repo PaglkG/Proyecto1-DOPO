@@ -6,8 +6,8 @@ import java.util.*;
 /**
  * This is slot machine game, this is a variant of I problem - SlotMachine ICPC competition
  *
- * @author 
- * @version (a version number or a date)
+ * @author Steveen-Gualdron
+ * @version 0.1
  */
 public class SlotMachine {
     private boolean isOk;

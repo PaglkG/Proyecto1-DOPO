@@ -31,7 +31,12 @@ public class Triangle{
         color = "green";
         isVisible = false;
     }
-
+    
+    // ------------------
+    public boolean getIsVisible() {
+        return isVisible;
+    }
+    
     /**
      * Make this triangle visible. If it was already visible, do nothing.
      */
