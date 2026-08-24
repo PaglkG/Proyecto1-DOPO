@@ -1,4 +1,7 @@
-import java.util.List;
+package slotMachine;
+
+import java.util.LinkedList;
+
 /**
  * Wheel class, this is the wheel that will be installed on slot machine.
  *

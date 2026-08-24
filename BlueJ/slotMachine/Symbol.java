@@ -1,3 +1,5 @@
+package slotMachine;
+
 import shapes.Triangle;
 /**
  * The class symbol has every logical of figures of wheels.

@@ -1,4 +1,7 @@
-import java.util.List;
+package slotMachine;
+
+import java.util.ArrayList;
+
 /**
  * This is slot machine game, this is a variant of I problem - SlotMachine ICPC competition
  *
