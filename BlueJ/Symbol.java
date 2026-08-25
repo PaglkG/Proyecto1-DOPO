@@ -27,6 +27,9 @@ public class Symbol {
         positionWheel = pos;
     }
     
+    public String getColor() {
+        return color;
+    }
     public int getPositionWheel() {
         return positionWheel;
     }
