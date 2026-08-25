@@ -1,4 +1,4 @@
-package slotMachine;
+package BlueJ.slotMachine;
 
 import java.util.LinkedList;
 

@@ -1,6 +1,7 @@
-package slotMachine;
+package BlueJ.slotMachine;
 
-import shapes.Triangle;
+import BlueJ.shapes.Triangle;
+
 /**
  * The class symbol has every logical of figures of wheels.
  * Visually, it is a triangle.

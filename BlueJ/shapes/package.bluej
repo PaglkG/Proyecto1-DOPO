@@ -1,4 +1,5 @@
 #BlueJ package file
+<<<<<<< HEAD
 dependency1.from=Triangle
 dependency1.to=Canvas
 dependency1.type=UsesDependency
@@ -13,12 +14,42 @@ package.editor.y=0
 package.frame.height=736
 package.frame.width=1382
 package.numDependencies=1
+=======
+dependency1.from=Circle
+dependency1.to=Canvas
+dependency1.type=UsesDependency
+dependency2.from=Rectangle
+dependency2.to=Canvas
+dependency2.type=UsesDependency
+dependency3.from=Triangle
+dependency3.to=Canvas
+dependency3.type=UsesDependency
+<<<<<<< HEAD
+objectbench.height=93
+=======
+objectbench.height=92
+>>>>>>> pablo
+objectbench.width=451
+package.divider.horizontal=0.599791013584117
+package.divider.vertical=0.7991214057507987
+package.editor.height=394
+package.editor.width=674
+package.editor.x=456
+package.editor.y=228
+package.frame.height=600
+package.frame.width=800
+package.numDependencies=3
+>>>>>>> 912c8035a1e7d3b50426ec9a3b333bf6f5d00842
 package.numTargets=4
 package.showExtends=true
 package.showUses=true
 readme.height=60
 readme.name=@README
+<<<<<<< HEAD
 readme.width=48
+=======
+readme.width=49
+>>>>>>> 912c8035a1e7d3b50426ec9a3b333bf6f5d00842
 readme.x=10
 readme.y=10
 target1.height=70

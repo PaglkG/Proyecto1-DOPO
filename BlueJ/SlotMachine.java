@@ -1,18 +1,19 @@
-package BlueJ.slotMachine;
+package BlueJ;
 
-import java.util.ArrayList;
+import java.util.List;
+import java.util.*;
 
 /**
  * This is slot machine game, this is a variant of I problem - SlotMachine ICPC competition
  *
- * @author 
- * @version (a version number or a date)
+ * @author Steveen-Gualdron
+ * @version 0.1
  */
 public class SlotMachine {
     private boolean isOk;
     private ArrayList<Wheel> wheels;
 
-    /**Constructor, nyadic method class, of SlotMachine.
+    /**Cronstructor, nyadic method class, of SlotMachine.
      */
     public SlotMachine() {
     }
