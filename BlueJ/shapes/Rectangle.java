@@ -1,4 +1,4 @@
-package shapes;
+package BlueJ.shapes;
 
 import java.awt.*;
 

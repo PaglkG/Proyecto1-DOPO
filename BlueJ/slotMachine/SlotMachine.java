@@ -12,7 +12,7 @@ public class SlotMachine {
     private boolean isOk;
     private ArrayList<Wheel> wheels;
 
-    /**Cronstructor, nyadic method class, of SlotMachine.
+    /**Constructor, nyadic method class, of SlotMachine.
      */
     public SlotMachine() {
     }
