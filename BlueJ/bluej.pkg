@@ -1,4 +1,22 @@
 #BlueJ package file
+<<<<<<< HEAD
+editor.fx.0.height=739
+editor.fx.0.width=816
+editor.fx.0.x=275
+editor.fx.0.y=-6
+objectbench.height=152
+objectbench.width=760
+package.divider.horizontal=0.5698365527488856
+package.divider.vertical=0.75
+package.editor.height=470
+package.editor.width=1226
+package.editor.x=0
+package.editor.y=0
+package.frame.height=736
+package.frame.width=1382
+package.numDependencies=0
+package.numTargets=0
+=======
 dependency1.from=SlotMachine
 dependency1.to=Wheel
 dependency1.type=UsesDependency
@@ -17,13 +35,16 @@ package.frame.height=1039
 package.frame.width=974
 package.numDependencies=2
 package.numTargets=9
+>>>>>>> 912c8035a1e7d3b50426ec9a3b333bf6f5d00842
 package.showExtends=true
 package.showUses=true
 readme.height=60
 readme.name=@README
-readme.width=49
+readme.width=48
 readme.x=10
 readme.y=10
+<<<<<<< HEAD
+=======
 target1.height=70
 target1.name=Circle
 target1.showInterface=false
@@ -85,3 +106,4 @@ target9.type=PackageTarget
 target9.width=120
 target9.x=470
 target9.y=10
+>>>>>>> 912c8035a1e7d3b50426ec9a3b333bf6f5d00842
