@@ -6,7 +6,7 @@ import java.util.ArrayList;
 /**
  * Wheel class, this is the wheel that will be installed on slot machine.
  *
- * @author Steveen-Gualdron
+ * @author Gualdron-Villagran
  * @version 0.1
  */
 public class Wheel {
@@ -149,7 +149,8 @@ public class Wheel {
         }
 
     }
-    // ----------------
+    /*Show the symbol making visible
+     */ 
     private void viewSymbol() {
             Symbol triangle = selecSymbol();
             triangle.changePositionX(positionX/2);
@@ -200,6 +201,4 @@ public class Wheel {
         }
         return listString;
     }
-
-    
 }
