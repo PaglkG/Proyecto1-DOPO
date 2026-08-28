@@ -130,7 +130,6 @@ public class Wheel {
      * @param symbol symbol is the color of symbol. ----------------------
      */
     public void addSymbol(Symbol triangle) {
-
         if (symbols.isEmpty()) {
             selectedSymbol = triangle;
         }
@@ -197,7 +196,7 @@ public class Wheel {
         ArrayList<Symbol> list = new ArrayList<>(this.symbols.values());
         ArrayList<String> listString = new ArrayList();
         for (Symbol symbol : list) {
-        listString.add(symbol.getColor());
+            listString.add(symbol.getColor());
         }
         return listString;
     }
