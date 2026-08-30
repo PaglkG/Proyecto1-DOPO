@@ -22,12 +22,76 @@ public class Rectangle{
     private String color;
     private boolean isVisible;
     
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public int getXPosition() {
+        return xPosition;
+    }
+
+    public int getxPosition() {
+        return xPosition;
+    }
+
+    public void setXPosition(int x) {
+        xPosition = x;
+    }
+
     public void setxPosition(int x) {
         xPosition = x;
     }
-    
+
+    public int getYPosition() {
+        return yPosition;
+    }
+
+    public int getyPosition() {
+        return yPosition;
+    }
+
+    public void setYPosition(int y) {
+        yPosition = y;
+    }
+
     public void setyPosition(int y) {
         yPosition = y;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public boolean isVisible() {
+        return isVisible;
+    }
+
+    public boolean getIsVisible() {
+        return isVisible;
+    }
+
+    public void setVisible(boolean isVisible) {
+        this.isVisible = isVisible;
+    }
+
+    public void setIsVisible(boolean isVisible) {
+        this.isVisible = isVisible;
     }
     
     /**

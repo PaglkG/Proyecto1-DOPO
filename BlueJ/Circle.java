@@ -29,6 +29,71 @@ public class Circle{
         isVisible = false;
     }
 
+    public int getDiameter() {
+        return diameter;
+    }
+
+    public void setDiameter(int diameter) {
+        this.diameter = diameter;
+    }
+
+    public int getXPosition() {
+        return xPosition;
+    }
+
+    public int getxPosition() {
+        return xPosition;
+    }
+
+    public void setXPosition(int xPosition) {
+        this.xPosition = xPosition;
+    }
+
+    public void setxPosition(int xPosition) {
+        this.xPosition = xPosition;
+    }
+
+    public int getYPosition() {
+        return yPosition;
+    }
+
+    public int getyPosition() {
+        return yPosition;
+    }
+
+    public void setYPosition(int yPosition) {
+        this.yPosition = yPosition;
+    }
+
+    public void setyPosition(int yPosition) {
+        this.yPosition = yPosition;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public boolean isVisible() {
+        return isVisible;
+    }
+
+    public boolean getIsVisible() {
+        return isVisible;
+    }
+
+    public void setVisible(boolean isVisible) {
+        this.isVisible = isVisible;
+    }
+
+    public void setIsVisible(boolean isVisible) {
+        this.isVisible = isVisible;
+    }
+
+
 
        
     public void makeVisible(){

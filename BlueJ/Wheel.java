@@ -48,12 +48,20 @@ public class Wheel {
     public String getColor() {
         return color;
     }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
     
     /**
      * Gets the current X position.
      */
     public int getPositionX() {
         return positionX;
+    }
+
+    public void setPositionX(int positionX) {
+        this.positionX = positionX;
     }
 
     /**
@@ -63,12 +71,27 @@ public class Wheel {
         return positionY;
     }
 
+    public void setPositionY(int positionY) {
+        this.positionY = positionY;
+    }
+
+    public int getWheelShape() {
+        return wheelShape;
+    }
+
+    public void setWheelShape(int wheelShape) {
+        this.wheelShape = wheelShape;
+    }
 
     /**
      * Gets the rectangle object.
      */
     public Rectangle getRectangle() {
         return rectangle;
+    }
+
+    public void setRectangle(Rectangle rectangle) {
+        this.rectangle = rectangle;
     }
 
     /**
@@ -78,11 +101,43 @@ public class Wheel {
         return isStoped;
     }
 
+    public boolean getIsStoped() {
+        return isStoped;
+    }
+
+    public void setStoped(boolean isStoped) {
+        this.isStoped = isStoped;
+    }
+
+    public void setIsStoped(boolean isStoped) {
+        this.isStoped = isStoped;
+    }
+
     /**
      * Checks if the element is visible.
      */
     public boolean isVisible() {
         return isVisible;
+    }
+
+    public boolean getIsVisible() {
+        return isVisible;
+    }
+
+    public void setVisible(boolean isVisible) {
+        this.isVisible = isVisible;
+    }
+
+    public void setIsVisible(boolean isVisible) {
+        this.isVisible = isVisible;
+    }
+
+    public Random getRandom() {
+        return random;
+    }
+
+    public void setRandom(Random random) {
+        this.random = random;
     }
 
     /**
@@ -92,11 +147,19 @@ public class Wheel {
         return selectedSymbol;
     }
 
+    public void setSelectedSymbol(Symbol selectedSymbol) {
+        this.selectedSymbol = selectedSymbol;
+    }
+
     /**
      * Gets the list of symbols.
      */   
     public TreeMap<Integer,Symbol> getSymbols() {
         return symbols;
+    }
+
+    public void setSymbols(TreeMap<Integer, Symbol> symbols) {
+        this.symbols = symbols;
     }
     
     /**To set the wheel color.

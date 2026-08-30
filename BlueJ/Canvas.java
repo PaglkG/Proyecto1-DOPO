@@ -45,8 +45,60 @@ public class Canvas{
     private List <Object> objects;
     private HashMap <Object,ShapeDescription> shapes;
     
-    public Color getBackgroundColour(){
+    public JFrame getFrame() {
+        return frame;
+    }
+
+    public void setFrame(JFrame frame) {
+        this.frame = frame;
+    }
+
+    public CanvasPane getCanvasPane() {
+        return canvas;
+    }
+
+    public void setCanvasPane(CanvasPane canvas) {
+        this.canvas = canvas;
+    }
+
+    public Graphics2D getGraphic() {
+        return graphic;
+    }
+
+    public void setGraphic(Graphics2D graphic) {
+        this.graphic = graphic;
+    }
+
+    public Color getBackgroundColour() {
         return backgroundColour;
+    }
+
+    public void setBackgroundColour(Color backgroundColour) {
+        this.backgroundColour = backgroundColour;
+    }
+
+    public Image getCanvasImage() {
+        return canvasImage;
+    }
+
+    public void setCanvasImage(Image canvasImage) {
+        this.canvasImage = canvasImage;
+    }
+
+    public List<Object> getObjects() {
+        return objects;
+    }
+
+    public void setObjects(List<Object> objects) {
+        this.objects = objects;
+    }
+
+    public HashMap<Object, ShapeDescription> getShapes() {
+        return shapes;
+    }
+
+    public void setShapes(HashMap<Object, ShapeDescription> shapes) {
+        this.shapes = shapes;
     }
     
     /**
@@ -198,6 +250,22 @@ public class Canvas{
         public ShapeDescription(Shape shape, String color){
             this.shape = shape;
             colorString = color;
+        }
+
+        public Shape getShape() {
+            return shape;
+        }
+
+        public void setShape(Shape shape) {
+            this.shape = shape;
+        }
+
+        public String getColorString() {
+            return colorString;
+        }
+
+        public void setColorString(String colorString) {
+            this.colorString = colorString;
         }
 
         public void draw(Graphics2D graphic){

@@ -32,9 +32,76 @@ public class Triangle{
         isVisible = false;
     }
     
-    // ------------------
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public int getXPosition() {
+        return xPosition;
+    }
+
+    public int getxPosition() {
+        return xPosition;
+    }
+
+    public void setXPosition(int xPosition) {
+        this.xPosition = xPosition;
+    }
+
+    public void setxPosition(int xPosition) {
+        this.xPosition = xPosition;
+    }
+
+    public int getYPosition() {
+        return yPosition;
+    }
+
+    public int getyPosition() {
+        return yPosition;
+    }
+
+    public void setYPosition(int yPosition) {
+        this.yPosition = yPosition;
+    }
+
+    public void setyPosition(int yPosition) {
+        this.yPosition = yPosition;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public boolean isVisible() {
+        return isVisible;
+    }
+
     public boolean getIsVisible() {
         return isVisible;
+    }
+
+    public void setVisible(boolean isVisible) {
+        this.isVisible = isVisible;
+    }
+
+    public void setIsVisible(boolean isVisible) {
+        this.isVisible = isVisible;
     }
     
     /**

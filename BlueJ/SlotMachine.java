@@ -18,6 +18,30 @@ public class SlotMachine {
     public SlotMachine() {
     }
 
+    public boolean isOk() {
+        return isOk;
+    }
+
+    public boolean getIsOk() {
+        return isOk;
+    }
+
+    public void setIsOk(boolean isOk) {
+        this.isOk = isOk;
+    }
+
+    public void setOk(boolean isOk) {
+        this.isOk = isOk;
+    }
+
+    public ArrayList<Wheel> getWheels() {
+        return wheels;
+    }
+
+    public void setWheels(ArrayList<Wheel> wheels) {
+        this.wheels = wheels;
+    }
+
     /**
      * Add a wheel to this slot machine, place the roulette wheel on the left or right side.
      * @param pos pos is the position of wheel that is added to this object.

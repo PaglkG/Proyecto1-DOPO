@@ -12,7 +12,7 @@ public class Symbol {
     private int positionX;
     private int positionY;
     private int positionWheel;
-    private final String color;
+    private String color;
     private boolean isVisible;
     private Triangle symbolShape;
     
@@ -27,13 +27,60 @@ public class Symbol {
         positionWheel = pos;
     }
     
+    public int getPositionX() {
+        return positionX;
+    }
+
+    public void setPositionX(int positionX) {
+        this.positionX = positionX;
+    }
+
+    public int getPositionY() {
+        return positionY;
+    }
+
+    public void setPositionY(int positionY) {
+        this.positionY = positionY;
+    }
 
     public String getColor() {
         return color;
     }
 
+    public void setColor(String color) {
+        this.color = color;
+    }
+
     public int getPositionWheel() {
         return positionWheel;
+    }
+
+    public void setPositionWheel(int positionWheel) {
+        this.positionWheel = positionWheel;
+    }
+
+    public boolean isVisible() {
+        return isVisible;
+    }
+
+    public boolean getIsVisible() {
+        return isVisible;
+    }
+
+    public void setVisible(boolean isVisible) {
+        this.isVisible = isVisible;
+    }
+
+    public void setIsVisible(boolean isVisible) {
+        this.isVisible = isVisible;
+    }
+
+    public Triangle getSymbolShape() {
+        return symbolShape;
+    }
+
+    public void setSymbolShape(Triangle symbolShape) {
+        this.symbolShape = symbolShape;
     }
 
     /**Sets a new X position to this symbol.
