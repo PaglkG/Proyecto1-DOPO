@@ -6,6 +6,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import java.util.ArrayList;
+import java.util.TreeMap;
 
 /**
  * The test class SlotMachineTest.
@@ -15,13 +17,19 @@ import org.junit.jupiter.api.Test;
  */
 public class SlotMachineTest {
     
+    private SlotMachine sltmchn;
+    
     @BeforeEach
     public void setUp() {
-        SlotMachine sltmchn = new SlotMachine();
+        sltmchn = new SlotMachine();
     }
     
     @Test
     public void shouldCreateSlotMachine() {
-        
+        ArrayList<Wheel> wheels = sltmchn.getWheels();
+        Wheel wheelCreated = wheels.get(0);
+        assertTrue(wheelCreated != null);
+        TreeMap<Integer, Symbol> symbolsCreated = wheelCreated.getSymbols();
+        assertTrue(symbolsCreated != null);
     }
 }

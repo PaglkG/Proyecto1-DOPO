@@ -41,6 +41,56 @@ public class Wheel {
         rectangle.makeVisible();
     }
     
+    /**To set the wheel color.
+     * @param newColor newColor is the color that will be set on this wheel.
+     */
+    public void changeColor(String newColor) {
+
+        color = newColor;
+        rectangle.changeColor(newColor);
+    }
+
+    /**Sets a new X position to this wheel.
+     * @param newPosX newPosX that going to set like x position of this wheel. 
+     */
+    public void changePositionX(int newPosX) {
+        positionX = newPosX;
+        rectangle.setxPosition(newPosX);
+        rectangle.makeVisible();
+    }
+
+    /**Sets a new Y position to this wheel.
+     * @param newPosY newPosY that going to set like y position of this wheel. 
+     */
+    public void changePositionY(int newPosY) {
+        positionY = newPosY;
+        rectangle.setxPosition(newPosY);
+        rectangle.makeVisible();
+    }
+
+    /**Add a specific symbol with its color.
+     * @param symbol symbol is the color of symbol. ----------------------
+     */
+    public void addSymbol(Symbol triangle) {
+        if (symbols.isEmpty()) {
+            selectedSymbol = triangle;
+        }
+        symbols.put(triangle.getPositionWheel(), triangle);
+
+    }
+
+    /**Remove a specific symbol with its color.
+     * @param symbol symbol is the color of symbol that will be removed. ---------------
+     */
+    public void delSymbol(Symbol triangle) {
+        symbols.remove(triangle.getPositionWheel());
+
+        if (!this.symbols.isEmpty()) { 
+            spin();
+        }
+
+    }
+    
     
     /**
      * Gets the current color.
@@ -162,55 +212,6 @@ public class Wheel {
         this.symbols = symbols;
     }
     
-    /**To set the wheel color.
-     * @param newColor newColor is the color that will be set on this wheel.
-     */
-    public void changeColor(String newColor) {
-
-        color = newColor;
-        rectangle.changeColor(newColor);
-    }
-
-    /**Sets a new X position to this wheel.
-     * @param newPosX newPosX that going to set like x position of this wheel. 
-     */
-    public void changePositionX(int newPosX) {
-        positionX = newPosX;
-        rectangle.setxPosition(newPosX);
-        rectangle.makeVisible();
-    }
-
-    /**Sets a new Y position to this wheel.
-     * @param newPosY newPosY that going to set like y position of this wheel. 
-     */
-    public void changePositionY(int newPosY) {
-        positionY = newPosY;
-        rectangle.setxPosition(newPosY);
-        rectangle.makeVisible();
-    }
-
-    /**Add a specific symbol with its color.
-     * @param symbol symbol is the color of symbol. ----------------------
-     */
-    public void addSymbol(Symbol triangle) {
-        if (symbols.isEmpty()) {
-            selectedSymbol = triangle;
-        }
-        symbols.put(triangle.getPositionWheel(), triangle);
-
-    }
-
-    /**Remove a specific symbol with its color.
-     * @param symbol symbol is the color of symbol that will be removed. ---------------
-     */
-    public void delSymbol(Symbol triangle) {
-        symbols.remove(triangle.getPositionWheel());
-
-        if (!this.symbols.isEmpty()) { 
-            spin();
-        }
-
-    }
     /*Show the symbol making visible
      */ 
     private void viewSymbol() {
@@ -262,5 +263,12 @@ public class Wheel {
             listString.add(symbol.getColor());
         }
         return listString;
+    }
+    
+    /**
+     * Compare two wheels, if have the same data at their attributes are equals
+     */
+    public boolean equals(Wheel wheel) {
+        return false;
     }
 }

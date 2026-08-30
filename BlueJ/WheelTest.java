@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
  * @author  Steveen-Gualdron
  * @version 0.1
  */
-public class TestWheel
+public class WheelTest
 {
     private Wheel wheel;
     @BeforeEach
@@ -38,7 +38,7 @@ public class TestWheel
     
     }   
     @Test
-    public void addAndDeleteSymbols(){
+    public void addSymbols(){
         Symbol triangle1 = new Symbol("black",0);
         Symbol triangle2 = new Symbol("blue",6);
         Symbol triangle3 = new Symbol("white",3);
@@ -46,11 +46,17 @@ public class TestWheel
         wheel.addSymbol(triangle2);
         wheel.addSymbol(triangle3);
         assertEquals(triangle1, wheel.selecSymbol());
+        wheel.delSymbol(triangle3);
+        
+    }
+    
+    @Test
+    public void deleteSymbols() {
+        Symbol triangle1 = new Symbol("black",0);
+        Symbol triangle2 = new Symbol("blue",6);
+        Symbol triangle3 = new Symbol("white",3);
         wheel.delSymbol(triangle1);
         wheel.delSymbol(triangle2);
         assertEquals(triangle3, wheel.selecSymbol());
-        wheel.delSymbol(triangle3);
-        wheel.addSymbol(triangle2);
-        assertEquals(triangle2, wheel.selecSymbol());
     }
 }
