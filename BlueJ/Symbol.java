@@ -9,11 +9,10 @@ import java.awt.*;
  * @version 0.1
  */
 public class Symbol {
-    private int positionX;
-    private int positionY;
     private int positionWheel;
     private String color;
     private boolean isVisible;
+    private Wheel wheel;
     private Triangle symbolShape;
     
     /**Constructor symbol, dyadic method class
@@ -31,7 +30,7 @@ public class Symbol {
      * @param newPosX newPosX that going to set like x position of this symbol. 
      */
     public void changePositionX(int newPosX) {
-        positionX = newPosX;
+        symbolShape.setXPosition(newPosX);
         if (symbolShape.isVisible()) {
             symbolShape.makeVisible();
         }
@@ -41,7 +40,7 @@ public class Symbol {
      * @param newPosY newPosY that going to set like y position of this symbol. 
      */
     public void changePositionY(int newPosY) {
-        positionY = newPosY;
+        symbolShape.setYPosition(newPosY);
         if (symbolShape.isVisible()) {
             symbolShape.makeVisible();
         }
@@ -56,23 +55,7 @@ public class Symbol {
     /**Makes this symbol invisible.
      */
     public void makeInvisible() {
-        symbolShape.changeColor("white");
-    }
-    
-    public int getPositionX() {
-        return positionX;
-    }
-
-    public void setPositionX(int positionX) {
-        this.positionX = positionX;
-    }
-
-    public int getPositionY() {
-        return positionY;
-    }
-
-    public void setPositionY(int positionY) {
-        this.positionY = positionY;
+        symbolShape.makeInvisible();
     }
 
     public String getColor() {

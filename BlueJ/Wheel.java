@@ -18,7 +18,6 @@ public class Wheel {
     private boolean isStoped;
     private boolean isVisible;
     private Random random;
-    private String color;
     private Symbol selectedSymbol;
     private TreeMap<Integer,Symbol> symbols;
 
@@ -33,10 +32,6 @@ public class Wheel {
 
         random = new Random();
         symbols = new TreeMap<>();
-        color = "grey";
-        rectangle = new Rectangle();
-        rectangle.changeSize(100,30);
-        rectangle.changeColor(color);
         rectangle.makeVisible();
     }
     
@@ -44,8 +39,6 @@ public class Wheel {
      * @param newColor newColor is the color that will be set on this wheel.
      */
     public void changeColor(String newColor) {
-
-        color = newColor;
         rectangle.changeColor(newColor);
     }
 
@@ -133,7 +126,7 @@ public class Wheel {
     /**Makes this wheel visible.
      */
     public void makeVisible() {
-        rectangle.changeColor(color);
+        rectangle.makeVisible();
         selectedSymbol.makeVisible();
     }
 
@@ -156,16 +149,6 @@ public class Wheel {
         return false;
     }
     
-    /**
-     * Gets the current color.
-     */
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
     
     /**
      * Gets the current X position.
