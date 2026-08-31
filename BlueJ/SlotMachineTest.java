@@ -49,4 +49,9 @@ public class SlotMachineTest {
         sltmchn.delWheel(1);
         assertNull(wheelWillBeDeleted);
     }
+    
+    @Test
+    public void should() {
+        
+    }
 }

@@ -63,15 +63,7 @@ public class Symbol {
         return isVisible;
     }
 
-    public boolean getIsVisible() {
-        return isVisible;
-    }
-
     public void setVisible(boolean isVisible) {
-        this.isVisible = isVisible;
-    }
-
-    public void setIsVisible(boolean isVisible) {
         this.isVisible = isVisible;
     }
 
@@ -88,7 +80,7 @@ public class Symbol {
      */
     public void changePositionX(int newPosX) {
         positionX = newPosX;
-        if (symbolShape.getIsVisible()) {
+        if (symbolShape.isVisible()) {
             symbolShape.makeVisible();
         }
     }
@@ -97,8 +89,8 @@ public class Symbol {
      * @param newPosY newPosY that going to set like y position of this symbol. 
      */
     public void changePositionY(int newPosY) {
-        positionX = newPosY;
-        if (symbolShape.getIsVisible()) {
+        positionY = newPosY;
+        if (symbolShape.isVisible()) {
             symbolShape.makeVisible();
         }
     }

@@ -115,14 +115,6 @@ public class SlotMachine {
         return isOk;
     }
 
-    public boolean getIsOk() {
-        return isOk;
-    }
-
-    public void setIsOk(boolean isOk) {
-        this.isOk = isOk;
-    }
-
     public void setOk(boolean isOk) {
         this.isOk = isOk;
     }

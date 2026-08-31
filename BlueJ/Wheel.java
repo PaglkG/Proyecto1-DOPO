@@ -54,7 +54,7 @@ public class Wheel {
      */
     public void changePositionX(int newPosX) {
         positionX = newPosX;
-        rectangle.setxPosition(newPosX);
+        rectangle.setXPosition(newPosX);
         rectangle.makeVisible();
     }
 
@@ -63,7 +63,7 @@ public class Wheel {
      */
     public void changePositionY(int newPosY) {
         positionY = newPosY;
-        rectangle.setxPosition(newPosY);
+        rectangle.setYPosition(newPosY);
         rectangle.makeVisible();
     }
     
@@ -159,15 +159,7 @@ public class Wheel {
         return isStoped;
     }
 
-    public boolean getIsStoped() {
-        return isStoped;
-    }
-
     public void setStoped(boolean isStoped) {
-        this.isStoped = isStoped;
-    }
-
-    public void setIsStoped(boolean isStoped) {
         this.isStoped = isStoped;
     }
 
@@ -178,15 +170,7 @@ public class Wheel {
         return isVisible;
     }
 
-    public boolean getIsVisible() {
-        return isVisible;
-    }
-
     public void setVisible(boolean isVisible) {
-        this.isVisible = isVisible;
-    }
-
-    public void setIsVisible(boolean isVisible) {
         this.isVisible = isVisible;
     }
 

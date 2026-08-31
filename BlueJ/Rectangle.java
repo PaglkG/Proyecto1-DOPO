@@ -13,7 +13,7 @@ import java.awt.*;
  
 public class Rectangle{
 
-    public static int EDGES = 4;
+    public static final int EDGES = 4;
     
     private int height;
     private int width;
@@ -42,15 +42,7 @@ public class Rectangle{
         return xPosition;
     }
 
-    public int getxPosition() {
-        return xPosition;
-    }
-
     public void setXPosition(int x) {
-        xPosition = x;
-    }
-
-    public void setxPosition(int x) {
         xPosition = x;
     }
 
@@ -58,15 +50,7 @@ public class Rectangle{
         return yPosition;
     }
 
-    public int getyPosition() {
-        return yPosition;
-    }
-
     public void setYPosition(int y) {
-        yPosition = y;
-    }
-
-    public void setyPosition(int y) {
         yPosition = y;
     }
 
@@ -82,15 +66,7 @@ public class Rectangle{
         return isVisible;
     }
 
-    public boolean getIsVisible() {
-        return isVisible;
-    }
-
     public void setVisible(boolean isVisible) {
-        this.isVisible = isVisible;
-    }
-
-    public void setIsVisible(boolean isVisible) {
         this.isVisible = isVisible;
     }
     

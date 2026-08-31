@@ -52,15 +52,7 @@ public class Triangle{
         return xPosition;
     }
 
-    public int getxPosition() {
-        return xPosition;
-    }
-
     public void setXPosition(int xPosition) {
-        this.xPosition = xPosition;
-    }
-
-    public void setxPosition(int xPosition) {
         this.xPosition = xPosition;
     }
 
@@ -68,15 +60,7 @@ public class Triangle{
         return yPosition;
     }
 
-    public int getyPosition() {
-        return yPosition;
-    }
-
     public void setYPosition(int yPosition) {
-        this.yPosition = yPosition;
-    }
-
-    public void setyPosition(int yPosition) {
         this.yPosition = yPosition;
     }
 
@@ -92,15 +76,7 @@ public class Triangle{
         return isVisible;
     }
 
-    public boolean getIsVisible() {
-        return isVisible;
-    }
-
     public void setVisible(boolean isVisible) {
-        this.isVisible = isVisible;
-    }
-
-    public void setIsVisible(boolean isVisible) {
         this.isVisible = isVisible;
     }
     
