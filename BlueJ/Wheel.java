@@ -26,7 +26,6 @@ public class Wheel {
     /**Constructor class of wheel, niladic method class.
      */
     public Wheel() {
-
         rectangle = new Rectangle();
         rectangle.changeSize(100,30);
         rectangle.changeColor("grey");
@@ -67,16 +66,25 @@ public class Wheel {
         rectangle.setxPosition(newPosY);
         rectangle.makeVisible();
     }
+    
+    /**
+     * 
+     */
+    public void addSymbol(String color, int pos) {
+        int sizeSymbols = symbols.size();
+        Symbol symbolToAdd = new Symbol(color, pos);
+        addSymbol(symbolToAdd);
+    }
 
     /**Add a specific symbol with its color.
      * @param symbol symbol is the color of symbol. ----------------------
      */
     public void addSymbol(Symbol triangle) {
-        if (symbols.isEmpty()) {
+        boolean isSymbolsEmpty = symbols.isEmpty();
+        if (isSymbolsEmpty) {
             selectedSymbol = triangle;
         }
         symbols.put(triangle.getPositionWheel(), triangle);
-
     }
 
     /**Remove a specific symbol with its color.
@@ -84,11 +92,11 @@ public class Wheel {
      */
     public void delSymbol(Symbol triangle) {
         symbols.remove(triangle.getPositionWheel());
-
-        if (!this.symbols.isEmpty()) { 
+        triangle.makeInvisible();
+        boolean isSymbolsEmpty = this.symbols.isEmpty();
+        if (!isSymbolsEmpty) { 
             spin();
         }
-
     }
     
     
@@ -201,8 +209,7 @@ public class Wheel {
         this.selectedSymbol = selectedSymbol;
     }
 
-    /**
-     * Gets the list of symbols.
+    /**Gets the list of symbols.
      */   
     public TreeMap<Integer,Symbol> getSymbols() {
         return symbols;
@@ -231,18 +238,24 @@ public class Wheel {
     /**Choose a symbol randomly.
      */
     public void spin() {
-        if (!this.symbols.isEmpty()) {
-        List<Integer> keys = new ArrayList<>(this.symbols.keySet());
-        int randomIndex = random.nextInt(keys.size());
-        int randomKey = keys.get(randomIndex);
-        selectedSymbol = symbols.get(randomKey);
+        boolean isSymbolsEmpty = this.symbols.isEmpty();
+        if (!isSymbolsEmpty) {
+            List<Integer> keys = new ArrayList<>(this.symbols.keySet());
+            int randomIndex = random.nextInt(keys.size());
+            int randomKey = keys.get(randomIndex);
+            selectedSymbol = symbols.get(randomKey);
         }
     }
+    
     /**Makes this wheel invisible.
      */
     public void makeInvisible() {
-        rectangle.changeColor("white");
+        rectangle.makeInvisible();
         selectedSymbol.makeInvisible();
+        for (Symbol symbol : symbols.values()) {
+            symbol.makeInvisible();
+        }
+        symbols.clear();
     }
 
 
@@ -264,7 +277,7 @@ public class Wheel {
         }
         return listString;
     }
-    
+
     /**
      * Compare two wheels, if have the same data at their attributes are equals
      */
