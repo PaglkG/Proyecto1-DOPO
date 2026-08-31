@@ -26,6 +26,38 @@ public class Symbol {
         symbolShape.changeColor(color);
         positionWheel = pos;
     }
+
+    /**Sets a new X position to this symbol.
+     * @param newPosX newPosX that going to set like x position of this symbol. 
+     */
+    public void changePositionX(int newPosX) {
+        positionX = newPosX;
+        if (symbolShape.isVisible()) {
+            symbolShape.makeVisible();
+        }
+    }
+
+    /**Sets a new Y position  to this symbol.
+     * @param newPosY newPosY that going to set like y position of this symbol. 
+     */
+    public void changePositionY(int newPosY) {
+        positionY = newPosY;
+        if (symbolShape.isVisible()) {
+            symbolShape.makeVisible();
+        }
+    }
+
+    /**Makes this symbol visible.
+     */
+    public void makeVisible() {
+        symbolShape.changeColor(color);
+    }
+
+    /**Makes this symbol invisible.
+     */
+    public void makeInvisible() {
+        symbolShape.changeColor("white");
+    }
     
     public int getPositionX() {
         return positionX;
@@ -73,37 +105,5 @@ public class Symbol {
 
     public void setSymbolShape(Triangle symbolShape) {
         this.symbolShape = symbolShape;
-    }
-
-    /**Sets a new X position to this symbol.
-     * @param newPosX newPosX that going to set like x position of this symbol. 
-     */
-    public void changePositionX(int newPosX) {
-        positionX = newPosX;
-        if (symbolShape.isVisible()) {
-            symbolShape.makeVisible();
-        }
-    }
-
-    /**Sets a new Y position  to this symbol.
-     * @param newPosY newPosY that going to set like y position of this symbol. 
-     */
-    public void changePositionY(int newPosY) {
-        positionY = newPosY;
-        if (symbolShape.isVisible()) {
-            symbolShape.makeVisible();
-        }
-    }
-
-    /**Makes this symbol visible.
-     */
-    public void makeVisible() {
-        symbolShape.changeColor(color);
-    }
-
-    /**Makes this symbol invisible.
-     */
-    public void makeInvisible() {
-        symbolShape.changeColor("white");
     }
 }

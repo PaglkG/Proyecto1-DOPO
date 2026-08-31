@@ -22,54 +22,6 @@ public class Rectangle{
     private String color;
     private boolean isVisible;
     
-    public int getHeight() {
-        return height;
-    }
-
-    public void setHeight(int height) {
-        this.height = height;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
-    public int getXPosition() {
-        return xPosition;
-    }
-
-    public void setXPosition(int x) {
-        xPosition = x;
-    }
-
-    public int getYPosition() {
-        return yPosition;
-    }
-
-    public void setYPosition(int y) {
-        yPosition = y;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
-
-    public boolean isVisible() {
-        return isVisible;
-    }
-
-    public void setVisible(boolean isVisible) {
-        this.isVisible = isVisible;
-    }
-    
     /**
      * Create a new rectangle at default position with default color.
      */
@@ -81,7 +33,6 @@ public class Rectangle{
         color = "magenta";
         isVisible = false;
     }
-    
 
     /**
      * Make this rectangle visible. If it was already visible, do nothing.
@@ -207,6 +158,54 @@ public class Rectangle{
     public void changeColor(String newColor){
         color = newColor;
         draw();
+    }
+    
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public int getXPosition() {
+        return xPosition;
+    }
+
+    public void setXPosition(int x) {
+        xPosition = x;
+    }
+
+    public int getYPosition() {
+        return yPosition;
+    }
+
+    public void setYPosition(int y) {
+        yPosition = y;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public boolean isVisible() {
+        return isVisible;
+    }
+
+    public void setVisible(boolean isVisible) {
+        this.isVisible = isVisible;
     }
 
     /*

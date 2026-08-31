@@ -82,23 +82,6 @@ public class Circle{
         erase();
         isVisible = false;
     }
-
-    private void draw(){
-        if(isVisible) {
-            Canvas canvas = Canvas.getCanvas();
-            canvas.draw(this, color, 
-                new Ellipse2D.Double(xPosition, yPosition, 
-                diameter, diameter));
-            canvas.wait(10);
-        }
-    }
-
-    private void erase(){
-        if(isVisible) {
-            Canvas canvas = Canvas.getCanvas();
-            canvas.erase(this);
-        }
-    }
     
     /**
      * Move the circle a few pixels to the right.
@@ -208,6 +191,20 @@ public class Circle{
         draw();
     }
 
+    private void draw(){
+        if(isVisible) {
+            Canvas canvas = Canvas.getCanvas();
+            canvas.draw(this, color, 
+                new Ellipse2D.Double(xPosition, yPosition, 
+                diameter, diameter));
+            canvas.wait(10);
+        }
+    }
 
-
+    private void erase(){
+        if(isVisible) {
+            Canvas canvas = Canvas.getCanvas();
+            canvas.erase(this);
+        }
+    }
 }

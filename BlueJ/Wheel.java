@@ -99,6 +99,62 @@ public class Wheel {
         }
     }
     
+    /**Gives the symbol that was selected when spinning the wheel.
+     * @return Returns the symbol that was selected when spinning the wheel. ----------
+     */
+    public Symbol selecSymbol() {
+        return selectedSymbol;
+    }
+    
+    /**Choose a symbol randomly.
+     */
+    public void spin() {
+        boolean isSymbolsEmpty = this.symbols.isEmpty();
+        if (!isSymbolsEmpty) {
+            List<Integer> keys = new ArrayList<>(this.symbols.keySet());
+            int randomIndex = random.nextInt(keys.size());
+            int randomKey = keys.get(randomIndex);
+            selectedSymbol = symbols.get(randomKey);
+        }
+    }
+    
+    /**Makes this wheel invisible.
+     */
+    public void makeInvisible() {
+        rectangle.makeInvisible();
+        selectedSymbol.makeInvisible();
+        for (Symbol symbol : symbols.values()) {
+            symbol.makeInvisible();
+        }
+        symbols.clear();
+    }
+
+
+    /**Makes this wheel visible.
+     */
+    public void makeVisible() {
+        rectangle.changeColor(color);
+        selectedSymbol.makeVisible();
+    }
+
+    /**Displays all existing symbol colors in order.
+     * @return A string array with exiting symbols colors of this slot machine.
+     */
+    public ArrayList<String>  symbols() {
+        ArrayList<Symbol> list = new ArrayList<>(this.symbols.values());
+        ArrayList<String> listString = new ArrayList();
+        for (Symbol symbol : list) {
+            listString.add(symbol.getColor());
+        }
+        return listString;
+    }
+
+    /**
+     * Compare two wheels, if have the same data at their attributes are equals
+     */
+    public boolean equals(Wheel wheel) {
+        return false;
+    }
     
     /**
      * Gets the current color.
@@ -202,7 +258,7 @@ public class Wheel {
     public void setSymbols(TreeMap<Integer, Symbol> symbols) {
         this.symbols = symbols;
     }
-    
+
     /*Show the symbol making visible
      */ 
     private void viewSymbol() {
@@ -210,62 +266,5 @@ public class Wheel {
             triangle.changePositionX(positionX/2);
             triangle.changePositionY(positionX/2);
             triangle.makeVisible();
-    }
-    
-    /**Gives the symbol that was selected when spinning the wheel.
-     * @return Returns the symbol that was selected when spinning the wheel. ----------
-     */
-    public Symbol selecSymbol() {
-        return selectedSymbol;
-    }
-    
-    /**Choose a symbol randomly.
-     */
-    public void spin() {
-        boolean isSymbolsEmpty = this.symbols.isEmpty();
-        if (!isSymbolsEmpty) {
-            List<Integer> keys = new ArrayList<>(this.symbols.keySet());
-            int randomIndex = random.nextInt(keys.size());
-            int randomKey = keys.get(randomIndex);
-            selectedSymbol = symbols.get(randomKey);
-        }
-    }
-    
-    /**Makes this wheel invisible.
-     */
-    public void makeInvisible() {
-        rectangle.makeInvisible();
-        selectedSymbol.makeInvisible();
-        for (Symbol symbol : symbols.values()) {
-            symbol.makeInvisible();
-        }
-        symbols.clear();
-    }
-
-
-    /**Makes this wheel visible.
-     */
-    public void makeVisible() {
-        rectangle.changeColor(color);
-        selectedSymbol.makeVisible();
-    }
-
-    /**Displays all existing symbol colors in order.
-     * @return A string array with exiting symbols colors of this slot machine.
-     */
-    public ArrayList<String>  symbols() {
-        ArrayList<Symbol> list = new ArrayList<>(this.symbols.values());
-        ArrayList<String> listString = new ArrayList();
-        for (Symbol symbol : list) {
-            listString.add(symbol.getColor());
-        }
-        return listString;
-    }
-
-    /**
-     * Compare two wheels, if have the same data at their attributes are equals
-     */
-    public boolean equals(Wheel wheel) {
-        return false;
     }
 }
