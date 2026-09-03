@@ -2,6 +2,10 @@ import java.util.List;
 import java.util.Random;
 import java.util.TreeMap;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.Set;
+import java.util.HashSet;
+
 /**
  * Wheel class, this is the wheel that will be installed on slot machine.
  *
@@ -82,7 +86,7 @@ public class Wheel {
     }
 
     /**Remove a specific symbol with its color.
-     * @param symbol symbol is the color of symbol that will be removed. ---------------
+     * @param symbol symbol is the symbol that will be removed. ---------------
      */
     public void delSymbol(Symbol triangle) {
         symbols.remove(triangle.getPositionAtTheWheel());
@@ -90,6 +94,28 @@ public class Wheel {
         boolean isSymbolsEmpty = this.symbols.isEmpty();
         if (!isSymbolsEmpty) { 
             spin();
+        }
+    }
+    
+    /**Remove a specific symbol with its color.
+     * @param color color is the color of symbol that will be removed of symbols. ---------------
+     */
+    public void delSymbol(String color) {
+        String currentColorSymbol = null; 
+        Set<Symbol> symbolsV = new HashSet<>(symbols.values());
+        for (Symbol symbol : symbolsV) {
+            currentColorSymbol = symbol.getColor();
+            if (currentColorSymbol.equals(color)) {
+                symbol.makeInvisible();
+                symbols.values().remove(symbol); // Elimina de los simbolos el color encontrado
+                if (symbol == selectedSymbol) {
+                    selectedSymbol = null;    // Si llega a estar adelante se elimina
+                }
+            }
+        }
+        boolean isSymbolsEmpty = symbols.isEmpty(), isSelectedSymbolNull = selectedSymbol == null;
+        if (isSymbolsEmpty && isSelectedSymbolNull) {
+            spin(); // Si se permite que gire otra vez la ruleta hagalo
         }
     }
     
@@ -116,11 +142,9 @@ public class Wheel {
      */
     public void makeInvisible() {
         wheelShape.makeInvisible();
-        
         for (Symbol symbol : symbols.values()) {
             symbol.makeInvisible();
         }
-        symbols.clear();
     }
     
     /** Gets the color of 
@@ -134,6 +158,12 @@ public class Wheel {
      */
     public void makeVisible() {
         wheelShape.makeVisible();
+        boolean isSymbolsEmpty = symbols.isEmpty();
+        Set<Symbol> symbolsV = new HashSet<>(symbols.values());
+        for (Symbol symbol : symbolsV) {
+            if (isSymbolsEmpty) break;
+            symbol.makeVisible();
+        }
         if (selectedSymbol != null) selectedSymbol.makeVisible();
     }
 

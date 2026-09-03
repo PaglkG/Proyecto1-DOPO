@@ -41,7 +41,7 @@ public class SlotMachineAceptanceTest {
     }
     
     @Test
-    public void shouldAddSymbolFirstWheel() {
+    public void shouldAddSymbolEveryWheel() {
         int NUMBER_WHEELS_TO_ADD = 5;
         for (int i = 0; i < NUMBER_WHEELS_TO_ADD; i++) {
             slmch.addWheel(i);
@@ -52,5 +52,16 @@ public class SlotMachineAceptanceTest {
         slmch.addSymbol(3, "blue");
         slmch.addSymbol(4, "green");
         slmch.makeVisible();
+    }
+    
+    @Test
+    public void shouldDelSpecificSymbolWheel() {
+        int NUMBER_WHEELS_TO_ADD = 5;
+        for (int i = 0; i < NUMBER_WHEELS_TO_ADD; i++) {
+            slmch.addWheel(i);
+            slmch.addSymbol(i, "magenta");
+        }
+        slmch.makeVisible();
+        slmch.delSymbol("magenta");
     }
 }

@@ -56,10 +56,12 @@ public class SlotMachine {
     }
 
     /** The symbol; on each wheel is removed, object is deleted.
-     * @param symbol symbol is the type of symbol that going to be created.
+     * @param symbol symbol is the type of symbol that going to be deleted.
      */
     public void delSymbol(String symbol) {
-        
+        for (Wheel wheel : wheels) {
+            wheel.delSymbol(symbol);
+        }
     }
 
     /** The symbol is added to each wheel; shape and wheel number are requested.
@@ -67,6 +69,7 @@ public class SlotMachine {
      * @param symbol symbol is the type of symbol that will be added at the specific number wheel.
      */
     public void placeSymbol(int wheel, String symbol) {
+        
     }
 
     /**Moves a specific number of wheel.
