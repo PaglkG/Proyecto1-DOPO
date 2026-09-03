@@ -36,13 +36,7 @@ public class SlotMachine {
      * @param pos pos is the position of wheel
      */
     public void delWheel(int pos) {
-        Wheel wheelToDelete = null;
-        for (Wheel wheel : wheels) {
-            if (wheel.getPositionWheel() == pos) {
-                wheelToDelete = wheel;
-                break;
-            }
-        }
+        Wheel wheelToDelete = findWheel(pos);
         if (wheelToDelete != null) {
             wheels.remove(wheelToDelete);
             wheelToDelete.makeInvisible();
@@ -52,16 +46,20 @@ public class SlotMachine {
     }
 
     /**The symbol object is created at a specific position and color.
-     * @param pos pos is the position of symbol that going to go.
+     * @param pos pos is the position of wheel going to add symbol.
      * @param color color is the color of symbol that going to be created.
      */
     public void addSymbol(int pos, String color) {
+        Wheel wheelToAddSymbol = findWheel(pos);
+        Symbol symbolToAdd = new Symbol(color);
+        wheelToAddSymbol.addSymbol(symbolToAdd);
     }
 
     /** The symbol; on each wheel is removed, object is deleted.
      * @param symbol symbol is the type of symbol that going to be created.
      */
     public void delSymbol(String symbol) {
+        
     }
 
     /** The symbol is added to each wheel; shape and wheel number are requested.
@@ -150,6 +148,17 @@ public class SlotMachine {
 
     public void setWheels(ArrayList<Wheel> wheels) {
         this.wheels = wheels;
+    }
+    
+    private Wheel findWheel(int pos) {
+        Wheel wheelFinded = null;
+        for (Wheel wheel : wheels) {
+            if (wheel.getPositionWheel() == pos) {
+                wheelFinded = wheel;
+                break;
+            }
+        }
+        return wheelFinded;
     }
     
     private void organicePositionWheels() {

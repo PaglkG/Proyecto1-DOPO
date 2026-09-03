@@ -33,15 +33,15 @@ public class WheelTest
         wheel.changePositionY(400);
         wheel.changePositionY(40);
         assertEquals("white", wheel.getColor(), "The color of the wheel should be 'white'");
-        assertEquals(120, wheel.getPositionX(), "The X position should be 120");
-        assertEquals(40, wheel.getPositionY(), "The Y position should be 40");
+        assertEquals(120, wheel.getXPosition(), "The X position should be 120");
+        assertEquals(40, wheel.getYPosition(), "The Y position should be 40");
     
     }   
     @Test
     public void addSymbols(){
-        Symbol triangle1 = new Symbol("black",0);
-        Symbol triangle2 = new Symbol("blue",6);
-        Symbol triangle3 = new Symbol("white",3);
+        Symbol triangle1 = new Symbol("black");
+        Symbol triangle2 = new Symbol("blue");
+        Symbol triangle3 = new Symbol("white");
         wheel.addSymbol(triangle1);
         wheel.addSymbol(triangle2);
         wheel.addSymbol(triangle3);
@@ -52,9 +52,9 @@ public class WheelTest
     
     @Test
     public void deleteSymbols() {
-        Symbol triangle1 = new Symbol("black",0);
-        Symbol triangle2 = new Symbol("blue",6);
-        Symbol triangle3 = new Symbol("white",3);
+        Symbol triangle1 = new Symbol("black");
+        Symbol triangle2 = new Symbol("blue");
+        Symbol triangle3 = new Symbol("white");
         wheel.delSymbol(triangle1);
         wheel.delSymbol(triangle2);
         assertEquals(triangle3, wheel.selecSymbol());

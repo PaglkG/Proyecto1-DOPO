@@ -25,7 +25,7 @@ public class Wheel {
         wheelShape = new Rectangle();
         wheelShape.changeSize(100,30);
         wheelShape.changeColor("grey");
-        wheelShape.makeVisible();
+        wheelShape.makeInvisible();
 
         random = new Random();
         symbols = new TreeMap<>();
@@ -52,34 +52,40 @@ public class Wheel {
      */
     public void changePositionY(int newPosY) {
         wheelShape.setYPosition(newPosY);
+        wheelShape.makeInvisible();
         wheelShape.makeVisible();
     }
     
-    /**
-     * 
+    /**Add a specific symbol with its color.
+     * @param color color is the color of symbol to add. ----------------------
      */
-    public void addSymbol(String color, int pos) {
+    public void addSymbol(String color) {
         int sizeSymbols = symbols.size();
-        Symbol symbolToAdd = new Symbol(color, pos);
+        Symbol symbolToAdd = new Symbol(color);
         addSymbol(symbolToAdd);
     }
 
     /**Add a specific symbol with its color.
-     * @param symbol symbol is the color of symbol. ----------------------
+     * @param symbol symbol is the symbol to add to the wheel. ----------------------
      */
-    public void addSymbol(Symbol triangle) {
+    public void addSymbol(Symbol symbol) {
         boolean isSymbolsEmpty = symbols.isEmpty();
         if (isSymbolsEmpty) {
-            selectedSymbol = triangle;
+            selectedSymbol = symbol;
         }
-        symbols.put(triangle.getPositionWheel(), triangle);
+        int xPositionWheel = wheelShape.getXPosition(), widthWheel = wheelShape.getWidth(), heightWheel =  wheelShape.getYPosition();
+        symbol.changePositionX(xPositionWheel+15);
+        symbol.changePositionY(heightWheel/2+45);
+        symbol.changeSize(30, widthWheel);
+        
+        symbols.put(symbol.getPositionAtTheWheel(), symbol);
     }
 
     /**Remove a specific symbol with its color.
      * @param symbol symbol is the color of symbol that will be removed. ---------------
      */
     public void delSymbol(Symbol triangle) {
-        symbols.remove(triangle.getPositionWheel());
+        symbols.remove(triangle.getPositionAtTheWheel());
         triangle.makeInvisible();
         boolean isSymbolsEmpty = this.symbols.isEmpty();
         if (!isSymbolsEmpty) { 
@@ -128,7 +134,7 @@ public class Wheel {
      */
     public void makeVisible() {
         wheelShape.makeVisible();
-        selectedSymbol.makeVisible();
+        if (selectedSymbol != null) selectedSymbol.makeVisible();
     }
 
     /**Displays all existing symbol colors in order.
@@ -224,11 +230,19 @@ public class Wheel {
         return wheelShape.getXPosition();
     }
     
+    public int getYPosition() {
+        return wheelShape.getYPosition();
+    }
+    
     
     public void moveHorizontal(int times) {
         int SPACEAMONGWHEEL = 20, LONGITUDEWHEEL = wheelShape.getWidth(); 
         wheelShape.moveHorizontal(0);
         changePositionX((SPACEAMONGWHEEL+LONGITUDEWHEEL)*times);
+    }
+    
+    public int getNumberOfSymbols() {
+        return symbols.size();
     }
     
     /*Show the symbol making visible
