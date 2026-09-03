@@ -22,8 +22,20 @@ public class SlotMachineAceptanceTest {
     
     @Test
     public void shouldAddWheelsCorrectly() {
-        slmch.addWheel(0);
-        slmch.addWheel(1);
+        int NUMBER_WHEELS_TO_ADD = 3;
+        for (int i = 0; i < NUMBER_WHEELS_TO_ADD; i++) {
+            slmch.addWheel(i);
+        }
     }
     
+    @Test
+    public void shouldDeleteWheelsCorrectly() {
+        int NUMBER_WHEELS_TO_ADD = 5;
+        for (int i = 0; i < NUMBER_WHEELS_TO_ADD; i++) {
+            slmch.addWheel(i);
+        }
+        
+        slmch.delWheel(3);
+        slmch.delWheel(2);
+    }
 }

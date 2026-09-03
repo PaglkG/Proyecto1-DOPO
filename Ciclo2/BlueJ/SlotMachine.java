@@ -36,6 +36,19 @@ public class SlotMachine {
      * @param pos pos is the position of wheel
      */
     public void delWheel(int pos) {
+        Wheel wheelToDelete = null;
+        for (Wheel wheel : wheels) {
+            if (wheel.getPositionWheel() == pos) {
+                wheelToDelete = wheel;
+                break;
+            }
+        }
+        if (wheelToDelete != null) {
+            wheels.remove(wheelToDelete);
+            wheelToDelete.makeInvisible();
+        }
+        //Aqui va la funcionalidad de que se modifican las wheels, por ahora lo básico
+        
     }
 
     /**The symbol object is created at a specific position and color.
@@ -109,6 +122,9 @@ public class SlotMachine {
     /**Makes the slot machine invisible.
      */
     public void makeInvisible() {
+        for (Wheel wheel : wheels) {
+            wheel.makeInvisible();
+        }
     }
 
     /**Deletes all objects.
@@ -134,5 +150,9 @@ public class SlotMachine {
 
     public void setWheels(ArrayList<Wheel> wheels) {
         this.wheels = wheels;
+    }
+    
+    private void organicePositionWheels() {
+        
     }
 }

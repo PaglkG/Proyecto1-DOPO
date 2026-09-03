@@ -110,7 +110,7 @@ public class Wheel {
      */
     public void makeInvisible() {
         wheelShape.makeInvisible();
-        selectedSymbol.makeInvisible();
+        
         for (Symbol symbol : symbols.values()) {
             symbol.makeInvisible();
         }
@@ -149,10 +149,6 @@ public class Wheel {
     public boolean equals(Wheel wheel) {
         return false;
     }
-    
-    
-    
-    
 
     /**
      * Gets the rectangle object.
