@@ -1,4 +1,4 @@
-package BlueJ;
+ 
 
 import java.awt.*;
 import java.awt.geom.*;

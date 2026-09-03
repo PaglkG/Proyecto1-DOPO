@@ -1,4 +1,4 @@
-package BlueJ;
+ 
 
 import javax.swing.*;
 import java.awt.*;

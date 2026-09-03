@@ -1,4 +1,4 @@
-package BlueJ;
+ 
 import java.util.List;
 import java.util.Random;
 import java.util.TreeMap;
@@ -121,7 +121,13 @@ public class Wheel {
         }
         symbols.clear();
     }
-
+    
+    /** Gets the color of 
+     *
+     */
+    public String getColor() {
+        return getRectangle().getColor();
+    }
 
     /**Makes this wheel visible.
      */
@@ -179,6 +185,7 @@ public class Wheel {
     public void setWheelShape(int wheelShape) {
         this.wheelShape = wheelShape;
     }
+    
 
     /**
      * Gets the rectangle object.

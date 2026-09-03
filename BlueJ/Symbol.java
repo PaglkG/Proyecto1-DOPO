@@ -1,4 +1,4 @@
-package BlueJ;
+ 
 //import BlueJ.shapes.Triangle; 
 import java.awt.*;
 /**
