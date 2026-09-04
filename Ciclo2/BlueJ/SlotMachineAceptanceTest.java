@@ -55,13 +55,14 @@ public class SlotMachineAceptanceTest {
     }
     
     @Test
-    public void shouldDelSpecificSymbolWheel() {
+    public void shouldDelSpecificSymbolWheel() throws InterruptedException {
         int NUMBER_WHEELS_TO_ADD = 5;
         for (int i = 0; i < NUMBER_WHEELS_TO_ADD; i++) {
             slmch.addWheel(i);
             slmch.addSymbol(i, "magenta");
         }
         slmch.makeVisible();
+        Thread.sleep(1000);
         slmch.delSymbol("magenta");
     }
 }
