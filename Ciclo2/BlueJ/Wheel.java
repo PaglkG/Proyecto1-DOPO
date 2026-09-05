@@ -77,6 +77,8 @@ public class Wheel {
         if (isSymbolsEmpty) {
             selectedSymbol = symbol;
         }
+        symbol.setPositionAtTheWheel(symbols.size()+1);
+        
         int xPositionWheel = wheelShape.getXPosition(), widthWheel = wheelShape.getWidth(), heightWheel =  wheelShape.getYPosition();
         symbol.changePositionX(xPositionWheel+15);
         symbol.changePositionY(heightWheel/2+45);
