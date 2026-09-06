@@ -1,7 +1,3 @@
- 
-
-
-
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -51,7 +47,20 @@ public class SlotMachineC1Test {
     }
     
     @Test
-    public void should() {
-        
+    public void shouldGiveSymbols() {
+        int NUMBER_WHEELS_TO_ADD = 5;
+        for (int i = 0; i < NUMBER_WHEELS_TO_ADD; i++) {
+            sltmchn.addWheel(i);
+        }
+        sltmchn.addSymbol(0, "magenta");
+        sltmchn.addSymbol(1, "red");
+        sltmchn.addSymbol(2, "yellow");
+        sltmchn.addSymbol(3, "blue");
+        sltmchn.addSymbol(4, "green");
+        String[] proof = sltmchn.symbols();
+        String[] result = new String[]{"magenta", "red", "yellow", "blue", "green"};
+        for (int i = 0; i < result.length;i++) {
+            assertEquals(proof[i], result[i]);
+        }
     }
 }

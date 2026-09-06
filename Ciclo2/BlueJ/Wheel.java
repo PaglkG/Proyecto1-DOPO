@@ -277,6 +277,24 @@ public class Wheel {
         return symbols.size();
     }
     
+    public String[] getColorSymbols() {
+        int sizeSymbols = symbols.size(), indexColorSymbol = 0;
+        String[] colorSymbols = new String[sizeSymbols];
+        String colorSymbol; 
+        for (Symbol currentSymbol : symbols.values()) {
+            colorSymbol =  currentSymbol.getColor();
+            if (colorSymbol != null) {
+                colorSymbols[indexColorSymbol] = colorSymbol;
+                indexColorSymbol++;
+            }
+        }
+        return colorSymbols;
+    }
+    
+    public int getSizeColors() {
+        return symbols.size();
+    }
+    
     /*Show the symbol making visible
      */ 
     private void viewSymbol() {
