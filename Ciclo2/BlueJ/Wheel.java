@@ -15,7 +15,7 @@ import java.util.HashSet;
 public class Wheel {
     private int positionWheel;
     
-    private Rectangle wheelShape; //fatal agregar a astah
+    private Figure wheelShape; //fatal agregar a astah
     private boolean isStoped;
     private boolean isVisible;
     private Random random;
@@ -27,7 +27,7 @@ public class Wheel {
      */
     public Wheel() {
         wheelShape = new Rectangle();
-        wheelShape.changeSize(100,30);
+        ((StraightSided) wheelShape).changeSize(100,30);
         wheelShape.changeColor("grey");
         wheelShape.makeInvisible();
 
@@ -69,7 +69,7 @@ public class Wheel {
         addSymbol(symbolToAdd);
     }
 
-    /**Add a specific symbol with its color.
+    /** Add a specific symbol with its color.
      * @param symbol symbol is the symbol to add to the wheel. ----------------------
      */
     public void addSymbol(Symbol symbol) {
@@ -79,7 +79,7 @@ public class Wheel {
         }
         symbol.setPositionAtTheWheel(symbols.size()+1);
         
-        int xPositionWheel = wheelShape.getXPosition(), widthWheel = wheelShape.getWidth(), heightWheel =  wheelShape.getYPosition();
+        int xPositionWheel = wheelShape.getXPosition(), widthWheel = ((StraightSided) wheelShape).getWidth(), heightWheel =  wheelShape.getYPosition();
         symbol.changePositionX(xPositionWheel+15);
         symbol.changePositionY(heightWheel/2+45);
         symbol.changeSize(30, widthWheel);
@@ -192,7 +192,7 @@ public class Wheel {
      * Gets the rectangle object.
      */
     public Rectangle getRectangle() {
-        return wheelShape;
+        return (Rectangle)wheelShape;
     }
 
     public void setRectangle(Rectangle rectangle) {
@@ -268,7 +268,7 @@ public class Wheel {
     
     
     public void moveHorizontal(int times) {
-        int SPACEAMONGWHEEL = 20, LONGITUDEWHEEL = wheelShape.getWidth(); 
+        int SPACEAMONGWHEEL = 20, LONGITUDEWHEEL = ((StraightSided)wheelShape).getWidth(); 
         wheelShape.moveHorizontal(0);
         changePositionX((SPACEAMONGWHEEL+LONGITUDEWHEEL)*times);
     }
@@ -284,6 +284,20 @@ public class Wheel {
         for (Symbol currentSymbol : symbols.values()) {
             colorSymbol =  currentSymbol.getColor();
             if (colorSymbol != null) {
+                colorSymbols[indexColorSymbol] = colorSymbol;
+                indexColorSymbol++;
+            }
+        }
+        return colorSymbols;
+    }
+    
+    public String[] getColorSymbolsConfiguration() {
+        int sizeSymbols = symbols.size(), indexColorSymbol = 0;
+        String[] colorSymbols = new String[sizeSymbols];
+        String colorSymbol; 
+        for (Symbol currentSymbol : symbols.values()) {
+            colorSymbol =  currentSymbol.getColor();
+            if (colorSymbol != null && currentSymbol.isVisible()) {
                 colorSymbols[indexColorSymbol] = colorSymbol;
                 indexColorSymbol++;
             }

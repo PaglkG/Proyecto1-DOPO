@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.TreeMap;
+import java.util.Map;
 
 /**
  * The test class SlotMachineTest.
@@ -59,6 +60,31 @@ public class SlotMachineC1Test {
         sltmchn.addSymbol(4, "green");
         String[] proof = sltmchn.symbols();
         String[] result = new String[]{"magenta", "red", "yellow", "blue", "green"};
+        for (int i = 0; i < result.length;i++) {
+            assertEquals(proof[i], result[i]);
+        }
+    }
+    
+    @Test
+    public void shouldGiveConfiguration() {
+        int NUMBER_WHEELS_TO_ADD = 5;
+        for (int i = 0; i < NUMBER_WHEELS_TO_ADD; i++) {
+            sltmchn.addWheel(i);
+        }
+        sltmchn.addSymbol(0, "magenta");
+        sltmchn.addSymbol(1, "red");
+        sltmchn.addSymbol(2, "yellow");
+        sltmchn.addSymbol(3, "blue");
+        sltmchn.addSymbol(4, "green");
+        ArrayList<Wheel> wheels = sltmchn.getWheels();
+        Wheel secondWheel = wheels.get(1);
+        Wheel fourthWheel = wheels.get(3);
+        Symbol symbolSecWheel = secondWheel.getSymbols().get(0);
+        Symbol symbolFourthWheel = secondWheel.getSymbols().get(0);
+        symbolSecWheel.setVisible(false);
+        symbolFourthWheel.setVisible(false);
+        String[] proof = sltmchn.configuration();
+        String[] result = new String[]{"magenta", "yellow", "green"};
         for (int i = 0; i < result.length;i++) {
             assertEquals(proof[i], result[i]);
         }

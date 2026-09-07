@@ -124,6 +124,19 @@ public class SlotMachine {
      * @return return an array of string with the symbols selected at the wheels.
      */
     public String[] configuration() {
+        String[] configuration;
+        int sizeWheels = wheels.size(), totalSizeColors = 0;
+        ArrayList<String[]> colorSymbolWheels = new ArrayList<>();
+        Wheel currentWheel = null;        
+        for (int i = 0; i < sizeWheels; i++) {
+            currentWheel = wheels.get(i);
+            if (currentWheel.isVisible()) {
+                colorSymbolWheels.add(currentWheel.getColorSymbolsConfiguration());
+                totalSizeColors += currentWheel.getSizeColors();
+            }
+            
+        }
+        
         return null;
     }
 

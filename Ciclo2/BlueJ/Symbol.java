@@ -11,7 +11,7 @@ import java.awt.*;
 public class Symbol {
     private int positionAtTheWheel;
     private Wheel wheel;
-    private Triangle symbolShape;
+    private Figure symbolShape;
     
     /**Constructor symbol, dyadic method class
      * @param color color is the color of this symbol.
@@ -49,7 +49,7 @@ public class Symbol {
     }
     
     public void changeSize(int newHeight, int newWidth) {
-        this.symbolShape.changeSize(newHeight, newWidth);
+        ((StraightSided) this.symbolShape).changeSize(newHeight, newWidth);
     }
 
     /**Makes this symbol visible.
@@ -82,7 +82,7 @@ public class Symbol {
     }
 
     public Triangle getSymbolShape() {
-        return symbolShape;
+        return (Triangle)symbolShape;
     }
 
     public void setSymbolShape(Triangle symbolShape) {
@@ -96,4 +96,6 @@ public class Symbol {
     public int getPositionAtTheWheel() {
         return positionAtTheWheel;
     }
+    
+    
 }

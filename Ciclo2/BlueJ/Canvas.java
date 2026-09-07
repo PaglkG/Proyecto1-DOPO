@@ -1,5 +1,3 @@
- 
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
@@ -45,62 +43,6 @@ public class Canvas{
     private List <Object> objects;
     private HashMap <Object,ShapeDescription> shapes;
     
-    public JFrame getFrame() {
-        return frame;
-    }
-
-    public void setFrame(JFrame frame) {
-        this.frame = frame;
-    }
-
-    public CanvasPane getCanvasPane() {
-        return canvas;
-    }
-
-    public void setCanvasPane(CanvasPane canvas) {
-        this.canvas = canvas;
-    }
-
-    public Graphics2D getGraphic() {
-        return graphic;
-    }
-
-    public void setGraphic(Graphics2D graphic) {
-        this.graphic = graphic;
-    }
-
-    public Color getBackgroundColour() {
-        return backgroundColour;
-    }
-
-    public void setBackgroundColour(Color backgroundColour) {
-        this.backgroundColour = backgroundColour;
-    }
-
-    public Image getCanvasImage() {
-        return canvasImage;
-    }
-
-    public void setCanvasImage(Image canvasImage) {
-        this.canvasImage = canvasImage;
-    }
-
-    public List<Object> getObjects() {
-        return objects;
-    }
-
-    public void setObjects(List<Object> objects) {
-        this.objects = objects;
-    }
-
-    public HashMap<Object, ShapeDescription> getShapes() {
-        return shapes;
-    }
-
-    public void setShapes(HashMap<Object, ShapeDescription> shapes) {
-        this.shapes = shapes;
-    }
-    
     /**
      * Create a Canvas.
      * @param title  title to appear in Canvas Frame
@@ -108,7 +50,7 @@ public class Canvas{
      * @param height  the desired height for the canvas
      * @param bgClour  the desired background colour of the canvas
      */
-    private Canvas(String title, int width, int height, Color bgColour){
+    public Canvas(String title, int width, int height, Color bgColour){
         frame = new JFrame();
         canvas = new CanvasPane();
         frame.setContentPane(canvas);
@@ -119,6 +61,23 @@ public class Canvas{
         objects = new ArrayList <Object>();
         shapes = new HashMap <Object,ShapeDescription>();
     }
+    
+    
+    
+    public void setDimension(int width, int height) {
+        canvas.setPreferredSize(new Dimension(width, height));
+        frame.pack();
+        
+        Dimension size = canvas.getSize();
+        canvasImage = canvas.createImage(size.width, size.height);
+        graphic = (Graphics2D)canvasImage.getGraphics();
+        graphic.setColor(backgroundColour);
+        graphic.fillRect(0, 0, size.width, size.height);
+        graphic.setColor(Color.black);
+        
+
+    }
+    
 
     /**
      * Set the canvas visibility and brings canvas to the front of screen
@@ -156,7 +115,8 @@ public class Canvas{
         shapes.put(referenceObject, new ShapeDescription(shape, color));
         redraw();
     }
- 
+     
+    
     /**
      * Erase a given shape's from the screen.
      * @param  referenceObject  the shape object to be erased 
@@ -186,8 +146,38 @@ public class Canvas{
             graphic.setColor(Color.magenta);
         else if(colorString.equals("white"))
             graphic.setColor(Color.white);
+        else if(colorString.equals("orange"))
+            graphic.setColor(Color.orange);
+        else if(colorString.equals("pink"))
+            graphic.setColor(Color.pink);
+        else if(colorString.equals("cyan"))
+            graphic.setColor(Color.cyan);
+        else if(colorString.equals("gray"))
+            graphic.setColor(Color.gray);
+        else if(colorString.equals("lightGray"))
+            graphic.setColor(Color.lightGray);
+        else if(colorString.equals("darkGray"))
+            graphic.setColor(Color.darkGray);
+        else if(colorString.equals("brown"))
+            graphic.setColor(new Color(139, 69, 19));
+        else if(colorString.equals("maroon"))
+            graphic.setColor(new Color(128, 0, 0));
+        else if(colorString.equals("gold"))
+            graphic.setColor(new Color(255, 220, 70));
+        else if(colorString.equals("darkYellow"))
+            graphic.setColor(new Color(128, 128, 0));
+        else if(colorString.equals("greenTint"))
+            graphic.setColor(new Color(152, 255, 179));
+        else if(colorString.equals("salmon"))
+            graphic.setColor(new Color(255, 76, 76));
+        else if(colorString.equals("darkRed"))
+            graphic.setColor(new Color(170, 0, 0));
+        else if(colorString.equals("hardGray"))
+            graphic.setColor(new Color(128, 128, 128));
+        else if(colorString.equals("softGray"))
+            graphic.setColor(new Color(224, 224, 224));
         else
-            graphic.setColor(Color.blue);
+            graphic.setColor(Color.black);
     }
 
     /**
@@ -234,8 +224,19 @@ public class Canvas{
      */
     private class CanvasPane extends JPanel{
         public void paint(Graphics g){
-            g.drawImage(canvasImage, 0, 0, null);
+            g.drawImage(canvasImage, 0, 0, null); 
         }
+    }
+    
+    public void close() {
+        objects.clear();
+        shapes.clear();
+
+        erase();
+
+        canvas.repaint();
+        frame.dispose();
+        canvasSingleton = null;
     }
     
     /************************************************************************
@@ -250,22 +251,6 @@ public class Canvas{
         public ShapeDescription(Shape shape, String color){
             this.shape = shape;
             colorString = color;
-        }
-
-        public Shape getShape() {
-            return shape;
-        }
-
-        public void setShape(Shape shape) {
-            this.shape = shape;
-        }
-
-        public String getColorString() {
-            return colorString;
-        }
-
-        public void setColorString(String colorString) {
-            this.colorString = colorString;
         }
 
         public void draw(Graphics2D graphic){
