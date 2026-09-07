@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import java.util.ArrayList;
 
 /**
  * The test class SlotMachineAceptanceTest.
@@ -14,10 +15,14 @@ import org.junit.jupiter.api.Test;
 public class SlotMachineAceptanceTest {
     
     private SlotMachine slmch;
+    private ArrayList<Wheel> wheels;
+    private int numWheels;
     
     @BeforeEach
     public void setUp() {
         slmch = new SlotMachine();
+        wheels = slmch.getWheels();
+        numWheels = wheels.size();
     }
     
     @Test
@@ -132,4 +137,22 @@ public class SlotMachineAceptanceTest {
     /*
     @Test
     public void should*/
+    
+    @Test
+    public void shouldSwapTwoWheels() throws InterruptedException {
+        int NUMBER_WHEELS_TO_ADD = 4;
+        for (int i = 1; i <= NUMBER_WHEELS_TO_ADD; i++) {
+            slmch.addWheel(i);
+        }
+        slmch.addSymbol(1, "yellow");
+        slmch.addSymbol(2, "blue");
+        slmch.addSymbol(3, "red");
+        slmch.addSymbol(4, "magenta"); // Se agregan simbolos para identificar las ruedas
+        
+        Thread.sleep(1000);
+        slmch.swap(4, 2);
+        Thread.sleep(1000);
+        slmch.swap(1, 3);
+        
+    }
 }

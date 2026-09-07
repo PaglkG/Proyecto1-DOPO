@@ -40,6 +40,7 @@ public class SlotMachine {
         if (wheelToDelete != null) {
             wheels.remove(wheelToDelete);
             wheelToDelete.makeInvisible();
+            
         }
         //Aqui va la funcionalidad de que se modifican las wheels, por ahora lo básico
         
@@ -124,20 +125,28 @@ public class SlotMachine {
      * @return return an array of string with the symbols selected at the wheels.
      */
     public String[] configuration() {
-        String[] configuration;
-        int sizeWheels = wheels.size(), totalSizeColors = 0;
+        int totalSizeColors = 0;
+        boolean isWheelVisible;
         ArrayList<String[]> colorSymbolWheels = new ArrayList<>();
-        Wheel currentWheel = null;        
-        for (int i = 0; i < sizeWheels; i++) {
-            currentWheel = wheels.get(i);
-            if (currentWheel.isVisible()) {
-                colorSymbolWheels.add(currentWheel.getColorSymbolsConfiguration());
-                totalSizeColors += currentWheel.getSizeColors();
+        Wheel currentWheel = null; 
+        for (Wheel wheel : wheels) {
+            isWheelVisible = wheel.isVisible();
+            if (wheel != null && isWheelVisible) {
+                colorSymbolWheels.add(wheel.getColorSymbolsConfiguration());
+                totalSizeColors += wheel.getSizeColors();
             }
-            
         }
-        
-        return null;
+        int currentSizeColor, indexColorSymbols = 0;
+        String[] configuration = new String[totalSizeColors];
+        for (String[] colorWheel : colorSymbolWheels) {
+            for (String color : colorWheel) {
+                if (color != null) {
+                    configuration[indexColorSymbols] = color;
+                    indexColorSymbols++;
+                }
+            }
+        }
+        return configuration;
     }
 
     /**Tells whether all shapes selected by the wheels are identical.
@@ -189,7 +198,7 @@ public class SlotMachine {
         this.wheels = wheels;
     }
     
-    private Wheel findWheel(int pos) {
+    public Wheel findWheel(int pos) {
         Wheel wheelFinded = null;
         for (Wheel wheel : wheels) {
             if (wheel.getPositionWheel() == pos) {
@@ -199,6 +208,24 @@ public class SlotMachine {
         }
         return wheelFinded;
     }
+    
+    public void swap(int wheel1, int wheel2) {
+        Wheel findedWheel1 = findWheel(wheel1);
+        Wheel findedWheel2 = findWheel(wheel2);
+        findedWheel1.moveHorizontal(wheel2);
+        findedWheel2.moveHorizontal(wheel1);
+        findedWheel1.repositionSymbols();   
+        findedWheel2.repositionSymbols();
+        if (findedWheel1.isVisible() && findedWheel2.isVisible()) {
+            findedWheel1.frameFlickering();
+            findedWheel2.frameFlickering();
+        }
+        int initialPosWheel1 = findedWheel1.getPositionWheel(), initialPosWheel2 = findedWheel2.getPositionWheel();
+        findedWheel1.setPositionWheel(initialPosWheel2);
+        findedWheel2.setPositionWheel(initialPosWheel1);
+    }
+    
+    
     
     private void organicePositionWheels() {
         

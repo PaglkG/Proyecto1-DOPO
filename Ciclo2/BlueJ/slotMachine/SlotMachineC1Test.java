@@ -17,35 +17,41 @@ public class SlotMachineC1Test {
     
     private SlotMachine sltmchn;
     private ArrayList<Wheel> wheels;
+    private int numWheels;
     
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         sltmchn = new SlotMachine();
         wheels = sltmchn.getWheels();
+        numWheels = wheels.size();
     }
     
     @Test
     public void shouldCreateSlotMachine() {
-        Wheel wheelCreated = wheels.get(0);
-        assertTrue(wheelCreated != null);
-        TreeMap<Integer, Symbol> symbolsCreated = wheelCreated.getSymbols();
-        assertTrue(symbolsCreated != null);
+        assertTrue(wheels != null); // Comprueba que existe
+        sltmchn.addWheel(1);
+        TreeMap<Integer, Symbol> symbolsCreated = wheels.get(0).getSymbols();
+        assertTrue(symbolsCreated != null); // Se deben crear tambien la existencia de los simbolos
     }
     
     @Test
     public void shouldAddWheel() {
+        sltmchn.addWheel(1);
         sltmchn.addWheel(2);
         Wheel firstWheel = wheels.get(0);
-        Wheel wheelAdded = wheels.get(1);
-        int xPosWheel = firstWheel.getXPosition(); // Moves 25*2
-        assertEquals(50, xPosWheel);
+        Wheel secondWheel = wheels.get(1);
+        int xPosWheelFirst = firstWheel.getXPosition(), xPosWheelSecond = secondWheel.getXPosition(); // Moves 25*2
+        assertEquals(25, xPosWheelFirst); // Se verifica que se ubica en la posicion correcta
+        assertEquals(50, xPosWheelFirst);
     }
     
     @Test
     public void shouldDelWheel() {
+        sltmchn.addWheel(1);
         Wheel wheelWillBeDeleted = wheels.get(0);
         sltmchn.delWheel(1);
-        assertNull(wheelWillBeDeleted);
+        assertFalse(wheels.contains(wheelWillBeDeleted)); // Se verifica su ausencia en la lista
+        assertEquals(0, wheels.size());
     }
     
     @Test
@@ -80,14 +86,20 @@ public class SlotMachineC1Test {
         ArrayList<Wheel> wheels = sltmchn.getWheels();
         Wheel secondWheel = wheels.get(1);
         Wheel fourthWheel = wheels.get(3);
-        Symbol symbolSecWheel = secondWheel.getSymbols().get(0);
-        Symbol symbolFourthWheel = secondWheel.getSymbols().get(0);
+        Symbol symbolSecWheel = secondWheel.getSymbols().get(1);   //Indice según como se guarden
+        Symbol symbolFourthWheel = fourthWheel.getSymbols().get(1); 
         symbolSecWheel.setVisible(false);
         symbolFourthWheel.setVisible(false);
         String[] proof = sltmchn.configuration();
+        
         String[] result = new String[]{"magenta", "yellow", "green"};
         for (int i = 0; i < result.length;i++) {
             assertEquals(proof[i], result[i]);
         }
+    }
+    
+    @AfterEach
+    void tearDown() {
+        wheels.clear();
     }
 }

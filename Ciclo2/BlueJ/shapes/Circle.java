@@ -15,11 +15,6 @@ public class Circle extends Figure {
     
     private int diameter;
     
-    public void makeInvisible(){
-        erase();
-        isVisible = false;
-    }
-    
     public Circle() {
         super(50, 50, "blue");
         diameter = 30;
@@ -37,6 +32,11 @@ public class Circle extends Figure {
         erase();
         diameter = newDiameter;
         draw();
+    }
+    
+    public void makeInvisible(){
+        erase();
+        isVisible = false;
     }
     
     /*

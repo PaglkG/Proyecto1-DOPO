@@ -11,23 +11,22 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Set;
 import java.util.HashSet;
+import java.util.Objects;
 
 /**
  * Wheel class, this is the wheel that will be installed on slot machine.
  *
  * @author Gualdron-Villagran
- * @version 0.1
+ * @version 1.0
  */
 public class Wheel {
     private int positionWheel;
-    
     private Figure wheelShape; //fatal agregar a astah
     private boolean isStoped;
-    private boolean isVisible;
+    private boolean isLocked;
     private Random random;
     private Symbol selectedSymbol;
     private TreeMap<Integer,Symbol> symbols;
-
 
     /**Constructor class of wheel, niladic method class.
      */
@@ -36,7 +35,7 @@ public class Wheel {
         ((StraightSided) wheelShape).changeSize(100,30);
         wheelShape.changeColor("grey");
         wheelShape.makeInvisible();
-
+        isLocked = false;
         random = new Random();
         symbols = new TreeMap<>();
     }
@@ -159,7 +158,7 @@ public class Wheel {
      *
      */
     public String getColor() {
-        return getRectangle().getColor();
+        return wheelShape.getColor();
     }
 
     /**Makes this wheel visible.
@@ -178,7 +177,7 @@ public class Wheel {
     /**Displays all existing symbol colors in order.
      * @return A string array with exiting symbols colors of this slot machine.
      */
-    public ArrayList<String>  symbols() {
+    public ArrayList<String> symbols() {
         ArrayList<Symbol> list = new ArrayList<>(this.symbols.values());
         ArrayList<String> listString = new ArrayList();
         for (Symbol symbol : list) {
@@ -191,7 +190,23 @@ public class Wheel {
      * Compare two wheels, if have the same data at their attributes are equals
      */
     public boolean equals(Wheel wheel) {
-        return false;
+        boolean hasSamePosition = this.positionWheel == wheel.getPositionWheel();
+        boolean hasSameBoolean = isStoped == wheel.isStoped() && isLocked == wheel.isLocked();
+        boolean hasSameSelectedSymbol = Objects.equals(selectedSymbol, wheel.getSelectedSymbol());
+        boolean hasSameSymbols = symbols.equals(wheel.getSymbols());
+        return hasSamePosition && hasSameBoolean && hasSameSelectedSymbol && hasSameSymbols;
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Wheel wheel = (Wheel) obj;
+        return this.equals(wheel);
+    }
+    
+    public boolean isLocked() {
+        return isLocked;
     }
 
     /**
@@ -220,11 +235,11 @@ public class Wheel {
      * Checks if the element is visible.
      */
     public boolean isVisible() {
-        return isVisible;
+        return wheelShape.isVisible();
     }
 
     public void setVisible(boolean isVisible) {
-        this.isVisible = isVisible;
+        wheelShape.setVisible(isVisible);
     }
 
     public Random getRandom() {
@@ -298,8 +313,12 @@ public class Wheel {
     }
     
     public String[] getColorSymbolsConfiguration() {
-        int sizeSymbols = symbols.size(), indexColorSymbol = 0;
-        String[] colorSymbols = new String[sizeSymbols];
+        int visibleCount = 0;
+        for (Symbol s : symbols.values()) {
+            if (s.getColor() != null && s.isVisible()) visibleCount++;
+        }
+        int indexColorSymbol = 0;
+        String[] colorSymbols = new String[visibleCount];
         String colorSymbol; 
         for (Symbol currentSymbol : symbols.values()) {
             colorSymbol =  currentSymbol.getColor();
@@ -313,6 +332,20 @@ public class Wheel {
     
     public int getSizeColors() {
         return symbols.size();
+    }
+    
+    public void frameFlickering() {
+        wheelShape.frameFlickering();
+        selectedSymbol.frameFlickering();
+    }
+    
+    public void repositionSymbols() {
+        int xPositionWheel = wheelShape.getXPosition();
+        int heightWheel = wheelShape.getYPosition();
+        for (Symbol symbol : symbols.values()) {
+            symbol.changePositionX(xPositionWheel + 15);
+            symbol.changePositionY(heightWheel / 2 + 45);
+        }
     }
     
     /*Show the symbol making visible

@@ -1,8 +1,11 @@
 package slotMachine;
-import java.awt.*;
+
 import shapes.Figure;
 import shapes.Triangle;
 import shapes.StraightSided;
+
+import java.util.Objects;
+import java.awt.*;
 /**
  * this class is the Symbol in the slotMachine
  * this class is the Symbol in the Wheel
@@ -99,5 +102,26 @@ public class Symbol {
         return positionAtTheWheel;
     }
     
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Symbol symbol = (Symbol) obj;
+        return this.equals(symbol);
+    }
     
+    public boolean equals(Symbol symbol) {
+        boolean hasSamePosition = positionAtTheWheel == symbol.getPositionAtTheWheel();
+        boolean hasSameWheel = Objects.equals(wheel, symbol.getWheel());
+        boolean hasSameColor = Objects.equals(getColor(), symbol.getColor());
+        return hasSamePosition && hasSameWheel && hasSameColor;
+    }
+    
+    public void frameFlickering() {
+        symbolShape.frameFlickering();
+    }
+    
+    public Wheel getWheel() {
+        return wheel;
+    }
 }
