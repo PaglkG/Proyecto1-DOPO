@@ -1,6 +1,8 @@
- 
-//import BlueJ.shapes.Triangle; 
+package slotMachine;
 import java.awt.*;
+import shapes.Figure;
+import shapes.Triangle;
+import shapes.StraightSided;
 /**
  * this class is the Symbol in the slotMachine
  * this class is the Symbol in the Wheel

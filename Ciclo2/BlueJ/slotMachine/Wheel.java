@@ -1,3 +1,9 @@
+package slotMachine;
+
+import shapes.Rectangle;
+import shapes.Figure;
+import shapes.StraightSided;
+
 import java.util.List;
 import java.util.Random;
 import java.util.TreeMap;

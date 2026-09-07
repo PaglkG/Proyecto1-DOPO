@@ -1,4 +1,4 @@
-
+package shapes;
 /**
  * StraightSided are the figures that has a height and a width.
  * This is the class StrightSided.
