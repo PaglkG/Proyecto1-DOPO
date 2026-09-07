@@ -187,7 +187,7 @@ public class Canvas{
         else if(colorString.equals("white"))
             graphic.setColor(Color.white);
         else
-            graphic.setColor(Color.black);
+            graphic.setColor(Color.blue);
     }
 
     /**

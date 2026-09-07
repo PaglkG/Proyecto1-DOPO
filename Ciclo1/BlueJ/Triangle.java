@@ -207,6 +207,11 @@ public class Triangle{
     public void setVisible(boolean isVisible) {
         this.isVisible = isVisible;
     }
+    
+    public void frameFlickering() {
+        makeInvisible();
+        makeVisible();
+    }
 
     /*
      * Draw the triangle with current specifications on screen.

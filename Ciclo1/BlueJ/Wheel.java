@@ -1,8 +1,11 @@
- 
 import java.util.List;
 import java.util.Random;
 import java.util.TreeMap;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.Set;
+import java.util.HashSet;
+
 /**
  * Wheel class, this is the wheel that will be installed on slot machine.
  *
@@ -10,11 +13,9 @@ import java.util.ArrayList;
  * @version 0.1
  */
 public class Wheel {
-    private int positionX;
-    private int positionY;
-
-    private int wheelShape;
-    private Rectangle rectangle; //fatal agregar a astah
+    private int positionWheel;
+    
+    private Rectangle wheelShape; //fatal agregar a astah
     private boolean isStoped;
     private boolean isVisible;
     private Random random;
@@ -25,70 +26,98 @@ public class Wheel {
     /**Constructor class of wheel, niladic method class.
      */
     public Wheel() {
-        rectangle = new Rectangle();
-        rectangle.changeSize(100,30);
-        rectangle.changeColor("grey");
-        rectangle.makeVisible();
+        wheelShape = new Rectangle();
+        wheelShape.changeSize(100,30);
+        wheelShape.changeColor("grey");
+        wheelShape.makeInvisible();
 
         random = new Random();
         symbols = new TreeMap<>();
-        rectangle.makeVisible();
     }
     
     /**To set the wheel color.
      * @param newColor newColor is the color that will be set on this wheel.
      */
     public void changeColor(String newColor) {
-        rectangle.changeColor(newColor);
+        wheelShape.changeColor(newColor);
     }
 
     /**Sets a new X position to this wheel.
      * @param newPosX newPosX that going to set like x position of this wheel. 
      */
     public void changePositionX(int newPosX) {
-        positionX = newPosX;
-        rectangle.setXPosition(newPosX);
-        rectangle.makeVisible();
+        wheelShape.setXPosition(newPosX);
+        wheelShape.makeInvisible();
+        wheelShape.makeVisible();
     }
 
     /**Sets a new Y position to this wheel.
      * @param newPosY newPosY that going to set like y position of this wheel. 
      */
     public void changePositionY(int newPosY) {
-        positionY = newPosY;
-        rectangle.setYPosition(newPosY);
-        rectangle.makeVisible();
+        wheelShape.setYPosition(newPosY);
+        wheelShape.makeInvisible();
+        wheelShape.makeVisible();
     }
     
-    /**
-     * 
+    /**Add a specific symbol with its color.
+     * @param color color is the color of symbol to add. ----------------------
      */
-    public void addSymbol(String color, int pos) {
+    public void addSymbol(String color) {
         int sizeSymbols = symbols.size();
-        Symbol symbolToAdd = new Symbol(color, pos);
+        Symbol symbolToAdd = new Symbol(color);
         addSymbol(symbolToAdd);
     }
 
-    /**Add a specific symbol with its color.
-     * @param symbol symbol is the color of symbol. ----------------------
+    /* Add a specific symbol with its color.
+     * @param symbol symbol is the symbol to add to the wheel. ----------------------
      */
-    public void addSymbol(Symbol triangle) {
+    private void addSymbol(Symbol symbol) {
         boolean isSymbolsEmpty = symbols.isEmpty();
         if (isSymbolsEmpty) {
-            selectedSymbol = triangle;
+            selectedSymbol = symbol;
         }
-        symbols.put(triangle.getPositionWheel(), triangle);
+        symbol.setPositionAtTheWheel(symbols.size()+1);
+        
+        int xPositionWheel = wheelShape.getXPosition(), widthWheel = wheelShape.getWidth(), heightWheel =  wheelShape.getYPosition();
+        symbol.changePositionX(xPositionWheel+15);
+        symbol.changePositionY(heightWheel/2+45);
+        symbol.changeSize(30, widthWheel);
+        
+        symbols.put(symbol.getPositionAtTheWheel(), symbol);
     }
 
     /**Remove a specific symbol with its color.
-     * @param symbol symbol is the color of symbol that will be removed. ---------------
+     * @param symbol symbol is the symbol that will be removed. ---------------
      */
     public void delSymbol(Symbol triangle) {
-        symbols.remove(triangle.getPositionWheel());
+        symbols.remove(triangle.getPositionAtTheWheel());
         triangle.makeInvisible();
         boolean isSymbolsEmpty = this.symbols.isEmpty();
         if (!isSymbolsEmpty) { 
             spin();
+        }
+    }
+    
+    /**Remove a specific symbol with its color.
+     * @param color color is the color of symbol that will be removed of symbols. ---------------
+     */
+    public void delSymbol(String color) {
+        String currentColorSymbol = null; 
+        Set<Symbol> symbolsV = new HashSet<>(symbols.values());
+        for (Symbol symbol : symbolsV) {
+            currentColorSymbol = symbol.getColor();
+            if (currentColorSymbol.equals(color)) {
+                symbol.makeInvisible();
+                symbols.values().remove(symbol); // Elimina de los simbolos el color encontrado
+                if (symbol == selectedSymbol) {
+                    selectedSymbol = null;    // Si llega a estar adelante se elimina
+                }
+            }
+        }
+        boolean isSymbolsEmpty = symbols.isEmpty(), isSelectedSymbolNull = selectedSymbol == null;
+        if (isSymbolsEmpty && isSelectedSymbolNull) {
+            spin(); // Si se permite que gire otra vez la ruleta hagalo
         }
     }
     
@@ -114,12 +143,10 @@ public class Wheel {
     /**Makes this wheel invisible.
      */
     public void makeInvisible() {
-        rectangle.makeInvisible();
-        selectedSymbol.makeInvisible();
+        wheelShape.makeInvisible();
         for (Symbol symbol : symbols.values()) {
             symbol.makeInvisible();
         }
-        symbols.clear();
     }
     
     /** Gets the color of 
@@ -132,8 +159,14 @@ public class Wheel {
     /**Makes this wheel visible.
      */
     public void makeVisible() {
-        rectangle.makeVisible();
-        selectedSymbol.makeVisible();
+        wheelShape.makeVisible();
+        boolean isSymbolsEmpty = symbols.isEmpty();
+        Set<Symbol> symbolsV = new HashSet<>(symbols.values());
+        for (Symbol symbol : symbolsV) {
+            if (isSymbolsEmpty) break;
+            symbol.makeVisible();
+        }
+        if (selectedSymbol != null) selectedSymbol.makeVisible();
     }
 
     /**Displays all existing symbol colors in order.
@@ -154,48 +187,16 @@ public class Wheel {
     public boolean equals(Wheel wheel) {
         return false;
     }
-    
-    
-    /**
-     * Gets the current X position.
-     */
-    public int getPositionX() {
-        return positionX;
-    }
-
-    public void setPositionX(int positionX) {
-        this.positionX = positionX;
-    }
-
-    /**
-     * Gets the current Y position.
-     */
-    public int getPositionY() {
-        return positionY;
-    }
-
-    public void setPositionY(int positionY) {
-        this.positionY = positionY;
-    }
-
-    public int getWheelShape() {
-        return wheelShape;
-    }
-
-    public void setWheelShape(int wheelShape) {
-        this.wheelShape = wheelShape;
-    }
-    
 
     /**
      * Gets the rectangle object.
      */
     public Rectangle getRectangle() {
-        return rectangle;
+        return wheelShape;
     }
 
     public void setRectangle(Rectangle rectangle) {
-        this.rectangle = rectangle;
+        this.wheelShape = rectangle;
     }
 
     /**
@@ -249,12 +250,72 @@ public class Wheel {
         this.symbols = symbols;
     }
 
+    public void setPositionWheel(int positionWheel) {
+        this.positionWheel = positionWheel;
+    }
+    
+    public int getPositionWheel() {
+        return this.positionWheel;
+    }
+    
+    public int getXPosition() {
+        return wheelShape.getXPosition();
+    }
+    
+    public int getYPosition() {
+        return wheelShape.getYPosition();
+    }
+    
+    
+    public void moveHorizontal(int times) {
+        int SPACEAMONGWHEEL = 20, LONGITUDEWHEEL = wheelShape.getWidth(); 
+        wheelShape.moveHorizontal(0);
+        changePositionX((SPACEAMONGWHEEL+LONGITUDEWHEEL)*times);
+    }
+    
+    public int getNumberOfSymbols() {
+        return symbols.size();
+    }
+    
+    public String[] getColorSymbols() {
+        int sizeSymbols = symbols.size(), indexColorSymbol = 0;
+        String[] colorSymbols = new String[sizeSymbols];
+        String colorSymbol; 
+        for (Symbol currentSymbol : symbols.values()) {
+            colorSymbol =  currentSymbol.getColor();
+            if (colorSymbol != null) {
+                colorSymbols[indexColorSymbol] = colorSymbol;
+                indexColorSymbol++;
+            }
+        }
+        return colorSymbols;
+    }
+    
+    public String[] getColorSymbolsConfiguration() {
+        int sizeSymbols = symbols.size(), indexColorSymbol = 0;
+        String[] colorSymbols = new String[sizeSymbols];
+        String colorSymbol; 
+        for (Symbol currentSymbol : symbols.values()) {
+            colorSymbol =  currentSymbol.getColor();
+            if (colorSymbol != null && currentSymbol.isVisible()) {
+                colorSymbols[indexColorSymbol] = colorSymbol;
+                indexColorSymbol++;
+            }
+        }
+        return colorSymbols;
+    }
+    
+    public int getSizeColors() {
+        return symbols.size();
+    }
+    
     /*Show the symbol making visible
      */ 
     private void viewSymbol() {
-            Symbol triangle = selecSymbol();
-            triangle.changePositionX(positionX/2);
-            triangle.changePositionY(positionX/2);
-            triangle.makeVisible();
+        int positionX = wheelShape.getXPosition(), positionY = wheelShape.getYPosition();
+        Symbol triangle = selecSymbol();
+        triangle.changePositionX(positionX/2);
+        triangle.changePositionY(positionX/2);
+        triangle.makeVisible();
     }
 }

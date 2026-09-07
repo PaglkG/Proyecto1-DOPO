@@ -16,6 +16,8 @@ public class SlotMachine {
     /**Cronstructor, nyadic method class, of SlotMachine.
      */
     public SlotMachine() {
+        isOk = true;
+        wheels = new ArrayList<>();
     }
 
     /**
@@ -23,6 +25,10 @@ public class SlotMachine {
      * @param pos pos is the position of wheel that is added to this object.
      */
     public void addWheel(int pos) {
+        Wheel newWheelToAdd = new Wheel();
+        wheels.add(newWheelToAdd);
+        newWheelToAdd.setPositionWheel(pos);
+        newWheelToAdd.moveHorizontal(pos);
     }
 
     /**To remove a wheel, pass its left or right position.
@@ -30,19 +36,32 @@ public class SlotMachine {
      * @param pos pos is the position of wheel
      */
     public void delWheel(int pos) {
+        Wheel wheelToDelete = findWheel(pos);
+        if (wheelToDelete != null) {
+            wheels.remove(wheelToDelete);
+            wheelToDelete.makeInvisible();
+        }
+        //Aqui va la funcionalidad de que se modifican las wheels, por ahora lo básico
+        
     }
 
     /**The symbol object is created at a specific position and color.
-     * @param pos pos is the position of symbol that going to go.
+     * @param pos pos is the position of wheel going to add symbol.
      * @param color color is the color of symbol that going to be created.
      */
     public void addSymbol(int pos, String color) {
+        Wheel wheelToAddSymbol = findWheel(pos);
+        Symbol symbolToAdd = new Symbol(color);
+        wheelToAddSymbol.addSymbol(symbolToAdd);
     }
 
     /** The symbol; on each wheel is removed, object is deleted.
-     * @param symbol symbol is the type of symbol that going to be created.
+     * @param symbol symbol is the type of symbol that going to be deleted.
      */
     public void delSymbol(String symbol) {
+        for (Wheel wheel : wheels) {
+            wheel.delSymbol(symbol);
+        }
     }
 
     /** The symbol is added to each wheel; shape and wheel number are requested.
@@ -50,24 +69,48 @@ public class SlotMachine {
      * @param symbol symbol is the type of symbol that will be added at the specific number wheel.
      */
     public void placeSymbol(int wheel, String symbol) {
+        Wheel wheelToPlaceSymbol = wheels.get(wheel);
+        wheelToPlaceSymbol.addSymbol(symbol);
     }
 
     /**Moves a specific number of wheel.
      * @param wheel wheel indicates the number (integer) of wheel that going to be moved.
      */
     public void spin(int wheel) {
+        Wheel wheelToSpin = wheels.get(wheel);
+        if (wheelToSpin != null) wheelToSpin.spin();
     }
 
     /**Moves each of the wheels.
      */
     public void spin() {
+        for (Wheel wheel : wheels) {
+            wheel.spin();
+        }
     }
 
     /**Displays all existing symbol colors in order.
      * @return A string array with exiting symbols colors of this slot machine.
      */
     public String[] symbols() {
-        return null;
+        int sizeWheels = wheels.size(), totalSizeColors = 0;
+        ArrayList<String[]> colorSymbolWheels = new ArrayList<>();
+        Wheel currentWheel = null;        
+        for (int i = 0; i < sizeWheels; i++) {
+            currentWheel = wheels.get(i);
+            colorSymbolWheels.add(currentWheel.getColorSymbols());
+            totalSizeColors += currentWheel.getSizeColors();
+        }
+        int currentSizeColor, indexColorSymbols = 0;
+        String[] colorSymbols = new String[totalSizeColors];
+        for (String[] colorWheel : colorSymbolWheels) {
+            currentSizeColor = colorWheel.length;
+            for (int j = 0; j < currentSizeColor; j++) {
+                colorSymbols[indexColorSymbols] = colorWheel[j];
+                indexColorSymbols++;
+            }
+        }
+        return colorSymbols;
     }
 
     /**Displays the number of distinct colors among the symbols on the wheel that are flipped.
@@ -81,6 +124,19 @@ public class SlotMachine {
      * @return return an array of string with the symbols selected at the wheels.
      */
     public String[] configuration() {
+        String[] configuration;
+        int sizeWheels = wheels.size(), totalSizeColors = 0;
+        ArrayList<String[]> colorSymbolWheels = new ArrayList<>();
+        Wheel currentWheel = null;        
+        for (int i = 0; i < sizeWheels; i++) {
+            currentWheel = wheels.get(i);
+            if (currentWheel.isVisible()) {
+                colorSymbolWheels.add(currentWheel.getColorSymbolsConfiguration());
+                totalSizeColors += currentWheel.getSizeColors();
+            }
+            
+        }
+        
         return null;
     }
 
@@ -95,11 +151,17 @@ public class SlotMachine {
     /**Makes the slot machine visible.
      */
     public void makeVisible() {
+        for (Wheel wheel : wheels) {
+            wheel.makeVisible();
+        }
     }
 
     /**Makes the slot machine invisible.
      */
     public void makeInvisible() {
+        for (Wheel wheel : wheels) {
+            wheel.makeInvisible();
+        }
     }
 
     /**Deletes all objects.
@@ -125,5 +187,20 @@ public class SlotMachine {
 
     public void setWheels(ArrayList<Wheel> wheels) {
         this.wheels = wheels;
+    }
+    
+    private Wheel findWheel(int pos) {
+        Wheel wheelFinded = null;
+        for (Wheel wheel : wheels) {
+            if (wheel.getPositionWheel() == pos) {
+                wheelFinded = wheel;
+                break;
+            }
+        }
+        return wheelFinded;
+    }
+    
+    private void organicePositionWheels() {
+        
     }
 }
