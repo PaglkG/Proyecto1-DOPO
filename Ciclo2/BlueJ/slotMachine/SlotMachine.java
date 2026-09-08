@@ -31,7 +31,7 @@ public class SlotMachine {
         wheels.add(newWheelToAdd);
         newWheelToAdd.setPositionWheel(pos);
         newWheelToAdd.moveHorizontal(pos);
-        if (isVisible) {           
+        if (isVisible) {
             newWheelToAdd.makeVisible();
         }
     }
@@ -121,8 +121,15 @@ public class SlotMachine {
     /**Displays the number of distinct colors among the symbols on the wheel that are flipped.
      * @return Number of distinct colors of the flipped symbols.
      */
-    public int distincSymbols() {
-        return 0;
+    public int distinctSymbols() {
+        int countDistincSymbols = 0;
+        Map<String, Integer> infoAllSymbols = getAllSymbolsAtSlotMachine();
+        for (Integer numTimesColorRepeat : infoAllSymbols.values()) {
+            if (numTimesColorRepeat.equals(1)) {
+                countDistincSymbols++;
+            }
+        }
+        return countDistincSymbols;
     }
 
     /**Gives all colors selected by the wheels from left to right.
@@ -259,6 +266,14 @@ public class SlotMachine {
         for (Wheel wheel : wheels) {
             wheel.frameFlickering();
         }
+    }
+    
+    private Map<String, Integer> getAllSymbolsAtSlotMachine() {
+        Map<String, Integer> allSymbols = new HashMap<>();
+        for (Wheel wheel : wheels) {
+            wheel.getInformationSymbols(allSymbols);
+        }
+        return allSymbols;
     }
     
     private void organicePositionWheels() {

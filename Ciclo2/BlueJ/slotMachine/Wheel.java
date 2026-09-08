@@ -373,6 +373,23 @@ public class Wheel {
         isLocked = false;
     }
     
+    /**Gets the color and number that repeat that color 
+     * @param info info is a collection with the number that repeats a specific color. 
+     */
+    public void getInformationSymbols(Map<String, Integer> info) {
+        String colorSymbol;
+        Integer numTimesColor = 0;
+        for (Symbol symbol : symbols.values()) {
+            colorSymbol = symbol.getColor();
+            if (info.containsKey(colorSymbol)) {
+                numTimesColor = info.get(colorSymbol);
+                info.put(colorSymbol, numTimesColor+1); // Se le adiciona la vez que se repite
+            } else {
+                info.put(colorSymbol, 1); // Si es la primera vez se agrega a la info 
+            }
+        }
+    }
+    
     /*Show the symbol making visible
      */ 
     private void viewSymbol() {

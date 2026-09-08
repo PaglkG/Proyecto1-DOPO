@@ -102,6 +102,39 @@ public class SlotMachineC1Test {
         }
     }
     
+    @Test
+    public void shouldGiveNumberDistingSymbols() {
+        int NUMBER_WHEELS_TO_ADD = 5;
+        for (int i = 0; i < NUMBER_WHEELS_TO_ADD; i++) {
+            sltmchn.addWheel(i);
+        }
+        sltmchn.addSymbol(0, "magenta");
+        sltmchn.addSymbol(1, "red");
+        sltmchn.addSymbol(2, "yellow");
+        sltmchn.addSymbol(3, "blue");
+        sltmchn.addSymbol(4, "green");
+        int numDistinctSymbols = sltmchn.distinctSymbols();
+        assertEquals(5, numDistinctSymbols);
+    }
+    
+    @Test
+    public void shouldGiveOtherNumberDistingSymbols() {
+        int NUMBER_WHEELS_TO_ADD = 5;
+        for (int i = 0; i < NUMBER_WHEELS_TO_ADD; i++) {
+            sltmchn.addWheel(i);
+            sltmchn.addSymbol(i, "magenta");
+            sltmchn.addSymbol(i, "red");
+            sltmchn.addSymbol(i, "yellow");
+        }
+        sltmchn.addSymbol(1, "write");
+        sltmchn.addSymbol(2, "black");
+        sltmchn.addSymbol(3, "blue");
+        sltmchn.addSymbol(4, "green"); // Solamente colocamos 4 simbolos distintos en distintas ruedas
+        
+        int numDistinctSymbols = sltmchn.distinctSymbols();
+        assertEquals(4, numDistinctSymbols);
+    }
+    
     @AfterEach
     void tearDown() {
         wheels.clear();
