@@ -21,7 +21,7 @@ import java.util.Objects;
  */
 public class Wheel {
     private int positionWheel;
-    private Figure wheelShape; //fatal agregar a astah
+    private Figure wheelShape; 
     private boolean isStoped;
     private boolean isLocked;
     private Random random;
@@ -52,7 +52,7 @@ public class Wheel {
      */
     public void changePositionX(int newPosX) {
         wheelShape.setXPosition(newPosX);
-        if (wheelShape.isVisible()) {
+        if (isVisible()) {
             wheelShape.makeInvisible();
             wheelShape.makeVisible();
         }
@@ -63,7 +63,7 @@ public class Wheel {
      */
     public void changePositionY(int newPosY) {
         wheelShape.setYPosition(newPosY);
-        if (wheelShape.isVisible()) {
+        if (isVisible()) {
             wheelShape.makeInvisible();
             wheelShape.makeVisible();
         }
@@ -87,13 +87,14 @@ public class Wheel {
             selectedSymbol = symbol;
         }
         symbol.setPositionAtTheWheel(symbols.size()+1);
-        
         int xPositionWheel = wheelShape.getXPosition(), widthWheel = ((StraightSided) wheelShape).getWidth(), heightWheel =  wheelShape.getYPosition();
         symbol.changePositionX(xPositionWheel+15);
         symbol.changePositionY(heightWheel/2+45);
         symbol.changeSize(30, widthWheel);
-        
         symbols.put(symbol.getPositionAtTheWheel(), symbol);
+        if (isVisible()) {         
+            symbol.makeVisible();
+        }
     }
 
     /**Remove a specific symbol with its color.
@@ -146,7 +147,11 @@ public class Wheel {
             int randomIndex = random.nextInt(keys.size());
             int randomKey = keys.get(randomIndex);
             selectedSymbol = symbols.get(randomKey);
+            if (isVisible()) {
+                selectedSymbol.frameFlickering();
+            }
         }
+        
     }
     
     /**Makes this wheel invisible.
@@ -168,12 +173,14 @@ public class Wheel {
     /**Makes this wheel visible.
      */
     public void makeVisible() {
-        wheelShape.makeVisible();
+        if (!isVisible()) {
+            wheelShape.makeVisible();    
+        }
         boolean isSymbolsEmpty = symbols.isEmpty();
         Set<Symbol> symbolsV = new HashSet<>(symbols.values());
         for (Symbol symbol : symbolsV) {
             if (isSymbolsEmpty) break;
-            symbol.makeVisible();
+            if (!isVisible()) symbol.makeVisible();
         }
         if (selectedSymbol != null) selectedSymbol.makeVisible();
     }
@@ -339,8 +346,10 @@ public class Wheel {
     }
     
     public void frameFlickering() {
-        wheelShape.frameFlickering();
-        selectedSymbol.frameFlickering();
+        if (isVisible()) {
+            wheelShape.frameFlickering();
+            selectedSymbol.frameFlickering();
+        }
     }
     
     public void repositionSymbols() {

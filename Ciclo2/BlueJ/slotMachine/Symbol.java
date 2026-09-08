@@ -42,7 +42,10 @@ public class Symbol {
      */
     public void changePositionX(int newPosX) {
         symbolShape.setXPosition(newPosX);
-        this.symbolShape.frameFlickering();
+        if (symbolShape.isVisible()) {
+            this.symbolShape.frameFlickering();
+        }
+        
     }
 
     /**Sets a new Y position  to this symbol.
@@ -50,7 +53,9 @@ public class Symbol {
      */
     public void changePositionY(int newPosY) {
         this.symbolShape.setYPosition(newPosY);
-        this.symbolShape.frameFlickering();
+        if (symbolShape.isVisible()) {
+            this.symbolShape.frameFlickering();
+        }
     }
     
     public void changeSize(int newHeight, int newWidth) {

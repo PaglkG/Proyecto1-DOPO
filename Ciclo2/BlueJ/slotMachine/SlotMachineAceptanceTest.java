@@ -16,7 +16,7 @@ public class SlotMachineAceptanceTest {
     
     private SlotMachine slmch;
     private ArrayList<Wheel> wheels;
-    private int numWheels;
+    private static int numWheels;
     
     @BeforeEach
     public void setUp() {
@@ -27,35 +27,44 @@ public class SlotMachineAceptanceTest {
     }
     
     @Test
-    public void shouldAddWheelsCorrectly() {
+    public void shouldAddWheelsCorrectly() throws InterruptedException {
         int NUMBER_WHEELS_TO_ADD = 3;
-        for (int i = 0; i < NUMBER_WHEELS_TO_ADD; i++) {
+        for (int i = 1; i <= NUMBER_WHEELS_TO_ADD; i++) {
             slmch.addWheel(i);
+            Thread.sleep(500);
         }
     }
     
     @Test
-    public void shouldDeleteWheelsCorrectly() {
+    public void shouldDeleteWheelsCorrectly() throws InterruptedException {
         int NUMBER_WHEELS_TO_ADD = 5;
-        for (int i = 0; i < NUMBER_WHEELS_TO_ADD; i++) {
+        for (int i = 1; i <= NUMBER_WHEELS_TO_ADD; i++) {
             slmch.addWheel(i);
         }
+        Thread.sleep(1000);
         slmch.delWheel(3);
-        slmch.delWheel(2);
+        Thread.sleep(1000);
+        slmch.delWheel(1);
+        Thread.sleep(1000);
     }
     
     @Test
-    public void shouldAddSymbolEveryWheel() {
+    public void shouldAddSymbolEveryWheel() throws InterruptedException {
         int NUMBER_WHEELS_TO_ADD = 5;
-        for (int i = 0; i < NUMBER_WHEELS_TO_ADD; i++) {
+        for (int i = 1; i <= NUMBER_WHEELS_TO_ADD; i++) {
             slmch.addWheel(i);
         }
-        slmch.addSymbol(0, "magenta");
-        slmch.addSymbol(1, "red");
-        slmch.addSymbol(2, "yellow");
-        slmch.addSymbol(3, "blue");
-        slmch.addSymbol(4, "green");
         slmch.makeVisible();
+        slmch.addSymbol(0, "magenta");
+        Thread.sleep(500);
+        slmch.addSymbol(1, "red");
+        Thread.sleep(500);
+        slmch.addSymbol(2, "yellow");
+        Thread.sleep(500);
+        slmch.addSymbol(3, "blue");
+        Thread.sleep(500);
+        slmch.addSymbol(4, "green");
+        Thread.sleep(500);
     }
     
     @Test
@@ -68,6 +77,7 @@ public class SlotMachineAceptanceTest {
         slmch.makeVisible();
         Thread.sleep(1000);
         slmch.delSymbol("magenta");
+        Thread.sleep(1000);
     }
     
     @Test
@@ -81,6 +91,7 @@ public class SlotMachineAceptanceTest {
         slmch.makeVisible();
         Thread.sleep(1000);
         slmch.delSymbol("magenta");
+        Thread.sleep(1000);
     }
     
     @Test
@@ -91,36 +102,37 @@ public class SlotMachineAceptanceTest {
             slmch.placeSymbol(i, "magenta");
             Thread.sleep(500);
         }
-        Thread.sleep(2000);
+        Thread.sleep(1500);
         for (int i = 0; i < NUMBER_WHEELS_TO_PLACE; i++) {
             slmch.addSymbol(i, "blue");
             slmch.spin();
+            Thread.sleep(500);
         }
+        Thread.sleep(1500);
     }
     
     @Test
     public void shouldSpinSpecificWheel() throws InterruptedException {
         int NUMBER_WHEELS_TO_ADD = 5;
-        for (int i = 0; i < NUMBER_WHEELS_TO_ADD; i++) {
+        for (int i = 1; i <= NUMBER_WHEELS_TO_ADD; i++) {
             slmch.addWheel(i);
             slmch.addSymbol(i, "magenta");
             slmch.addSymbol(i, "blue");
             slmch.addSymbol(i, "yellow");
             slmch.addSymbol(i, "red");
             slmch.addSymbol(i, "green");
-            slmch.addSymbol(i, "blue");
-            slmch.addSymbol(i, "white");
-            slmch.addSymbol(i, "blue");
+            Thread.sleep(500);
         }
         Thread.sleep(1000);
-        slmch.spin(1); //Solo debería de cambiar la 2da y última rueda
-        slmch.spin(4);
+        slmch.spin(2); //Solo debería de cambiar la 2da y última rueda
+        slmch.spin(5);
+        Thread.sleep(1500);
     }
     
     @Test 
     public void shouldSpinAllWheels() throws InterruptedException {
         int NUMBER_WHEELS_TO_ADD = 5;
-        for (int i = 0; i < NUMBER_WHEELS_TO_ADD; i++) {
+        for (int i = 1; i <= NUMBER_WHEELS_TO_ADD; i++) {
             slmch.addWheel(i);
             slmch.addSymbol(i, "magenta");
             slmch.addSymbol(i, "blue");
@@ -130,8 +142,10 @@ public class SlotMachineAceptanceTest {
             slmch.addSymbol(i, "blue");
             slmch.addSymbol(i, "white");
             slmch.addSymbol(i, "blue");
+            Thread.sleep(500);
         }
         slmch.spin();
+        Thread.sleep(1500);
     }
     /*
     @Test
@@ -148,9 +162,45 @@ public class SlotMachineAceptanceTest {
         slmch.addSymbol(3, "red");
         slmch.addSymbol(4, "magenta"); // Se agregan simbolos para identificar las ruedas
         
-        Thread.sleep(1000);
+        Thread.sleep(1500);
         slmch.swap(4, 2);
-        Thread.sleep(1000);
+        Thread.sleep(1500);
         slmch.swap(1, 3);
+    }
+    
+    @Test 
+    public void shouldLockAndUnlockSomeWheels() throws InterruptedException {
+        int NUMBER_WHEELS_TO_ADD = 5;
+        for (int i = 1; i <= NUMBER_WHEELS_TO_ADD; i++) {
+            slmch.addWheel(i);
+            slmch.addSymbol(i, "magenta");
+            slmch.addSymbol(i, "blue");
+            slmch.addSymbol(i, "yellow");
+            slmch.addSymbol(i, "red");
+            slmch.addSymbol(i, "green");
+            slmch.addSymbol(i, "blue");
+            slmch.addSymbol(i, "white");
+            slmch.addSymbol(i, "blue");
+            Thread.sleep(500);
+        }
+        slmch.lock(1);
+        slmch.lock(3);
+        slmch.spin(); // Solamente deberian de girar la rueda 2, 4, 5 (Cambian de selectedSymbol o el simbolo principal)
+        Thread.sleep(2000);
+        slmch.unlock(1);
+        slmch.unlock(3);
+        slmch.spin(); // Giran todas
+        Thread.sleep(2500);
+        slmch.lock(1);
+        slmch.lock(3);
+        slmch.spin(); // Solamente deberian de girar la rueda 2, 4, 5 (Cambian de selectedSymbol o el simbolo principal)
+        Thread.sleep(2000);
+    }
+    
+    @AfterEach
+    void tearsDown() {
+        slmch.makeInvisible();
+        slmch = null;
+        wheels.clear();
     }
 }

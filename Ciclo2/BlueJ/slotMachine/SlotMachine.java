@@ -12,12 +12,14 @@ import java.util.*;
 public class SlotMachine {
     private boolean isOk;
     private ArrayList<Wheel> wheels;
+    private boolean isVisible;
 
     /**Cronstructor, nyadic method class, of SlotMachine.
      */
     public SlotMachine() {
         isOk = true;
         wheels = new ArrayList<>();
+        isVisible = false;
     }
 
     /**
@@ -29,6 +31,9 @@ public class SlotMachine {
         wheels.add(newWheelToAdd);
         newWheelToAdd.setPositionWheel(pos);
         newWheelToAdd.moveHorizontal(pos);
+        if (isVisible) {           
+            newWheelToAdd.makeVisible();
+        }
     }
 
     /**To remove a wheel, pass its left or right position.
@@ -39,8 +44,7 @@ public class SlotMachine {
         Wheel wheelToDelete = findWheel(pos);
         if (wheelToDelete != null) {
             wheels.remove(wheelToDelete);
-            wheelToDelete.makeInvisible();
-            
+            if (isVisible) wheelToDelete.makeInvisible();
         }
         //Aqui va la funcionalidad de que se modifican las wheels, por ahora lo básico
         
@@ -160,6 +164,7 @@ public class SlotMachine {
     /**Makes the slot machine visible.
      */
     public void makeVisible() {
+        if (!isVisible) isVisible = true;
         for (Wheel wheel : wheels) {
             wheel.makeVisible();
         }
@@ -168,6 +173,7 @@ public class SlotMachine {
     /**Makes the slot machine invisible.
      */
     public void makeInvisible() {
+        if (isVisible) isVisible = false;
         for (Wheel wheel : wheels) {
             wheel.makeInvisible();
         }
@@ -246,6 +252,10 @@ public class SlotMachine {
     }
     
     public void frameFlickering() {
+        if (!isVisible) {
+            isVisible = true;
+        }    
+        
         for (Wheel wheel : wheels) {
             wheel.frameFlickering();
         }
