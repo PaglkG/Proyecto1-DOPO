@@ -2,6 +2,7 @@ package slotMachine;
 
 import java.util.List;
 import java.util.*;
+import javax.swing.JOptionPane;
 
 /**
  * This is slot machine game, this is a variant of I problem - SlotMachine ICPC competition
@@ -186,9 +187,13 @@ public class SlotMachine {
         }
     }
 
-    /**Deletes all objects.
+    /**Deletes all objects and close the windows.
      */
     public void exit() {
+        if (wheels != null) {
+            wheels.clear();
+        }
+        shapes.Canvas.getCanvas().close();
     }
     
     /**Indicates whether the last operation was successful.
@@ -196,6 +201,9 @@ public class SlotMachine {
      * False otherwise.
      */
     public boolean isOk() {
+        if (!isOk) {
+            errorMessage("Esa acción no se puede realizar");
+        }
         return isOk;
     }
 
@@ -211,6 +219,9 @@ public class SlotMachine {
         this.wheels = wheels;
     }
     
+    /**Given a postion of wheel find this object at the SlotMachine.
+     * @param pos pos is the wheel's position that will be search around all wheels of SlotMachine. 
+     */
     public Wheel findWheel(int pos) {
         Wheel wheelFinded = null;
         for (Wheel wheel : wheels) {
@@ -258,6 +269,9 @@ public class SlotMachine {
         wheelToUnlock.unlock();
     }
     
+    /**Makes a update visually of SlotMachine
+     * 
+     */
     public void frameFlickering() {
         if (!isVisible) {
             isVisible = true;
@@ -268,12 +282,30 @@ public class SlotMachine {
         }
     }
     
+    /* Obtains information of all symbol of all wheel
+     * @return A map with the information of all symbol of SlotMachine 
+     */
     private Map<String, Integer> getAllSymbolsAtSlotMachine() {
         Map<String, Integer> allSymbols = new HashMap<>();
         for (Wheel wheel : wheels) {
             wheel.getInformationSymbols(allSymbols);
         }
         return allSymbols;
+    }
+    
+    /*
+     * Error message this going to apperear at the screen
+     * This only apper if simulator is visible
+     */
+    private void errorMessage(String messageError) {
+        if (isVisible) {
+            JOptionPane.showMessageDialog( 
+            null, 
+            messageError,  // Mensaje de la ventana
+            "Invalid Action",  //Mensaje del titulo de la ventana
+            JOptionPane.ERROR_MESSAGE
+            );
+        }
     }
     
     private void organicePositionWheels() {

@@ -135,6 +135,16 @@ public class SlotMachineC1Test {
         assertEquals(4, numDistinctSymbols);
     }
     
+    @Test
+    public void shouldExitTheProgram() {
+        int NUMBER_WHEELS_TO_ADD = 5;
+        for (int i = 0; i < NUMBER_WHEELS_TO_ADD; i++) {
+            sltmchn.addWheel(i);
+        }
+        sltmchn.exit();
+        assertTrue(wheels.isEmpty());
+    }
+    
     @AfterEach
     void tearDown() {
         wheels.clear();
