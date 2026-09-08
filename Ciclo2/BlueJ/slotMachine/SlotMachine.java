@@ -226,7 +226,6 @@ public class SlotMachine {
     }
     
     
-    
     private void organicePositionWheels() {
         
     }

@@ -52,8 +52,10 @@ public class Wheel {
      */
     public void changePositionX(int newPosX) {
         wheelShape.setXPosition(newPosX);
-        wheelShape.makeInvisible();
-        wheelShape.makeVisible();
+        if (wheelShape.isVisible()) {
+            wheelShape.makeInvisible();
+            wheelShape.makeVisible();
+        }
     }
 
     /**Sets a new Y position to this wheel.
@@ -61,8 +63,10 @@ public class Wheel {
      */
     public void changePositionY(int newPosY) {
         wheelShape.setYPosition(newPosY);
-        wheelShape.makeInvisible();
-        wheelShape.makeVisible();
+        if (wheelShape.isVisible()) {
+            wheelShape.makeInvisible();
+            wheelShape.makeVisible();
+        }
     }
     
     /**Add a specific symbol with its color.

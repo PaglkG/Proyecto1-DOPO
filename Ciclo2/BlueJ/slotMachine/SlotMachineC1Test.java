@@ -41,8 +41,8 @@ public class SlotMachineC1Test {
         Wheel firstWheel = wheels.get(0);
         Wheel secondWheel = wheels.get(1);
         int xPosWheelFirst = firstWheel.getXPosition(), xPosWheelSecond = secondWheel.getXPosition(); // Moves 25*2
-        assertEquals(25, xPosWheelFirst); // Se verifica que se ubica en la posicion correcta
-        assertEquals(50, xPosWheelFirst);
+        assertEquals(50, xPosWheelFirst); // Se verifica que se ubica en la posicion correcta
+        assertEquals(100, xPosWheelSecond);
     }
     
     @Test
@@ -86,10 +86,14 @@ public class SlotMachineC1Test {
         ArrayList<Wheel> wheels = sltmchn.getWheels();
         Wheel secondWheel = wheels.get(1);
         Wheel fourthWheel = wheels.get(3);
+        
+        sltmchn.makeVisible();
+        
         Symbol symbolSecWheel = secondWheel.getSymbols().get(1);   //Indice según como se guarden
         Symbol symbolFourthWheel = fourthWheel.getSymbols().get(1); 
         symbolSecWheel.setVisible(false);
         symbolFourthWheel.setVisible(false);
+        
         String[] proof = sltmchn.configuration();
         
         String[] result = new String[]{"magenta", "yellow", "green"};
