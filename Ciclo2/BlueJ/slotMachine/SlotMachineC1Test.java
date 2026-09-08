@@ -136,6 +136,34 @@ public class SlotMachineC1Test {
     }
     
     @Test
+    public void shouldBeJackpot() {
+        int NUMBER_WHEELS_TO_ADD = 5;
+        for (int i = 0; i < NUMBER_WHEELS_TO_ADD; i++) {
+            sltmchn.addWheel(i);
+            sltmchn.addSymbol(i, "magenta");
+            sltmchn.addSymbol(i, "red");
+            sltmchn.addSymbol(i, "yellow");
+        }
+        boolean isJackpot = sltmchn.isJackpot();
+        assertTrue(isJackpot);
+    }
+    
+    @Test
+    public void shouldntBeJackpot() {
+        int NUMBER_WHEELS_TO_ADD = 5;
+        for (int i = 0; i < NUMBER_WHEELS_TO_ADD; i++) {
+            sltmchn.addWheel(i);
+            sltmchn.addSymbol(i, "magenta");
+            sltmchn.addSymbol(i, "red");
+            sltmchn.addSymbol(i, "yellow");
+        }
+        Wheel secondWheel = wheels.get(1);
+        secondWheel.setSelectedSymbol(new Symbol("blue"));
+        boolean isJackpot = sltmchn.isJackpot();
+        assertFalse(isJackpot);
+    }
+    
+    @Test
     public void shouldExitTheProgram() {
         int NUMBER_WHEELS_TO_ADD = 5;
         for (int i = 0; i < NUMBER_WHEELS_TO_ADD; i++) {

@@ -166,7 +166,17 @@ public class SlotMachine {
      * false otherwise
      */
     public boolean isJackpot() {
-        return false;
+        boolean isSymbolIdentical;
+        int indexNextWheel;
+        Wheel wheelToCompare, wheelNext;
+        for (int  i = 0; i < wheels.size()-1; i++) {
+            indexNextWheel = i+1;
+            wheelToCompare = wheels.get(i);
+            wheelNext = wheels.get(indexNextWheel);
+            isSymbolIdentical = (wheelToCompare.getSelectedSymbol()).equals(wheelNext.getSelectedSymbol());
+            if (!isSymbolIdentical) return false;
+        }
+        return true;
     }
 
     /**Makes the slot machine visible.
