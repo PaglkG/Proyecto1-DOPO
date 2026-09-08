@@ -78,7 +78,7 @@ public class SlotMachine {
      * @param wheel wheel indicates the number (integer) of wheel that going to be moved.
      */
     public void spin(int wheel) {
-        Wheel wheelToSpin = wheels.get(wheel);
+        Wheel wheelToSpin = findWheel(wheel);
         if (wheelToSpin != null) wheelToSpin.spin();
     }
 
@@ -209,6 +209,10 @@ public class SlotMachine {
         return wheelFinded;
     }
     
+    /**Swap two specific wheel of position 
+     * @param wheel1 wheel1 is the number of first wheel at the slotmachine that will be swaped by second wheel.
+     * @param wheel2 wheel2 is the nunmber of second wheel at the slotmachine that will be swaped by first wheel.
+     */
     public void swap(int wheel1, int wheel2) {
         Wheel findedWheel1 = findWheel(wheel1);
         Wheel findedWheel2 = findWheel(wheel2);
@@ -225,6 +229,27 @@ public class SlotMachine {
         findedWheel2.setPositionWheel(initialPosWheel1);
     }
     
+    /**This locked a specific wheel to this wheel can't spin
+     * @param wheel wheel is an integer that means the number of this slotmachine; That wheel will be locked. 
+     */
+    public void lock(int wheel) {
+        Wheel wheelToLock = findWheel(wheel);
+        wheelToLock.lock();
+    }
+    
+    /**Make a wheel unlock, this able to the wheel spin corectly 
+     * @param wheel wheel is an integer that means the number of this slotmachine; That wheel will be locked. 
+     */
+    public void unlock(int wheel) {
+        Wheel wheelToUnlock = findWheel(wheel);
+        wheelToUnlock.unlock();
+    }
+    
+    public void frameFlickering() {
+        for (Wheel wheel : wheels) {
+            wheel.frameFlickering();
+        }
+    }
     
     private void organicePositionWheels() {
         

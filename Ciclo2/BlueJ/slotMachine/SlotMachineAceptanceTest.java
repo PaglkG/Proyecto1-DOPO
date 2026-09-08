@@ -23,6 +23,7 @@ public class SlotMachineAceptanceTest {
         slmch = new SlotMachine();
         wheels = slmch.getWheels();
         numWheels = wheels.size();
+        slmch.frameFlickering();
     }
     
     @Test
@@ -31,7 +32,6 @@ public class SlotMachineAceptanceTest {
         for (int i = 0; i < NUMBER_WHEELS_TO_ADD; i++) {
             slmch.addWheel(i);
         }
-        slmch.makeVisible();
     }
     
     @Test
@@ -40,7 +40,6 @@ public class SlotMachineAceptanceTest {
         for (int i = 0; i < NUMBER_WHEELS_TO_ADD; i++) {
             slmch.addWheel(i);
         }
-        slmch.makeVisible();
         slmch.delWheel(3);
         slmch.delWheel(2);
     }
@@ -153,6 +152,5 @@ public class SlotMachineAceptanceTest {
         slmch.swap(4, 2);
         Thread.sleep(1000);
         slmch.swap(1, 3);
-        
     }
 }

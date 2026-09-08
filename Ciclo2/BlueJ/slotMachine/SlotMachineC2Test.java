@@ -42,4 +42,61 @@ public class SlotMachineC2Test {
         assertEquals(proofWheel3, firstWheel);
         assertEquals(proofWheel4, secondWheel);
     }
+    
+    @Test
+    public void shouldLockSpecificWheel() {
+        int NUMBER_WHEELS_TO_ADD = 5;
+        for (int i = 1; i <= NUMBER_WHEELS_TO_ADD; i++) {
+            sltmchn.addWheel(i);
+            sltmchn.addSymbol(i, "magenta");
+            sltmchn.addSymbol(i, "blue");
+            sltmchn.addSymbol(i, "yellow");
+            sltmchn.addSymbol(i, "red");
+            sltmchn.addSymbol(i, "green");
+            sltmchn.addSymbol(i, "blue");
+            sltmchn.addSymbol(i, "white");
+            sltmchn.addSymbol(i, "blue");
+        }
+        Wheel secondWheel = wheels.get(1), fourthWheel = wheels.get(3);
+        Symbol proofSecWheel = secondWheel.getSelectedSymbol(), proofFourthWheel =  fourthWheel.getSelectedSymbol();
+        sltmchn.lock(2);
+        sltmchn.lock(4);
+        sltmchn.spin(2);
+        sltmchn.spin(4);
+        Symbol selectedSymbolSecWheel = secondWheel.getSelectedSymbol(), selectedSymbolFourthWheel =  fourthWheel.getSelectedSymbol();
+        assertEquals(proofSecWheel, selectedSymbolSecWheel);
+        assertEquals(proofFourthWheel, selectedSymbolFourthWheel);
+    }
+    
+    @Test
+    public void shouldUnlockSpecificWheel() {
+        int NUMBER_WHEELS_TO_ADD = 5;
+        for (int i = 1; i <= NUMBER_WHEELS_TO_ADD; i++) {
+            sltmchn.addWheel(i);
+            sltmchn.addSymbol(i, "magenta");
+            sltmchn.addSymbol(i, "blue");
+            sltmchn.addSymbol(i, "yellow");
+            sltmchn.addSymbol(i, "red");
+            sltmchn.addSymbol(i, "green");
+            sltmchn.addSymbol(i, "blue");
+            sltmchn.addSymbol(i, "white");
+            sltmchn.addSymbol(i, "blue");
+        }
+        Wheel secondWheel = wheels.get(1), fourthWheel = wheels.get(3);
+        Symbol proofSecWheel = secondWheel.getSelectedSymbol(), proofFourthWheel =  fourthWheel.getSelectedSymbol();
+        sltmchn.lock(2);
+        sltmchn.lock(4);
+        sltmchn.spin(2);
+        sltmchn.spin(4);
+        Symbol selectedSymbolSecWheel = secondWheel.getSelectedSymbol(), selectedSymbolFourthWheel =  secondWheel.getSelectedSymbol();
+        assertEquals(proofSecWheel, selectedSymbolSecWheel);
+        assertEquals(proofFourthWheel, selectedSymbolFourthWheel);
+        sltmchn.unlock(2);
+        sltmchn.unlock(4);
+        sltmchn.spin(2);
+        sltmchn.spin(4);
+        selectedSymbolSecWheel = secondWheel.getSelectedSymbol(); selectedSymbolFourthWheel =  secondWheel.getSelectedSymbol();
+        assertNotEquals(proofSecWheel, selectedSymbolSecWheel);
+        assertNotEquals(proofFourthWheel, selectedSymbolFourthWheel);
+    }
 }

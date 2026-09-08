@@ -141,7 +141,7 @@ public class Wheel {
      */
     public void spin() {
         boolean isSymbolsEmpty = this.symbols.isEmpty();
-        if (!isSymbolsEmpty) {
+        if (!isSymbolsEmpty && !isLocked) {
             List<Integer> keys = new ArrayList<>(this.symbols.keySet());
             int randomIndex = random.nextInt(keys.size());
             int randomKey = keys.get(randomIndex);
@@ -350,6 +350,18 @@ public class Wheel {
             symbol.changePositionX(xPositionWheel + 15);
             symbol.changePositionY(heightWheel / 2 + 45);
         }
+    }
+    
+    /**This locked this wheel to can´t spin it.
+     */
+    public void lock() {
+        isLocked = true;
+    }
+    
+    /**This locked this wheel to can spin it.
+     */
+    public void unlock(){
+        isLocked = false;
     }
     
     /*Show the symbol making visible
