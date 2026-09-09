@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class Wheel {
     private int positionX;
     private int positionY;
-    private Rectangle rectangle; //fatal agregar a astah
+    private Rectangle rectangle; 
     private boolean isStoped;
     private boolean isVisible;
     private Random random;
@@ -187,5 +187,6 @@ public class Wheel {
         return listString;
     }
 
+        
     
 }
