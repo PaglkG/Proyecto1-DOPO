@@ -1,8 +1,6 @@
 package slotMachine;
 
 import shapes.Rectangle;
-import shapes.Figure;
-import shapes.StraightSided;
 
 import java.util.List;
 import java.util.Random;
@@ -21,7 +19,7 @@ import java.util.Objects;
  */
 public class Wheel {
     private int positionWheel;
-    private Figure wheelShape; 
+    private Rectangle wheelShape; 
     private boolean isStoped;
     private boolean isLocked;
     private Random random;
@@ -32,7 +30,7 @@ public class Wheel {
      */
     public Wheel() {
         wheelShape = new Rectangle();
-        ((StraightSided) wheelShape).changeSize(100,30);
+        wheelShape.changeSize(100,30);
         wheelShape.changeColor("grey");
         wheelShape.makeInvisible();
         isLocked = false;
@@ -87,7 +85,7 @@ public class Wheel {
             selectedSymbol = symbol;
         }
         symbol.setPositionAtTheWheel(symbols.size()+1);
-        int xPositionWheel = wheelShape.getXPosition(), widthWheel = ((StraightSided) wheelShape).getWidth(), heightWheel =  wheelShape.getYPosition();
+        int xPositionWheel = wheelShape.getXPosition(), widthWheel = wheelShape.getWidth(), heightWheel =  wheelShape.getYPosition();
         symbol.changePositionX(xPositionWheel+15);
         symbol.changePositionY(heightWheel/2+45);
         symbol.changeSize(30, widthWheel);
@@ -300,7 +298,7 @@ public class Wheel {
     
     
     public void moveHorizontal(int times) {
-        int SPACEAMONGWHEEL = 20, LONGITUDEWHEEL = ((StraightSided)wheelShape).getWidth(); 
+        int SPACEAMONGWHEEL = 20, LONGITUDEWHEEL = wheelShape.getWidth(); 
         wheelShape.moveHorizontal(0);
         changePositionX((SPACEAMONGWHEEL+LONGITUDEWHEEL)*times);
     }

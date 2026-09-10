@@ -21,6 +21,22 @@ public class Canvas{
     // shape objects in this project clean and simple for educational purposes.
 
     private static Canvas canvasSingleton;
+    private static final Map<String, Color> PALETTE = new HashMap<>();
+    static {
+        PALETTE.put("red",        Color.red);
+        PALETTE.put("black",      Color.black);
+        PALETTE.put("blue",       Color.blue);
+        PALETTE.put("yellow",     Color.yellow);
+        PALETTE.put("green",      Color.green);
+        PALETTE.put("magenta",    Color.magenta);
+        PALETTE.put("white",      Color.white);
+        PALETTE.put("orange",     Color.orange);
+        PALETTE.put("pink",       Color.pink);
+        PALETTE.put("cyan",       Color.cyan);
+        PALETTE.put("gray",       Color.gray);
+        PALETTE.put("lightGray",  Color.lightGray);
+        PALETTE.put("darkGray",   Color.darkGray);
+    }
 
     /**
      * Factory method to get the canvas singleton object.
@@ -130,55 +146,10 @@ public class Canvas{
 
     /**
      * Set the foreground colour of the Canvas.
-     * @param  newColour   the new colour for the foreground of the Canvas 
+     * @param colorString  the new colour for the foreground of the Canvas 
      */
     public void setForegroundColor(String colorString){
-        if(colorString.equals("red"))
-            graphic.setColor(Color.red);
-        else if(colorString.equals("black"))
-            graphic.setColor(Color.black);
-        else if(colorString.equals("blue"))
-            graphic.setColor(Color.blue);
-        else if(colorString.equals("yellow"))
-            graphic.setColor(Color.yellow);
-        else if(colorString.equals("green"))
-            graphic.setColor(Color.green);
-        else if(colorString.equals("magenta"))
-            graphic.setColor(Color.magenta);
-        else if(colorString.equals("white"))
-            graphic.setColor(Color.white);
-        else if(colorString.equals("orange"))
-            graphic.setColor(Color.orange);
-        else if(colorString.equals("pink"))
-            graphic.setColor(Color.pink);
-        else if(colorString.equals("cyan"))
-            graphic.setColor(Color.cyan);
-        else if(colorString.equals("gray"))
-            graphic.setColor(Color.gray);
-        else if(colorString.equals("lightGray"))
-            graphic.setColor(Color.lightGray);
-        else if(colorString.equals("darkGray"))
-            graphic.setColor(Color.darkGray);
-        else if(colorString.equals("brown"))
-            graphic.setColor(new Color(139, 69, 19));
-        else if(colorString.equals("maroon"))
-            graphic.setColor(new Color(128, 0, 0));
-        else if(colorString.equals("gold"))
-            graphic.setColor(new Color(255, 220, 70));
-        else if(colorString.equals("darkYellow"))
-            graphic.setColor(new Color(128, 128, 0));
-        else if(colorString.equals("greenTint"))
-            graphic.setColor(new Color(152, 255, 179));
-        else if(colorString.equals("salmon"))
-            graphic.setColor(new Color(255, 76, 76));
-        else if(colorString.equals("darkRed"))
-            graphic.setColor(new Color(170, 0, 0));
-        else if(colorString.equals("hardGray"))
-            graphic.setColor(new Color(128, 128, 128));
-        else if(colorString.equals("softGray"))
-            graphic.setColor(new Color(224, 224, 224));
-        else
-            graphic.setColor(Color.black);
+        graphic.setColor(PALETTE.getOrDefault(colorString, Color.black));
     }
 
     /**

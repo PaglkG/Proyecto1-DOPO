@@ -40,7 +40,7 @@ public abstract class Figure {
      */
     public void moveRigth(int distance) {
         erase();
-        yPosition += distance;
+        xPosition += distance;
         draw();
     }
     

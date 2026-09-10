@@ -55,15 +55,15 @@ public class SlotMachineAceptanceTest {
             slmch.addWheel(i);
         }
         slmch.makeVisible();
-        slmch.addSymbol(0, "magenta");
+        slmch.addSymbol(1, "magenta");
         Thread.sleep(500);
-        slmch.addSymbol(1, "red");
+        slmch.addSymbol(2, "red");
         Thread.sleep(500);
-        slmch.addSymbol(2, "yellow");
+        slmch.addSymbol(3, "yellow");
         Thread.sleep(500);
-        slmch.addSymbol(3, "blue");
+        slmch.addSymbol(4, "blue");
         Thread.sleep(500);
-        slmch.addSymbol(4, "green");
+        slmch.addSymbol(5, "green");
         Thread.sleep(500);
     }
     

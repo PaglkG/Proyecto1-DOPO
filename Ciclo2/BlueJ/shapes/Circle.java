@@ -30,13 +30,10 @@ public class Circle extends Figure {
      */
     public void changeSize(int newDiameter){
         erase();
-        diameter = newDiameter;
+        if (newDiameter>=0) {
+            diameter = newDiameter;
+        }
         draw();
-    }
-    
-    public void makeInvisible(){
-        erase();
-        isVisible = false;
     }
     
     /*

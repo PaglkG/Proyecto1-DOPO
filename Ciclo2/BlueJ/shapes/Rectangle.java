@@ -26,11 +26,6 @@ public class Rectangle extends StraightSided {
         this.width = width;
     }
     
-    public void makeInvisible(){
-        erase();
-        isVisible = false;
-    }
-    
     /*
      * Draw rectangle
      */

@@ -1,8 +1,6 @@
 package slotMachine;
 
-import shapes.Figure;
 import shapes.Triangle;
-import shapes.StraightSided;
 
 import java.util.Objects;
 import java.awt.*;
@@ -16,7 +14,7 @@ import java.awt.*;
 public class Symbol {
     private int positionAtTheWheel;
     private Wheel wheel;
-    private Figure symbolShape;
+    private Triangle symbolShape;
     
     /**Constructor symbol, dyadic method class
      * @param color color is the color of this symbol.
@@ -59,7 +57,7 @@ public class Symbol {
     }
     
     public void changeSize(int newHeight, int newWidth) {
-        ((StraightSided) this.symbolShape).changeSize(newHeight, newWidth);
+        this.symbolShape.changeSize(newHeight, newWidth);
     }
 
     /**Makes this symbol visible.
