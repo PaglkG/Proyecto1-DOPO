@@ -147,9 +147,6 @@ public class SlotMachineAceptanceTest {
         slmch.spin();
         Thread.sleep(1500);
     }
-    /*
-    @Test
-    public void should*/
     
     @Test
     public void shouldSwapTwoWheels() throws InterruptedException {
@@ -166,10 +163,11 @@ public class SlotMachineAceptanceTest {
         slmch.swap(4, 2);
         Thread.sleep(1500);
         slmch.swap(1, 3);
+        Thread.sleep(1500);
     }
     
     @Test 
-    public void shouldLockAndUnlockSomeWheels() throws InterruptedException {
+    public void shouldLockAndUnlockSomeWheelsSpin() throws InterruptedException {
         int NUMBER_WHEELS_TO_ADD = 5;
         for (int i = 1; i <= NUMBER_WHEELS_TO_ADD; i++) {
             slmch.addWheel(i);
@@ -195,6 +193,47 @@ public class SlotMachineAceptanceTest {
         slmch.lock(3);
         slmch.spin(); // Solamente deberian de girar la rueda 2, 4, 5 (Cambian de selectedSymbol o el simbolo principal)
         Thread.sleep(2000);
+    }
+    
+    @Test
+    public void shouldntDeleteWheelWhenIsLocked() throws InterruptedException{
+        int NUMBER_WHEELS_TO_ADD = 5;
+        for (int i = 1; i <= NUMBER_WHEELS_TO_ADD; i++) {
+            slmch.addWheel(i);
+            Thread.sleep(500);
+        }
+        slmch.lock(2);
+        slmch.lock(4);
+        for (int i = 1; i <= NUMBER_WHEELS_TO_ADD; i++) {
+            slmch.delWheel(i);
+            Thread.sleep(500);
+        }
+    }
+    
+    @Test
+    public void shouldntSwapWheelWhenIsLocked() throws InterruptedException{
+        int NUMBER_WHEELS_TO_ADD = 5;
+        for (int i = 1; i <= NUMBER_WHEELS_TO_ADD; i++) {
+            slmch.addWheel(i);
+            Thread.sleep(500);
+        }
+        Wheel wheel1 = wheels.get(0), wheel2 = wheels.get(1), wheel4 = wheels.get(3), wheel5 = wheels.get(4);
+        wheel2.addSymbol("yellow");
+        Thread.sleep(500);
+        wheel4.addSymbol("magenta");
+        slmch.lock(2);
+        slmch.lock(4);
+        Thread.sleep(500);
+        slmch.swap(2, 4);
+        Thread.sleep(1500);
+        wheel5.addSymbol("blue");
+        Thread.sleep(500);
+        wheel1.addSymbol("cyan");
+        Thread.sleep(500);
+        slmch.swap(1, 5);
+        Thread.sleep(1500);
+        slmch.swap(2, 5);
+        Thread.sleep(2500);
     }
     
     @AfterEach

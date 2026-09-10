@@ -43,7 +43,7 @@ public class SlotMachine {
      */
     public void delWheel(int pos) {
         Wheel wheelToDelete = findWheel(pos);
-        if (wheelToDelete != null) {
+        if (wheelToDelete != null && !wheelToDelete.isLocked()) {
             wheels.remove(wheelToDelete);
             if (isVisible) wheelToDelete.makeInvisible();
         }
@@ -250,17 +250,7 @@ public class SlotMachine {
     public void swap(int wheel1, int wheel2) {
         Wheel findedWheel1 = findWheel(wheel1);
         Wheel findedWheel2 = findWheel(wheel2);
-        findedWheel1.moveHorizontal(wheel2);
-        findedWheel2.moveHorizontal(wheel1);
-        findedWheel1.repositionSymbols();   
-        findedWheel2.repositionSymbols();
-        if (findedWheel1.isVisible() && findedWheel2.isVisible()) {
-            findedWheel1.frameFlickering();
-            findedWheel2.frameFlickering();
-        }
-        int initialPosWheel1 = findedWheel1.getPositionWheel(), initialPosWheel2 = findedWheel2.getPositionWheel();
-        findedWheel1.setPositionWheel(initialPosWheel2);
-        findedWheel2.setPositionWheel(initialPosWheel1);
+        findedWheel1.swap(findedWheel2);
     }
     
     /**This locked a specific wheel to this wheel can't spin
@@ -290,6 +280,15 @@ public class SlotMachine {
         for (Wheel wheel : wheels) {
             wheel.frameFlickering();
         }
+    }
+    
+    public void spin(int wheel, int steps) {
+        if (isVisible) {
+            
+        } else if (!isVisible) {
+            
+        }
+        
     }
     
     /* Obtains information of all symbol of all wheel

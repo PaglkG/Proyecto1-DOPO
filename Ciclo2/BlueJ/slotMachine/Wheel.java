@@ -99,11 +99,13 @@ public class Wheel {
      * @param symbol symbol is the symbol that will be removed. ---------------
      */
     public void delSymbol(Symbol triangle) {
-        symbols.remove(triangle.getPositionAtTheWheel());
-        triangle.makeInvisible();
-        boolean isSymbolsEmpty = this.symbols.isEmpty();
-        if (!isSymbolsEmpty) { 
-            spin();
+        if (!isLocked) {
+            symbols.remove(triangle.getPositionAtTheWheel());
+            triangle.makeInvisible();
+            boolean isSymbolsEmpty = this.symbols.isEmpty();
+            if (!isSymbolsEmpty) { 
+                spin();
+            }
         }
     }
     
@@ -113,20 +115,23 @@ public class Wheel {
     public void delSymbol(String color) {
         String currentColorSymbol = null; 
         Set<Symbol> symbolsV = new HashSet<>(symbols.values());
-        for (Symbol symbol : symbolsV) {
-            currentColorSymbol = symbol.getColor();
-            if (currentColorSymbol.equals(color)) {
-                symbol.makeInvisible();
-                symbols.values().remove(symbol); // Elimina de los simbolos el color encontrado
-                if (symbol == selectedSymbol) {
-                    selectedSymbol = null;    // Si llega a estar adelante se elimina
+        if (!isLocked) {
+            for (Symbol symbol : symbolsV) {
+                currentColorSymbol = symbol.getColor();
+                if (currentColorSymbol.equals(color)) {
+                    symbol.makeInvisible();
+                    symbols.values().remove(symbol); // Elimina de los simbolos el color encontrado
+                    if (symbol == selectedSymbol) {
+                        selectedSymbol = null;    // Si llega a estar adelante se elimina
+                    }
                 }
             }
+            boolean isSymbolsEmpty = symbols.isEmpty(), isSelectedSymbolNull = selectedSymbol == null;
+            if (isSymbolsEmpty && isSelectedSymbolNull) {
+                spin(); // Si se permite que gire otra vez la ruleta hagalo
+            }
         }
-        boolean isSymbolsEmpty = symbols.isEmpty(), isSelectedSymbolNull = selectedSymbol == null;
-        if (isSymbolsEmpty && isSelectedSymbolNull) {
-            spin(); // Si se permite que gire otra vez la ruleta hagalo
-        }
+        
     }
     
     /**Gives the symbol that was selected when spinning the wheel.
@@ -294,6 +299,28 @@ public class Wheel {
     
     public int getYPosition() {
         return wheelShape.getYPosition();
+    }
+    
+    /**Swap two specific wheel of position 
+     * @param wheel1 wheel1 is the number of first wheel at the slotmachine that will be swaped by second wheel.
+     * @param wheel2 wheel2 is the nunmber of second wheel at the slotmachine that will be swaped by first wheel.
+     */
+    public void swap(Wheel wheelToSwap) {
+        boolean isWheelToSwapLocked = wheelToSwap.isLocked();
+        if (!isLocked && !isWheelToSwapLocked) {
+            int thisPosition = this.getPositionWheel();
+            int otherPosition = wheelToSwap.getPositionWheel();
+            this.moveHorizontal(otherPosition);
+            wheelToSwap.moveHorizontal(thisPosition);
+            this.repositionSymbols();
+            wheelToSwap.repositionSymbols();
+            if (this.isVisible() && wheelToSwap.isVisible()) {
+                this.frameFlickering();
+                wheelToSwap.frameFlickering();
+            }
+            this.setPositionWheel(otherPosition);
+            wheelToSwap.setPositionWheel(thisPosition);
+        }
     }
     
     
