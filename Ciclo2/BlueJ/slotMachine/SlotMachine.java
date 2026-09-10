@@ -1,5 +1,7 @@
 package slotMachine;
 
+import shapes.Canvas;
+
 import java.util.List;
 import java.util.*;
 import javax.swing.JOptionPane;
@@ -203,7 +205,7 @@ public class SlotMachine {
         if (wheels != null) {
             wheels.clear();
         }
-        shapes.Canvas.getCanvas().close();
+        Canvas.getCanvas().close();
     }
     
     /**Indicates whether the last operation was successful.
@@ -276,7 +278,6 @@ public class SlotMachine {
         if (!isVisible) {
             isVisible = true;
         }    
-        
         for (Wheel wheel : wheels) {
             wheel.frameFlickering();
         }

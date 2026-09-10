@@ -1,9 +1,14 @@
 package slotMachine;
 
+
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import shapes.Canvas;
+
 import java.util.ArrayList;
 
 /**
@@ -54,7 +59,6 @@ public class SlotMachineAceptanceTest {
         for (int i = 1; i <= NUMBER_WHEELS_TO_ADD; i++) {
             slmch.addWheel(i);
         }
-        slmch.makeVisible();
         slmch.addSymbol(1, "magenta");
         Thread.sleep(500);
         slmch.addSymbol(2, "red");
@@ -74,7 +78,6 @@ public class SlotMachineAceptanceTest {
             slmch.addWheel(i);
             slmch.addSymbol(i, "magenta");
         }
-        slmch.makeVisible();
         Thread.sleep(1000);
         slmch.delSymbol("magenta");
         Thread.sleep(1000);
@@ -88,7 +91,6 @@ public class SlotMachineAceptanceTest {
             slmch.addSymbol(i, "magenta");
             slmch.addSymbol(i, "blue");
         }
-        slmch.makeVisible();
         Thread.sleep(1000);
         slmch.delSymbol("magenta");
         Thread.sleep(1000);
@@ -239,7 +241,13 @@ public class SlotMachineAceptanceTest {
     @AfterEach
     void tearsDown() {
         slmch.makeInvisible();
+        slmch.exit();
         slmch = null;
         wheels.clear();
+    }
+    
+    @AfterAll
+    static void tearDownClass() {
+        Canvas.getCanvas().close();
     }
 }
