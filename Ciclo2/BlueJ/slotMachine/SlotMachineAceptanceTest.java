@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import shapes.Canvas;
 
-import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * The test class SlotMachineAceptanceTest.
@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class SlotMachineAceptanceTest {
     
     private SlotMachine slmch;
-    private ArrayList<Wheel> wheels;
+    private Map<Integer, Wheel> wheels;
     private static int numWheels;
     
     @BeforeEach

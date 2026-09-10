@@ -1,12 +1,11 @@
 package slotMachine;
 
-
-
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import java.util.ArrayList;
+
+import java.util.Map;
 
 /**
  * The test class SlotMachineC2.
@@ -17,7 +16,7 @@ import java.util.ArrayList;
 public class SlotMachineC2Test {
     
     private SlotMachine sltmchn;
-    private ArrayList<Wheel> wheels;
+    private Map<Integer, Wheel> wheels;
     private int numWheels;
     
     @BeforeEach
@@ -33,14 +32,15 @@ public class SlotMachineC2Test {
         sltmchn.addWheel(2);
         sltmchn.addWheel(3);
         sltmchn.addWheel(4);
-        Wheel firstWheel = wheels.get(0), secondWheel = wheels.get(1), thirdWheel = wheels.get(2), fourthWheel = wheels.get(3);
+        Wheel firstWheel = wheels.get(1), secondWheel = wheels.get(2), thirdWheel = wheels.get(3), fourthWheel = wheels.get(4);
         sltmchn.swap(4, 2);
         sltmchn.swap(1, 3);
-        Wheel proofWheel1 = sltmchn.findWheel(1), proofWheel2 = sltmchn.findWheel(2), proofWheel3 = sltmchn.findWheel(3), proofWheel4 = sltmchn.findWheel(4);
+        Wheel proofWheel1 = wheels.get(1), proofWheel2 = wheels.get(2), proofWheel3 = wheels.get(3), proofWheel4 = wheels.get(4);
         assertEquals(proofWheel1, thirdWheel);
         assertEquals(proofWheel2, fourthWheel);
         assertEquals(proofWheel3, firstWheel);
         assertEquals(proofWheel4, secondWheel);
+        assertEquals(4, wheels.size());
     }
     
     @Test
@@ -82,21 +82,24 @@ public class SlotMachineC2Test {
             sltmchn.addSymbol(i, "white");
             sltmchn.addSymbol(i, "blue");
         }
-        Wheel secondWheel = wheels.get(1), fourthWheel = wheels.get(3);
-        Symbol proofSecWheel = secondWheel.getSelectedSymbol(), proofFourthWheel =  fourthWheel.getSelectedSymbol();
+        Wheel secondWheel = wheels.get(2), fourthWheel = wheels.get(4);
+        Symbol proofSecWheel = secondWheel.getSelectedSymbol(), proofFourthWheel = fourthWheel.getSelectedSymbol();
+    
         sltmchn.lock(2);
         sltmchn.lock(4);
         sltmchn.spin(2);
         sltmchn.spin(4);
-        Symbol selectedSymbolSecWheel = secondWheel.getSelectedSymbol(), selectedSymbolFourthWheel =  secondWheel.getSelectedSymbol();
-        assertEquals(proofSecWheel, selectedSymbolSecWheel);
-        assertEquals(proofFourthWheel, selectedSymbolFourthWheel);
+        Symbol selectedSymbolSecWheel = secondWheel.getSelectedSymbol(), selectedSymbolFourthWheel = fourthWheel.getSelectedSymbol();
+        assertEquals(proofSecWheel, selectedSymbolSecWheel);       // sigue igual porque está locked
+        assertEquals(proofFourthWheel, selectedSymbolFourthWheel); // sigue igual porque está locked
+    
         sltmchn.unlock(2);
         sltmchn.unlock(4);
         sltmchn.spin(2);
         sltmchn.spin(4);
-        selectedSymbolSecWheel = secondWheel.getSelectedSymbol(); selectedSymbolFourthWheel =  secondWheel.getSelectedSymbol();
-        assertNotEquals(proofSecWheel, selectedSymbolSecWheel);
-        assertNotEquals(proofFourthWheel, selectedSymbolFourthWheel);
+        selectedSymbolSecWheel = secondWheel.getSelectedSymbol();
+        selectedSymbolFourthWheel = fourthWheel.getSelectedSymbol();
+        assertNotEquals(proofSecWheel, selectedSymbolSecWheel);       // cambió porque ya no está locked
+        assertNotEquals(proofFourthWheel, selectedSymbolFourthWheel); // cambió porque ya no está locked
     }
 }
