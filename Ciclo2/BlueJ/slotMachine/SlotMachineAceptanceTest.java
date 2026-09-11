@@ -249,11 +249,11 @@ public class SlotMachineAceptanceTest {
             slmch.addSymbol(i, "blue");
             slmch.addSymbol(i, "cyan");
         }
-        slmch.spin(1, 2); // Queda en magenta
+        slmch.spin(1, 2); // Queda en blue
         Thread.sleep(2000);
-        slmch.spin(2, 3); // Queda en blue
+        slmch.spin(2, 3); // Queda en cyan
         Thread.sleep(2000);
-        slmch.spin(4, 4); // Queda en cyan
+        slmch.spin(4, 4); // Queda en yellow
         Thread.sleep(2000);
     }
     

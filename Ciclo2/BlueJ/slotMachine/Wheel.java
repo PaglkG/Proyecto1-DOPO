@@ -88,7 +88,11 @@ public class Wheel {
         positionSymbol(symbol);
         symbols.put(symbol.getPositionAtTheWheel(), symbol);
         if (isVisible()) {
-            symbol.makeVisible();
+            if (symbol == selectedSymbol) {
+                symbol.makeVisible();
+            } else {
+                symbol.makeInvisible();
+            }
         }
     }
 
@@ -409,68 +413,52 @@ public class Wheel {
         }
     }
     
-    public void spinSlowly(int steps) throws InterruptedException {
-        boolean isSymbolsEmpty = this.symbols.isEmpty();
-        if (!isSymbolsEmpty && !isLocked) {
-            Integer posSelectedSymbol = symbols.entrySet().stream() // Lo convierte en un stream para poderlo operar
-                .filter(entry -> Objects.equals(entry.getValue(), steps)) // Le dice que filtre entre los objetos que se quieren encontrar (cuando cumple la condicion)
-                .map(Map.Entry::getKey) // map aplica la funcion que contiene a todos los elementos que señala
-                .findFirst() // Permite que solamente de la primera coincidencia que se halle
-                .orElse(null); // Condiciona a que si no se encuentra entonces brinde null
-            boolean isPosSelectedSymbolNull = posSelectedSymbol == null;
-            if (!isPosSelectedSymbolNull) {
-                int positionSymbolToSelect = posSelectedSymbol+steps, positionSymbolToMove, counterCantMove = 0;
-                
-                Symbol currentSymbol = null, nextSymbol = null;
-                boolean isAtBoundPosition, isAtBoundPosNextSymbol;
-                for (Integer positionSymbolkey : symbols.keySet()) {
-                    positionSymbolToMove = positionSymbolkey+posSelectedSymbol;
-                    isAtBoundPosition = symbols.containsKey(positionSymbolToMove);
-                    if (!isAtBoundPosition || counterCantMove >= posSelectedSymbol) {
-                        currentSymbol = symbols.get(counterCantMove);
-                        counterCantMove++;
-                    } else if (isAtBoundPosition) {
-                        currentSymbol = symbols.get(positionSymbolToMove);
-                        
-                    } 
-                    isAtBoundPosNextSymbol  = symbols.containsKey(positionSymbolToMove+1);
-                    if (isAtBoundPosNextSymbol) {
-                        nextSymbol = symbols.get(positionSymbolToMove+1);
-                    } else {
-                        nextSymbol = symbols.get(counterCantMove+1);
-                    }
-                    if (!currentSymbol.equals(symbols.get(positionSymbolToSelect))) {
-                        selectedSymbol.moveSlowly(25);
-                        Thread.sleep(500);
-                        selectedSymbol = null; // Desaparece
-                        selectedSymbol = nextSymbol;
-                    }
-                    if (isVisible()) {
-                        selectedSymbol.frameFlickering();
-                    }
-                }
-                selectedSymbol = symbols.get(positionSymbolToSelect);
+    public void spinSlowly(int steps) throws InterruptedException { //Funcionalidad ayudada a corregir por Gemini Flash 3.6
+        if (symbols.isEmpty() || isLocked) return;
+    
+        // Determina la posición actual en el TreeMap
+        int currentKey = (selectedSymbol != null) ? selectedSymbol.getPositionAtTheWheel() : symbols.firstKey();
+
+        for (int i = 0; i < steps; i++) {
+            Symbol current = symbols.get(currentKey);
+    
+            // Mueve hacia abajo el símbolo actual y lo oculta
+            if (isVisible() && current != null) {
+                current.moveSlowly(25);
+                current.makeInvisible();
             }
-            
+    
+            // Avanza cíclicamente al siguiente símbolo (1..size)
+            currentKey = (currentKey % symbols.size()) + 1;
+            selectedSymbol = symbols.get(currentKey);
+    
+            // Posiciona y visibiliza el nuevo símbolo seleccionado
+            positionSymbol(selectedSymbol);
+            if (isVisible()) {
+                selectedSymbol.makeVisible();
+                selectedSymbol.frameFlickering();
+            }
+    
+            Thread.sleep(700); // Pausa visual para la animación
         }
-        return;
     }
     
-    public void spin(int steps) {
-        boolean isSymbolsEmpty = this.symbols.isEmpty();
-        if (!isSymbolsEmpty && !isLocked) {
-            Integer posSelectedSymbol = symbols.entrySet().stream() // Lo convierte en un stream para poderlo operar
-                .filter(entry -> Objects.equals(entry.getValue(), steps)) // Le dice que filtre entre los objetos que se quieren encontrar (cuando cumple la condicion)
-                .map(Map.Entry::getKey) // map aplica la funcion que contiene a todos los elementos que señala
-                .findFirst() // Permite que solamente de la primera coincidencia que se halle
-                .orElse(null); // Condiciona a que si no se encuentra entonces brinde null
-            boolean isPosSelectedSymbolNull = posSelectedSymbol == null;
-            if (!isPosSelectedSymbolNull) {
-                int positionSymbolToSelect = posSelectedSymbol+steps;
-                selectedSymbol = symbols.get(positionSymbolToSelect);
-            }
+    public void spin(int steps) { //Funcionalidad ayudada a corregir por Gemini Flash 3.6
+        if (symbols.isEmpty() || isLocked) return;
+    
+        int currentKey = (selectedSymbol != null) ? selectedSymbol.getPositionAtTheWheel() : symbols.firstKey();
+        int newKey = ((currentKey - 1 + steps) % symbols.size()) + 1;
+    
+        if (isVisible() && selectedSymbol != null) {
+            selectedSymbol.makeInvisible();
         }
-        return;
+    
+        selectedSymbol = symbols.get(newKey);
+        positionSymbol(selectedSymbol);
+    
+        if (isVisible()) {
+            selectedSymbol.makeVisible();
+        }
     }
     
     private void positionSymbol(Symbol symbol) {
