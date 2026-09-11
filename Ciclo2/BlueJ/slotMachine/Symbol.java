@@ -23,6 +23,7 @@ public class Symbol {
     public Symbol(String color) {
         symbolShape = new Triangle();
         symbolShape.changeColor(color);
+        symbolShape.changeSize(30, 30);
     }
     
     /**Constructor symbol, dyadic method class
@@ -34,22 +35,13 @@ public class Symbol {
         symbolShape.changeColor(color);
         positionAtTheWheel = pos;
     }
-
-    /**Sets a new X position to this symbol.
-     * @param newPosX newPosX that going to set like x position of this symbol. 
-     */
-    public void changePositionX(int newPosX) {
-        symbolShape.setXPosition(newPosX);
-        if (symbolShape.isVisible()) {
-            this.symbolShape.frameFlickering();
-        }
-        
-    }
-
-    /**Sets a new Y position  to this symbol.
+    
+    /**Sets a new X and Y position to this symbol.
+     * @param newPosX newPosX that going to set like x position of this symbol.
      * @param newPosY newPosY that going to set like y position of this symbol. 
      */
-    public void changePositionY(int newPosY) {
+    public void changePosition(int newPosX, int newPosY) {
+        this.symbolShape.setXPosition(newPosX);
         this.symbolShape.setYPosition(newPosY);
         if (symbolShape.isVisible()) {
             this.symbolShape.frameFlickering();
@@ -118,6 +110,11 @@ public class Symbol {
         boolean hasSameWheel = Objects.equals(wheel, symbol.getWheel());
         boolean hasSameColor = Objects.equals(getColor(), symbol.getColor());
         return hasSamePosition && hasSameWheel && hasSameColor;
+    }
+
+    
+    public void moveSlowly(int howMany) {
+        symbolShape.slowMoveVertical(howMany);
     }
     
     public void frameFlickering() {

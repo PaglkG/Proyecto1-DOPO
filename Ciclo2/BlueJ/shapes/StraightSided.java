@@ -20,8 +20,10 @@ public abstract class StraightSided extends Figure {
      */
     public void changeSize(int newHeight, int newWidth) {
         erase();
-        height = newHeight;
-        width = newWidth;
+        if (newHeight >= 0 && newWidth >= 0){
+            height = newHeight;
+            width = newWidth;
+        }
         draw();
     }
     

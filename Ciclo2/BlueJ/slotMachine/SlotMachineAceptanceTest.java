@@ -238,6 +238,25 @@ public class SlotMachineAceptanceTest {
         Thread.sleep(2500);
     }
     
+    @Test
+    public void shouldMoveSlowlyWhenSpinWithSteps() throws InterruptedException {
+        int NUMBER_WHEELS_TO_ADD = 5;
+        for (int i = 1; i <= NUMBER_WHEELS_TO_ADD; i++) {
+            slmch.addWheel(i);
+            Thread.sleep(500);
+            slmch.addSymbol(i, "yellow");
+            slmch.addSymbol(i, "magenta");
+            slmch.addSymbol(i, "blue");
+            slmch.addSymbol(i, "cyan");
+        }
+        slmch.spin(1, 2); // Queda en magenta
+        Thread.sleep(2000);
+        slmch.spin(2, 3); // Queda en blue
+        Thread.sleep(2000);
+        slmch.spin(4, 4); // Queda en cyan
+        Thread.sleep(2000);
+    }
+    
     @AfterEach
     void tearsDown() {
         slmch.makeInvisible();

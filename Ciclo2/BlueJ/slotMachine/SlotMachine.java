@@ -288,11 +288,12 @@ public class SlotMachine {
         }
     }
     
-    public void spin(int wheel, int steps) {
+    public void spin(int wheel, int steps) throws InterruptedException {
+        Wheel wheelToSpin = wheels.get(wheel);
         if (isVisible) {
-            
+            wheelToSpin.spinSlowly(steps);
         } else if (!isVisible) {
-            
+            wheelToSpin.spin(steps);
         }
         
     }

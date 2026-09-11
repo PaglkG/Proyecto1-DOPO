@@ -85,12 +85,9 @@ public class Wheel {
             selectedSymbol = symbol;
         }
         symbol.setPositionAtTheWheel(symbols.size()+1);
-        int xPositionWheel = wheelShape.getXPosition(), widthWheel = wheelShape.getWidth(), heightWheel =  wheelShape.getYPosition();
-        symbol.changePositionX(xPositionWheel+15);
-        symbol.changePositionY(heightWheel/2+45);
-        symbol.changeSize(30, widthWheel);
+        positionSymbol(symbol);
         symbols.put(symbol.getPositionAtTheWheel(), symbol);
-        if (isVisible()) {         
+        if (isVisible()) {
             symbol.makeVisible();
         }
     }
@@ -154,7 +151,7 @@ public class Wheel {
                 selectedSymbol.frameFlickering();
             }
         }
-        
+        return;
     }
     
     /**Makes this wheel invisible.
@@ -378,11 +375,8 @@ public class Wheel {
     }
     
     public void repositionSymbols() {
-        int xPositionWheel = wheelShape.getXPosition();
-        int heightWheel = wheelShape.getYPosition();
         for (Symbol symbol : symbols.values()) {
-            symbol.changePositionX(xPositionWheel + 15);
-            symbol.changePositionY(heightWheel / 2 + 45);
+            positionSymbol(symbol);
         }
     }
     
@@ -415,13 +409,73 @@ public class Wheel {
         }
     }
     
-    /*Show the symbol making visible
-     */ 
-    private void viewSymbol() {
-        int positionX = wheelShape.getXPosition(), positionY = wheelShape.getYPosition();
-        Symbol triangle = selecSymbol();
-        triangle.changePositionX(positionX/2);
-        triangle.changePositionY(positionX/2);
-        triangle.makeVisible();
+    public void spinSlowly(int steps) throws InterruptedException {
+        boolean isSymbolsEmpty = this.symbols.isEmpty();
+        if (!isSymbolsEmpty && !isLocked) {
+            Integer posSelectedSymbol = symbols.entrySet().stream() // Lo convierte en un stream para poderlo operar
+                .filter(entry -> Objects.equals(entry.getValue(), steps)) // Le dice que filtre entre los objetos que se quieren encontrar (cuando cumple la condicion)
+                .map(Map.Entry::getKey) // map aplica la funcion que contiene a todos los elementos que señala
+                .findFirst() // Permite que solamente de la primera coincidencia que se halle
+                .orElse(null); // Condiciona a que si no se encuentra entonces brinde null
+            boolean isPosSelectedSymbolNull = posSelectedSymbol == null;
+            if (!isPosSelectedSymbolNull) {
+                int positionSymbolToSelect = posSelectedSymbol+steps, positionSymbolToMove, counterCantMove = 0;
+                
+                Symbol currentSymbol = null, nextSymbol = null;
+                boolean isAtBoundPosition, isAtBoundPosNextSymbol;
+                for (Integer positionSymbolkey : symbols.keySet()) {
+                    positionSymbolToMove = positionSymbolkey+posSelectedSymbol;
+                    isAtBoundPosition = symbols.containsKey(positionSymbolToMove);
+                    if (!isAtBoundPosition || counterCantMove >= posSelectedSymbol) {
+                        currentSymbol = symbols.get(counterCantMove);
+                        counterCantMove++;
+                    } else if (isAtBoundPosition) {
+                        currentSymbol = symbols.get(positionSymbolToMove);
+                        
+                    } 
+                    isAtBoundPosNextSymbol  = symbols.containsKey(positionSymbolToMove+1);
+                    if (isAtBoundPosNextSymbol) {
+                        nextSymbol = symbols.get(positionSymbolToMove+1);
+                    } else {
+                        nextSymbol = symbols.get(counterCantMove+1);
+                    }
+                    if (!currentSymbol.equals(symbols.get(positionSymbolToSelect))) {
+                        selectedSymbol.moveSlowly(25);
+                        Thread.sleep(500);
+                        selectedSymbol = null; // Desaparece
+                        selectedSymbol = nextSymbol;
+                    }
+                    if (isVisible()) {
+                        selectedSymbol.frameFlickering();
+                    }
+                }
+                selectedSymbol = symbols.get(positionSymbolToSelect);
+            }
+            
+        }
+        return;
+    }
+    
+    public void spin(int steps) {
+        boolean isSymbolsEmpty = this.symbols.isEmpty();
+        if (!isSymbolsEmpty && !isLocked) {
+            Integer posSelectedSymbol = symbols.entrySet().stream() // Lo convierte en un stream para poderlo operar
+                .filter(entry -> Objects.equals(entry.getValue(), steps)) // Le dice que filtre entre los objetos que se quieren encontrar (cuando cumple la condicion)
+                .map(Map.Entry::getKey) // map aplica la funcion que contiene a todos los elementos que señala
+                .findFirst() // Permite que solamente de la primera coincidencia que se halle
+                .orElse(null); // Condiciona a que si no se encuentra entonces brinde null
+            boolean isPosSelectedSymbolNull = posSelectedSymbol == null;
+            if (!isPosSelectedSymbolNull) {
+                int positionSymbolToSelect = posSelectedSymbol+steps;
+                selectedSymbol = symbols.get(positionSymbolToSelect);
+            }
+        }
+        return;
+    }
+    
+    private void positionSymbol(Symbol symbol) {
+        int xPositionWheel = wheelShape.getXPosition();
+        int heightWheel = wheelShape.getYPosition();
+        symbol.changePosition(xPositionWheel + 15, heightWheel / 2 + 45);
     }
 }
