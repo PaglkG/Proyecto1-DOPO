@@ -295,7 +295,10 @@ public class SlotMachine {
         } else if (!isVisible) {
             wheelToSpin.spin(steps);
         }
-        
+        Map<Integer, Symbol> symbolsWheelToSpin = wheelToSpin.getSymbols();
+        boolean canSpin = !symbolsWheelToSpin.isEmpty() && !wheelToSpin.isLocked();
+        isOk = canSpin;
+        isOk();
     }
     
     /* Obtains information of all symbol of all wheel

@@ -48,22 +48,11 @@ public class Wheel {
     /**Sets a new X position to this wheel.
      * @param newPosX newPosX that going to set like x position of this wheel. 
      */
-    public void changePositionX(int newPosX) {
+    public void changePosition(int newPosX, int newPosY) {
         wheelShape.setXPosition(newPosX);
-        if (isVisible()) {
-            wheelShape.makeInvisible();
-            wheelShape.makeVisible();
-        }
-    }
-
-    /**Sets a new Y position to this wheel.
-     * @param newPosY newPosY that going to set like y position of this wheel. 
-     */
-    public void changePositionY(int newPosY) {
         wheelShape.setYPosition(newPosY);
         if (isVisible()) {
-            wheelShape.makeInvisible();
-            wheelShape.makeVisible();
+            wheelShape.frameFlickering();
         }
     }
     
@@ -104,7 +93,7 @@ public class Wheel {
             symbols.remove(triangle.getPositionAtTheWheel());
             triangle.makeInvisible();
             boolean isSymbolsEmpty = this.symbols.isEmpty();
-            if (!isSymbolsEmpty) { 
+            if (!isSymbolsEmpty && !isLocked) { 
                 spin();
             }
         }
@@ -128,7 +117,7 @@ public class Wheel {
                 }
             }
             boolean isSymbolsEmpty = symbols.isEmpty(), isSelectedSymbolNull = selectedSymbol == null;
-            if (isSymbolsEmpty && isSelectedSymbolNull) {
+            if (!isSymbolsEmpty && isSelectedSymbolNull) {
                 spin(); // Si se permite que gire otra vez la ruleta hagalo
             }
         }
@@ -192,11 +181,13 @@ public class Wheel {
     /**Displays all existing symbol colors in order.
      * @return A string array with exiting symbols colors of this slot machine.
      */
-    public ArrayList<String> symbols() {
+    public String[] symbols() {
         ArrayList<Symbol> list = new ArrayList<>(this.symbols.values());
-        ArrayList<String> listString = new ArrayList();
+        String[] listString = new String[list.size()];
+        int indexListString = 0;
         for (Symbol symbol : list) {
-            listString.add(symbol.getColor());
+            listString[indexListString] = symbol.getColor();
+            indexListString++;
         }
         return listString;
     }
@@ -322,13 +313,14 @@ public class Wheel {
             this.setPositionWheel(otherPosition);
             wheelToSwap.setPositionWheel(thisPosition);
         }
+        return;
     }
     
     
     public void moveHorizontal(int times) {
         int SPACEAMONGWHEEL = 20, LONGITUDEWHEEL = wheelShape.getWidth(); 
-        wheelShape.moveHorizontal(0);
-        changePositionX((SPACEAMONGWHEEL+LONGITUDEWHEEL)*times);
+        wheelShape.moveHorizontal(0); // Establecer en el inicio para despues correrla
+        changePosition((SPACEAMONGWHEEL+LONGITUDEWHEEL)*times, 0);
     }
     
     public int getNumberOfSymbols() {
