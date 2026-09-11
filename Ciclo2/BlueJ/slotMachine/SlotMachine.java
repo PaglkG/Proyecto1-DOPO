@@ -45,10 +45,13 @@ public class SlotMachine {
      */
     public void delWheel(int pos) {
         Wheel wheelToDelete = wheels.get(pos);
-        if (wheelToDelete != null && !wheelToDelete.isLocked()) {
+        boolean isWheelToDeleteLocked = wheelToDelete.isLocked();
+        if (wheelToDelete != null && !isWheelToDeleteLocked) {
             wheels.remove(pos);
             if (isVisible) wheelToDelete.makeInvisible();
         }
+        isOk = !isWheelToDeleteLocked;
+        isOk();
         //Aqui va la funcionalidad de que se modifican las wheels, por ahora lo básico
         
     }
@@ -86,14 +89,25 @@ public class SlotMachine {
      */
     public void spin(int wheel) {
         Wheel wheelToSpin = wheels.get(wheel);
-        if (wheelToSpin != null) wheelToSpin.spin();
+        boolean isWheelToSpinLocked = wheelToSpin.isLocked();
+        if (wheelToSpin != null && !isWheelToSpinLocked) {
+            wheelToSpin.spin();
+        }
+        isOk = !isWheelToSpinLocked;
+        isOk();
     }
 
     /**Moves each of the wheels.
      */
     public void spin() {
+        boolean isWheelToSpinLocked;
         for (Wheel wheel : wheels.values()) {
-            wheel.spin();
+            isWheelToSpinLocked = wheel.isLocked();
+            if (!isWheelToSpinLocked) {
+                wheel.spin();
+            }
+            isOk = !isWheelToSpinLocked;
+            isOk();
         }
     }
 
