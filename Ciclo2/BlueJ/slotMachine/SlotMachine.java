@@ -301,7 +301,7 @@ public class SlotMachine {
         isOk();
     }
     
-    /* Obtains information of all symbol of all wheel
+    /* Obtains information of all symbol of all wheel (Key: Color, Value: time color repeats).
      * @return A map with the information of all symbol of SlotMachine 
      */
     private Map<String, Integer> getAllSymbolsAtSlotMachine() {

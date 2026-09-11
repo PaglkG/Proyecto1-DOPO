@@ -376,19 +376,19 @@ public class Wheel {
         }
     }
     
-    /**This locked this wheel to can´t spin it.
+    /**This locked this wheel to can´t spin, delete and swap it.
      */
     public void lock() {
         isLocked = true;
     }
     
-    /**This locked this wheel to can spin it.
+    /**This locked this wheel to can spin, delete and swap it.
      */
     public void unlock(){
         isLocked = false;
     }
     
-    /**Gets the color and number that repeat that color 
+    /**Gets the color and number that repeat that color.
      * @param info info is a collection with the number that repeats a specific color. 
      */
     public void getInformationSymbols(Map<String, Integer> info) {
