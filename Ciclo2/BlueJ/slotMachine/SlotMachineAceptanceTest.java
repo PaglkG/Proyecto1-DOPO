@@ -219,7 +219,7 @@ public class SlotMachineAceptanceTest {
             slmch.addWheel(i);
             Thread.sleep(500);
         }
-        Wheel wheel1 = wheels.get(0), wheel2 = wheels.get(1), wheel4 = wheels.get(3), wheel5 = wheels.get(4);
+        Wheel wheel1 = wheels.get(1), wheel2 = wheels.get(2), wheel4 = wheels.get(4), wheel5 = wheels.get(5);
         wheel2.addSymbol("yellow");
         Thread.sleep(500);
         wheel4.addSymbol("magenta");
