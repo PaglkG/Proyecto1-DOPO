@@ -288,6 +288,9 @@ public class SlotMachine {
         }
     }
     
+    /**Spin a specific wheel a specific ce
+     * 
+     */
     public void spin(int wheel, int steps) throws InterruptedException {
         Wheel wheelToSpin = wheels.get(wheel);
         if (isVisible) {
@@ -301,6 +304,9 @@ public class SlotMachine {
         isOk();
     }
     
+    public void spin(String[] setSymbols) {
+        
+    }
     /* Obtains information of all symbol of all wheel (Key: Color, Value: time color repeats).
      * @return A map with the information of all symbol of SlotMachine 
      */

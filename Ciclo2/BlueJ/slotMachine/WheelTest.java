@@ -20,7 +20,7 @@ public class WheelTest
     void setUp() {
         wheel = new Wheel();
     }
-//deberia crear un rectangulo y cambiar el color junto a sus posiciones 
+
     @Test
     public void changeColorAndPositionTest(){
         wheel.changeColor("black");
@@ -40,7 +40,7 @@ public class WheelTest
         wheel.addSymbol(triangle1);
         wheel.addSymbol(triangle2);
         wheel.addSymbol(triangle3);
-        assertEquals(triangle1, wheel.selecSymbol());
+        assertEquals(triangle1, wheel.selectedSymbol());
         wheel.delSymbol(triangle3);
         
     }
@@ -55,6 +55,6 @@ public class WheelTest
         wheel.addSymbol(triangle3);
         wheel.delSymbol(triangle1);
         wheel.delSymbol(triangle2);
-        assertEquals(triangle3, wheel.selecSymbol());
+        assertEquals(triangle3, wheel.selectedSymbol());
     }
 }

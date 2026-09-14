@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import java.util.List;
+import java.util.ArrayList;
 
 import java.util.Map;
 
@@ -160,5 +162,35 @@ public class SlotMachineC2Test {
         assertTrue(sltmchn.isOk());
         sltmchn.spin(3);
         assertFalse(sltmchn.isOk());
+    }
+    
+    @Test
+    public void shouldSpinToObtainASpecificConfigurationOfSymbols() {
+        int NUMBER_WHEELS_TO_ADD = 5;
+        for (int i = 1; i <= NUMBER_WHEELS_TO_ADD; i++) {
+            sltmchn.addWheel(i);
+            sltmchn.addSymbol(i, "magenta");
+            sltmchn.addSymbol(i, "blue");
+            sltmchn.addSymbol(i, "yellow");
+            sltmchn.addSymbol(i, "red");
+            sltmchn.addSymbol(i, "green");
+            sltmchn.addSymbol(i, "gray");
+            sltmchn.addSymbol(i, "white");
+            sltmchn.addSymbol(i, "cyan");
+            sltmchn.addSymbol(i, "pink");
+        }
+        String[] specificConfiguration = {"blue", "cyan", "yellow", "green", "pink"};
+        sltmchn.spin(specificConfiguration);
+        int indexSpecification = 0;
+        Symbol selectedSymbol;
+        String currentColorSelectedSymbolAtWheel, colorSpecificConfiguration;
+        boolean shouldBeEqualColorConfigurationWithColorSymbol;
+        for (Wheel wheel : wheels.values()) {
+            selectedSymbol = wheel.selectedSymbol();
+            currentColorSelectedSymbolAtWheel = selectedSymbol.getColor();
+            colorSpecificConfiguration = specificConfiguration[indexSpecification];
+            shouldBeEqualColorConfigurationWithColorSymbol = currentColorSelectedSymbolAtWheel.equals(colorSpecificConfiguration);
+            assertTrue(shouldBeEqualColorConfigurationWithColorSymbol);
+        }
     }
 }

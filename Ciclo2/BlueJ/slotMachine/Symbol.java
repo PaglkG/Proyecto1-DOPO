@@ -111,7 +111,6 @@ public class Symbol {
         boolean hasSameColor = Objects.equals(getColor(), symbol.getColor());
         return hasSamePosition && hasSameWheel && hasSameColor;
     }
-
     
     public void moveSlowly(int howMany) {
         symbolShape.slowMoveVertical(howMany);

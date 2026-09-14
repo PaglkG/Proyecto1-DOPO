@@ -127,7 +127,7 @@ public class Wheel {
     /**Gives the symbol that was selected when spinning the wheel.
      * @return Returns the symbol that was selected when spinning the wheel. ----------
      */
-    public Symbol selecSymbol() {
+    public Symbol selectedSymbol() {
         return selectedSymbol;
     }
     
