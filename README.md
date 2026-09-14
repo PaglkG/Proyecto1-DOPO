@@ -152,7 +152,7 @@ classDiagram
 ```bash
 # 1. Clonar el repositorio
 git clone <url-del-repositorio>
-cd DOPOG01/Laboratorios/slotMachine
+cd Proyecto1-DOPO/
 
 # 2. Abrir el proyecto en BlueJ
 #    File > Open Project > seleccionar carpeta slotMachine

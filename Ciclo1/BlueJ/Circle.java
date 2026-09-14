@@ -1,4 +1,4 @@
-package BlueJ;
+ 
 
 import java.awt.*;
 import java.awt.geom.*;
@@ -29,6 +29,47 @@ public class Circle{
         isVisible = false;
     }
 
+    public int getDiameter() {
+        return diameter;
+    }
+
+    public void setDiameter(int diameter) {
+        this.diameter = diameter;
+    }
+
+    public int getXPosition() {
+        return xPosition;
+    }
+
+    public void setXPosition(int xPosition) {
+        this.xPosition = xPosition;
+    }
+
+    public int getYPosition() {
+        return yPosition;
+    }
+
+    public void setYPosition(int yPosition) {
+        this.yPosition = yPosition;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public boolean isVisible() {
+        return isVisible;
+    }
+
+    public void setVisible(boolean isVisible) {
+        this.isVisible = isVisible;
+    }
+
+
 
        
     public void makeVisible(){
@@ -40,23 +81,6 @@ public class Circle{
     public void makeInvisible(){
         erase();
         isVisible = false;
-    }
-
-    private void draw(){
-        if(isVisible) {
-            Canvas canvas = Canvas.getCanvas();
-            canvas.draw(this, color, 
-                new Ellipse2D.Double(xPosition, yPosition, 
-                diameter, diameter));
-            canvas.wait(10);
-        }
-    }
-
-    private void erase(){
-        if(isVisible) {
-            Canvas canvas = Canvas.getCanvas();
-            canvas.erase(this);
-        }
     }
     
     /**
@@ -167,6 +191,20 @@ public class Circle{
         draw();
     }
 
+    private void draw(){
+        if(isVisible) {
+            Canvas canvas = Canvas.getCanvas();
+            canvas.draw(this, color, 
+                new Ellipse2D.Double(xPosition, yPosition, 
+                diameter, diameter));
+            canvas.wait(10);
+        }
+    }
 
-
+    private void erase(){
+        if(isVisible) {
+            Canvas canvas = Canvas.getCanvas();
+            canvas.erase(this);
+        }
+    }
 }

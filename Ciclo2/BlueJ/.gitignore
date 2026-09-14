@@ -9,6 +9,3 @@
 
 # Ignorar los paquetes (cuando trabajemos con eclipse)
 #*.pkg
-
-# Ignorar los temporales de astah
-*.asta.lock
