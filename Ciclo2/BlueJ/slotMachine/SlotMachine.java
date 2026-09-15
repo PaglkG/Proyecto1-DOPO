@@ -89,8 +89,10 @@ public class SlotMachine {
      */
     public void addSymbol(int pos, String color) {
         Wheel wheelToAddSymbol = wheels.get(pos);
-        Symbol symbolToAdd = new Symbol(color);
-        wheelToAddSymbol.addSymbol(symbolToAdd);
+        if (wheelToAddSymbol != null) {
+            Symbol symbolToAdd = new Symbol(color);
+            wheelToAddSymbol.addSymbol(symbolToAdd);
+        }
     }
 
     /** The symbol; on each wheel is removed, object is deleted.
