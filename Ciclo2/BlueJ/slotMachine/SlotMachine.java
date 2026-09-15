@@ -1,10 +1,12 @@
 package slotMachine;
-
+import shapes.Rectangle;
 import shapes.Canvas;
 
 import java.util.List;
 import java.util.*;
 import javax.swing.JOptionPane;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * This is slot machine game, this is a variant of I problem - SlotMachine ICPC competition
@@ -14,15 +16,19 @@ import javax.swing.JOptionPane;
  */
 public class SlotMachine {
     private boolean isOk;
-    private Map<Integer, Wheel> wheels; //Key represents the position of wheel at the slotmachine
+    private TreeMap<Integer, Wheel> wheels; 
     private boolean isVisible;
+    private Rectangle body;
 
     /**Cronstructor, nyadic method class, of SlotMachine.
      */
     public SlotMachine() {
+        body = new Rectangle(10,10,270,270,"pink");
         isOk = true;
         wheels = new TreeMap<>();
         isVisible = false;
+        
+        
     }
 
     /**
@@ -30,15 +36,35 @@ public class SlotMachine {
      * @param pos pos is the position of wheel that is added to this object.
      */
     public void addWheel(int pos) {
-        Wheel newWheelToAdd = new Wheel();
-        wheels.put(pos, newWheelToAdd);
-        newWheelToAdd.setPositionWheel(pos);
-        newWheelToAdd.moveHorizontal(pos);
+        Wheel wheel = new Wheel();
+        wheels.put(pos,wheel);
+        if (wheels.isEmpty()) {
+            wheel.changePositionX(20);
+            wheel.changePositionY(50);
+        }
+        else {
+            Integer posMin = wheels.lowerKey(pos);
+            if (posMin == null) {
+                posMin = pos;
+                wheel.changePositionX(20);
+                wheel.changePositionY(50);
+            }
+            else {
+                wheel.changePositionX(wheels.get(posMin).getPositionX() + 50);
+                wheel.changePositionY(50);
+            }
+            NavigableMap<Integer, Wheel> subMap = wheels.tailMap(posMin, false);
+            for (Map.Entry<Integer, slotMachine.Wheel> wheelNext : subMap.entrySet()) {
+                posMin = wheels.lowerKey(wheelNext.getKey());
+                wheelNext.getValue().changePositionX(wheels.get(posMin).getPositionX() + 50);
+            }
+        }
         if (isVisible) {
-            newWheelToAdd.makeVisible();
+            wheel.makeVisible();
         }
     }
-
+    
+    
     /**To remove a wheel, pass its left or right position.
      * If a wheel with a wheel to its right is removed, all wheels on the right move one position to the left
      * @param pos pos is the position of wheel
@@ -183,6 +209,7 @@ public class SlotMachine {
      */
     public void makeVisible() {
         if (!isVisible) isVisible = true;
+        body.makeVisible();
         for (Wheel wheel : wheels.values()) {
             wheel.makeVisible();
         }
@@ -192,9 +219,11 @@ public class SlotMachine {
      */
     public void makeInvisible() {
         if (isVisible) isVisible = false;
+
         for (Wheel wheel : wheels.values()) {
             wheel.makeInvisible();
         }
+        body.makeInvisible();
     }
 
     /**Deletes all objects and close the windows.
@@ -225,7 +254,7 @@ public class SlotMachine {
         return wheels;
     }
 
-    public void setWheels(Map<Integer, Wheel> wheels) {
+    public void setWheels(TreeMap<Integer, Wheel> wheels) {
         this.wheels = wheels;
     }
     
