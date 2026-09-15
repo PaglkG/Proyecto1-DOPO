@@ -54,14 +54,18 @@ public class SlotMachine {
                 wheel.changePositionY(50);
             }
             NavigableMap<Integer, Wheel> subMap = wheels.tailMap(posMin, false);
-            for (Map.Entry<Integer, slotMachine.Wheel> wheelNext : subMap.entrySet()) {
-                posMin = wheels.lowerKey(wheelNext.getKey());
-                wheelNext.getValue().changePositionX(wheels.get(posMin).getPositionX() + 50);
-            }
+            order(subMap);
         }
         if (isVisible) {
             wheel.makeVisible();
         }
+    }
+    
+    private void order( NavigableMap<Integer, Wheel> subMap ) {
+        for (Map.Entry<Integer, slotMachine.Wheel> wheelNext : subMap.entrySet()) {
+                Integer posMin = wheels.lowerKey(wheelNext.getKey());
+                wheelNext.getValue().changePositionX(wheels.get(posMin).getPositionX() + 50);
+            }
     }
     
     
@@ -71,11 +75,11 @@ public class SlotMachine {
      */
     public void delWheel(int pos) {
         Wheel wheelToDelete = wheels.get(pos);
-        if (wheelToDelete != null && !wheelToDelete.isLocked()) {
+        if (wheelToDelete != null) {
             wheels.remove(pos);
-            if (isVisible) wheelToDelete.makeInvisible();
+            NavigableMap<Integer, Wheel> subMap = wheels.tailMap(pos, false);
+            order(subMap);
         }
-        //Aqui va la funcionalidad de que se modifican las wheels, por ahora lo básico
         
     }
 
