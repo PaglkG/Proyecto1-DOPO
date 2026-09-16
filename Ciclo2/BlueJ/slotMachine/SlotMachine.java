@@ -157,13 +157,14 @@ public class SlotMachine {
      * @return Number of distinct colors of the flipped symbols.
      */
     public int distinctSymbols() {
-        int countDistincSymbols = 0;
-        Map<String, Integer> infoAllSymbols = getAllSymbolsAtSlotMachine();
-        for (Integer numTimesColorRepeat : infoAllSymbols.values()) {
-            if (numTimesColorRepeat.equals(1)) {
-                countDistincSymbols++;
+        Set<String> colorSymbols = new HashSet<>();
+        
+        for (Wheel wheel : wheels.values()) {
+            for (String color : wheel.symbols()){
+                colorSymbols.add(color);
             }
         }
+        int countDistincSymbols = colorSymbols.size();
         return countDistincSymbols;
     }
 
