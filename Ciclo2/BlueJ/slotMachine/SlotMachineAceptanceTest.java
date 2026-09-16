@@ -73,6 +73,24 @@ public class SlotMachineAceptanceTest {
     }
     
     @Test
+    public void shouldSymbolsEveryWheel() {
+        int NUMBER_WHEELS_TO_ADD = 5;
+        for (int i = 1; i <= NUMBER_WHEELS_TO_ADD; i++) {
+            slmch.addWheel(i);
+        }
+        slmch.addSymbol(1, "magenta");
+        slmch.addSymbol(1, "red");
+        slmch.addSymbol(2, "red");
+        slmch.addSymbol(2, "green");
+        slmch.addSymbol(3, "yellow");
+        slmch.addSymbol(4, "blue");
+        slmch.addSymbol(5, "green");
+        String[] symbols = slmch.symbols();
+        String[] symbolsIdeal ={"magenta","red","green","yellow","blue","green"};
+        assertArrayEquals(symbolsIdeal, symbols);
+    }
+    
+    @Test
     public void shouldDelSpecificSymbolWheel() throws InterruptedException {
         int NUMBER_WHEELS_TO_ADD = 5;
         for (int i = 0; i < NUMBER_WHEELS_TO_ADD; i++) {

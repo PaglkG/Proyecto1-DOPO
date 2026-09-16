@@ -141,22 +141,16 @@ public class SlotMachine {
      * @return A string array with exiting symbols colors of this slot machine.
      */
     public String[] symbols() {
-        int sizeWheels = wheels.size(), totalSizeColors = 0;
-        ArrayList<String[]> colorSymbolWheels = new ArrayList<>();
-        for (Wheel currentWheel : wheels.values()) {
-            colorSymbolWheels.add(currentWheel.getColorSymbols());
-            totalSizeColors += currentWheel.getSizeColors();
-        }
-        int currentSizeColor, indexColorSymbols = 0;
-        String[] colorSymbols = new String[totalSizeColors];
-        for (String[] colorWheel : colorSymbolWheels) {
-            currentSizeColor = colorWheel.length;
-            for (int j = 0; j < currentSizeColor; j++) {
-                colorSymbols[indexColorSymbols] = colorWheel[j];
-                indexColorSymbols++;
+        ArrayList<String> colorSymbols = new ArrayList<>();
+        
+        for (Wheel wheel : wheels.values()) {
+            for (String color : wheel.symbols()){
+                colorSymbols.add(color);
             }
         }
-        return colorSymbols;
+        String[] symbols = colorSymbols.toArray(new String[0]);
+        
+        return symbols;
     }
 
     /**Displays the number of distinct colors among the symbols on the wheel that are flipped.
