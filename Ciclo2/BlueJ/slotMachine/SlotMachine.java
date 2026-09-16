@@ -172,28 +172,14 @@ public class SlotMachine {
      * @return return an array of string with the symbols selected at the wheels.
      */
     public String[] configuration() {
-        int totalSizeColors = 0;
-        boolean isWheelVisible;
-        ArrayList<String[]> colorSymbolWheels = new ArrayList<>();
-        Wheel currentWheel = null; 
+        ArrayList<String> colorSymbols = new ArrayList<>();
+        
         for (Wheel wheel : wheels.values()) {
-            isWheelVisible = wheel.isVisible();
-            if (wheel != null && isWheelVisible) {
-                colorSymbolWheels.add(wheel.getColorSymbolsConfiguration());
-                totalSizeColors += wheel.getSizeColors();
-            }
+                colorSymbols.add(wheel.getSelectedSymbol().getColor());
         }
-        int currentSizeColor, indexColorSymbols = 0;
-        String[] configuration = new String[totalSizeColors];
-        for (String[] colorWheel : colorSymbolWheels) {
-            for (String color : colorWheel) {
-                if (color != null) {
-                    configuration[indexColorSymbols] = color;
-                    indexColorSymbols++;
-                }
-            }
-        }
-        return configuration;
+        String[] symbols = colorSymbols.toArray(new String[0]);
+        
+        return symbols;
     }
 
     /**Tells whether all shapes selected by the wheels are identical.
