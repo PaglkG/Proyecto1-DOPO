@@ -86,7 +86,7 @@ public class SlotMachineAceptanceTest {
         slmch.addSymbol(4, "blue");
         slmch.addSymbol(5, "green");
         String[] symbols = slmch.symbols();
-        String[] symbolsIdeal ={"magenta","red","green","yellow","blue","green"};
+        String[] symbolsIdeal ={"magenta","red","red","green","yellow","blue","green"};
         assertArrayEquals(symbolsIdeal, symbols);
     }
     
