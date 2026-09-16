@@ -187,15 +187,18 @@ public class SlotMachine {
      * false otherwise
      */
     public boolean isJackpot() {
-        boolean isSymbolIdentical;
-        int indexNextWheel, sizeWheels = wheels.size();
-        Wheel wheelToCompare, wheelNext;
-        for (int  i = 0; i < sizeWheels-1; i++) {
-            indexNextWheel = i+1;
-            wheelToCompare = wheels.get(i);
-            wheelNext = wheels.get(indexNextWheel);
-            isSymbolIdentical = (wheelToCompare.getSelectedSymbol()).equals(wheelNext.getSelectedSymbol());
-            if (!isSymbolIdentical) return false;
+        ArrayList<String> colorSymbols = new ArrayList<>();
+        
+        for (Wheel wheel : wheels.values()) {
+                colorSymbols.add(wheel.getSelectedSymbol().getColor());
+        }
+        
+        String frist = colorSymbols.get(0);
+        
+        for (int i = 1; i < colorSymbols.size(); i++) {
+        if (!frist.equals(colorSymbols.get(i))) {
+            return false;
+            }
         }
         return true;
     }
