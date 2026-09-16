@@ -62,10 +62,16 @@ public class SlotMachine {
     }
     
     private void order( NavigableMap<Integer, Wheel> subMap ) {
+        
         for (Map.Entry<Integer, slotMachine.Wheel> wheelNext : subMap.entrySet()) {
                 Integer posMin = wheels.lowerKey(wheelNext.getKey());
-                wheelNext.getValue().changePositionX(wheels.get(posMin).getPositionX() + 50);
+                if (posMin != null) {
+                    wheelNext.getValue().changePositionX(wheels.get(posMin).getPositionX() + 50);
             }
+                else {
+                    wheelNext.getValue().changePositionX(50); 
+            }
+        }
     }
     
     
@@ -75,9 +81,10 @@ public class SlotMachine {
      */
     public void delWheel(int pos) {
         Wheel wheelToDelete = wheels.get(pos);
+        wheelToDelete.makeInvisible();
         if (wheelToDelete != null) {
-            wheels.remove(pos);
             NavigableMap<Integer, Wheel> subMap = wheels.tailMap(pos, false);
+            wheels.remove(pos);
             order(subMap);
         }
         
@@ -109,8 +116,9 @@ public class SlotMachine {
      * @param symbol symbol is the type of symbol that will be added at the specific number wheel.
      */
     public void placeSymbol(int wheel, String symbol) {
-        Wheel wheelToPlaceSymbol = wheels.get(wheel);
-        wheelToPlaceSymbol.addSymbol(symbol);
+        for (Wheel wheelToPlaceSymbol : wheels.values()) {
+             wheelToPlaceSymbol.addSymbol(symbol);   
+        }
     }
 
     /**Moves a specific number of wheel.

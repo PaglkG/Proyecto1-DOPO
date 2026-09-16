@@ -48,6 +48,7 @@ public class SlotMachineAceptanceTest {
         }
         Thread.sleep(1000);
         slmch.delWheel(3);
+        slmch.delWheel(5);
         Thread.sleep(1000);
         slmch.delWheel(1);
         Thread.sleep(1000);
