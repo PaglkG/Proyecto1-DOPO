@@ -1,6 +1,7 @@
 package slotMachine;
 
 import shapes.Canvas;
+import shapes.Rectangle;
 
 import java.util.List;
 import java.util.*;
@@ -14,15 +15,18 @@ import javax.swing.JOptionPane;
  */
 public class SlotMachine {
     private boolean isOk;
-    private Map<Integer, Wheel> wheels; //Key represents the position of wheel at the slotmachine
+    private NavigableMap<Integer, Wheel> wheels; //Key represents the position of wheel at the slotmachine
     private boolean isVisible;
+    private Rectangle body;
 
     /**Cronstructor, nyadic method class, of SlotMachine.
      */
     public SlotMachine() {
-        isOk = true;
+        isOk = false;
         wheels = new TreeMap<>();
         isVisible = false;
+        body = new Rectangle(10,10,270,270,"pink");
+        isOk = true;
     }
 
     /**
@@ -30,13 +34,29 @@ public class SlotMachine {
      * @param pos pos is the position of wheel that is added to this object.
      */
     public void addWheel(int pos) {
+        isOk = false;
+        invariantPositionWheel(pos);
         Wheel newWheelToAdd = new Wheel();
         wheels.put(pos, newWheelToAdd);
-        newWheelToAdd.setPositionWheel(pos);
-        newWheelToAdd.moveHorizontal(pos);
+        if (wheels.isEmpty()) {
+            newWheelToAdd.changePosition(20, 50);
+        }
+        else {
+            Integer posMin = wheels.firstKey();
+            if (posMin == null) {
+                posMin = pos;
+                newWheelToAdd.changePosition(20, 50);
+            }
+            else {
+                newWheelToAdd.changePosition(wheels.get(posMin).getXPosition() + 50, 50);
+            }
+            NavigableMap<Integer, Wheel> subMap = wheels.tailMap(posMin, false);
+            order(subMap);
+        }
         if (isVisible) {
             newWheelToAdd.makeVisible();
         }
+        isOk = true; // Acción exitosa
     }
 
     /**To remove a wheel, pass its left or right position.
@@ -44,16 +64,19 @@ public class SlotMachine {
      * @param pos pos is the position of wheel
      */
     public void delWheel(int pos) {
+        isOk = false;
+        invariantPositionWheel(pos);
+        
         Wheel wheelToDelete = wheels.get(pos);
-        boolean isWheelToDeleteLocked = wheelToDelete.isLocked();
-        if (wheelToDelete != null && !isWheelToDeleteLocked) {
+        boolean isPossibleDeleteWheel = wheelToDelete != null && !wheelToDelete.isLocked();
+        if (isPossibleDeleteWheel) {
             wheels.remove(pos);
             if (isVisible) wheelToDelete.makeInvisible();
         }
-        isOk = !isWheelToDeleteLocked;
+        isOk = isPossibleDeleteWheel;
         isOk();
         //Aqui va la funcionalidad de que se modifican las wheels, por ahora lo básico
-        
+        isOk = true;
     }
 
     /**The symbol object is created at a specific position and color.
@@ -61,18 +84,23 @@ public class SlotMachine {
      * @param color color is the color of symbol that going to be created.
      */
     public void addSymbol(int pos, String color) {
+        isOk = false;
+        invariantPositionWheel(pos);
         Wheel wheelToAddSymbol = wheels.get(pos);
         Symbol symbolToAdd = new Symbol(color);
         wheelToAddSymbol.addSymbol(symbolToAdd);
+        isOk = true;
     }
 
     /** The symbol; on each wheel is removed, object is deleted.
      * @param symbol symbol is the type of symbol that going to be deleted.
      */
     public void delSymbol(String symbol) {
+        isOk = false;
         for (Wheel wheel : wheels.values()) {
             wheel.delSymbol(symbol);
         }
+        isOk = true;
     }
 
     /** The symbol is added to each wheel; shape and wheel number are requested.
@@ -80,14 +108,19 @@ public class SlotMachine {
      * @param symbol symbol is the type of symbol that will be added at the specific number wheel.
      */
     public void placeSymbol(int wheel, String symbol) {
+        isOk = false;
+        invariantPositionWheel(wheel);
         Wheel wheelToPlaceSymbol = wheels.get(wheel);
         wheelToPlaceSymbol.addSymbol(symbol);
+        isOk = true;
     }
 
     /**Moves a specific number of wheel.
      * @param wheel wheel indicates the number (integer) of wheel that going to be moved.
      */
     public void spin(int wheel) {
+        isOk = false;
+        invariantPositionWheel(wheel);
         Wheel wheelToSpin = wheels.get(wheel);
         boolean isWheelToSpinLocked = wheelToSpin.isLocked();
         if (wheelToSpin != null && !isWheelToSpinLocked) {
@@ -100,6 +133,7 @@ public class SlotMachine {
     /**Moves each of the wheels.
      */
     public void spin() {
+        isOk = false;
         boolean isWheelToSpinLocked;
         for (Wheel wheel : wheels.values()) {
             isWheelToSpinLocked = wheel.isLocked();
@@ -108,13 +142,16 @@ public class SlotMachine {
             }
             isOk = !isWheelToSpinLocked;
             isOk();
+            return;
         }
+        isOk = true;
     }
 
     /**Displays all existing symbol colors in order.
      * @return A string array with exiting symbols colors of this slot machine.
      */
     public String[] symbols() {
+        isOk = false;
         int sizeWheels = wheels.size(), totalSizeColors = 0;
         ArrayList<String[]> colorSymbolWheels = new ArrayList<>();
         for (Wheel currentWheel : wheels.values()) {
@@ -130,6 +167,7 @@ public class SlotMachine {
                 indexColorSymbols++;
             }
         }
+        isOk = true;
         return colorSymbols;
     }
 
@@ -137,6 +175,7 @@ public class SlotMachine {
      * @return Number of distinct colors of the flipped symbols.
      */
     public int distinctSymbols() {
+        isOk = false;
         int countDistincSymbols = 0;
         Map<String, Integer> infoAllSymbols = getAllSymbolsAtSlotMachine();
         for (Integer numTimesColorRepeat : infoAllSymbols.values()) {
@@ -144,6 +183,7 @@ public class SlotMachine {
                 countDistincSymbols++;
             }
         }
+        isOk = true;
         return countDistincSymbols;
     }
 
@@ -151,6 +191,7 @@ public class SlotMachine {
      * @return return an array of string with the symbols selected at the wheels.
      */
     public String[] configuration() {
+        isOk = false;
         int totalSizeColors = 0;
         boolean isWheelVisible;
         ArrayList<String[]> colorSymbolWheels = new ArrayList<>();
@@ -172,6 +213,7 @@ public class SlotMachine {
                 }
             }
         }
+        isOk = false;
         return configuration;
     }
 
@@ -180,6 +222,7 @@ public class SlotMachine {
      * false otherwise
      */
     public boolean isJackpot() {
+        isOk = false;
         boolean isSymbolIdentical;
         int indexNextWheel, sizeWheels = wheels.size();
         Wheel wheelToCompare, wheelNext;
@@ -190,25 +233,30 @@ public class SlotMachine {
             isSymbolIdentical = (wheelToCompare.getSelectedSymbol()).equals(wheelNext.getSelectedSymbol());
             if (!isSymbolIdentical) return false;
         }
+        isOk = true;
         return true;
     }
 
     /**Makes the slot machine visible.
      */
     public void makeVisible() {
-        if (!isVisible) isVisible = true;
+        isOk = false;
+        isVisible = true;
         for (Wheel wheel : wheels.values()) {
             wheel.makeVisible();
         }
+        isOk = true;
     }
 
     /**Makes the slot machine invisible.
      */
     public void makeInvisible() {
-        if (isVisible) isVisible = false;
+        isOk = false;
+        isVisible = false;
         for (Wheel wheel : wheels.values()) {
             wheel.makeInvisible();
         }
+        isOk = true;
     }
 
     /**Deletes all objects and close the windows.
@@ -238,16 +286,15 @@ public class SlotMachine {
     public Map<Integer, Wheel> getWheels() {
         return wheels;
     }
-
-    public void setWheels(Map<Integer, Wheel> wheels) {
-        this.wheels = wheels;
-    }
     
     /**Swap two specific wheel of position 
      * @param wheel1 wheel1 is the number of first wheel at the slotmachine that will be swaped by second wheel.
      * @param wheel2 wheel2 is the nunmber of second wheel at the slotmachine that will be swaped by first wheel.
      */
     public void swap(int wheel1, int wheel2) {
+        isOk = false;
+        invariantPositionWheel(wheel1);
+        invariantPositionWheel(wheel2);
         Wheel findedWheel1 = wheels.get(wheel1);
         Wheel findedWheel2 = wheels.get(wheel2);
         findedWheel1.swap(findedWheel2);
@@ -264,34 +311,44 @@ public class SlotMachine {
      * @param wheel wheel is an integer that means the number of this slotmachine; That wheel will be locked. 
      */
     public void lock(int wheel) {
+        isOk = false;
+        invariantPositionWheel(wheel);
         Wheel wheelToLock = wheels.get(wheel);
         wheelToLock.lock();
+        isOk = true;
     }
     
     /**Make a wheel unlock, this able to the wheel spin corectly 
      * @param wheel wheel is an integer that means the number of this slotmachine; That wheel will be locked. 
      */
     public void unlock(int wheel) {
+        isOk = false;
+        invariantPositionWheel(wheel);
         Wheel wheelToUnlock = wheels.get(wheel);
         wheelToUnlock.unlock();
+        isOk = true;
     }
     
     /**Makes a update visually of SlotMachine
      * 
      */
     public void frameFlickering() {
+        isOk = false;
         if (!isVisible) {
             isVisible = true;
         }    
         for (Wheel wheel : wheels.values()) {
             wheel.frameFlickering();
         }
+        isOk = true;
     }
     
     /**Spin a specific wheel a specific ce
      * 
      */
     public void spin(int wheel, int steps) throws InterruptedException {
+        isOk = false;
+        invariantPositionWheel(wheel);
         Wheel wheelToSpin = wheels.get(wheel);
         if (isVisible) {
             wheelToSpin.spinSlowly(steps);
@@ -330,6 +387,28 @@ public class SlotMachine {
             "Invalid Action",  //Mensaje del titulo de la ventana
             JOptionPane.ERROR_MESSAGE
             );
+        }
+    }
+    
+    private void invariantPositionWheel(int pos) {
+        int sizeWheels = wheels.size();
+        if (pos < 0 || pos > sizeWheels || wheels.containsKey(pos)) {
+            errorMessage("Tiene que ser consecutivos las posiciones y positivas, también no debe repetirse");
+        }
+        isOk();
+        return;
+    }
+    
+    private void order( NavigableMap<Integer, Wheel> subMap ) {
+        
+        for (Map.Entry<Integer, slotMachine.Wheel> wheelNext : subMap.entrySet()) {
+                Integer posMin = wheels.lowerKey(wheelNext.getKey());
+                if (posMin != null) {
+                    wheelNext.getValue().changePosition(wheels.get(posMin).getXPosition() + 50, 0);
+            }
+                else {
+                    wheelNext.getValue().changePosition(50,0); 
+            }
         }
     }
     
