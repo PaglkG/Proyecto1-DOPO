@@ -11,6 +11,14 @@ public class Rectangle extends Polygon2D {
 
     public static final int EDGES = 4;
     
+    public void setHeight(int newHeight) {
+        this.height = newHeight;
+    }
+    
+    public void setWidth(int newWidth) {
+        this.width = newWidth;
+    }
+    
     /**
      * Create a new rectangle at default position with default color.
      */
@@ -30,7 +38,7 @@ public class Rectangle extends Polygon2D {
      * Draw rectangle
      */
     @Override
-    protected void draw() {
+    public void draw() {
         if(isVisible) {
             Canvas canvas = Canvas.getCanvas();
             canvas.draw(this, color,

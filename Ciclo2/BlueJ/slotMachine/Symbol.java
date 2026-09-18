@@ -13,7 +13,6 @@ import java.awt.*;
  */
 public class Symbol {
     private int positionAtTheWheel;
-    private Wheel wheel;
     private Triangle symbolShape;
     
     /**Constructor symbol, dyadic method class
@@ -107,9 +106,8 @@ public class Symbol {
     
     public boolean equals(Symbol symbol) {
         boolean hasSamePosition = positionAtTheWheel == symbol.getPositionAtTheWheel();
-        boolean hasSameWheel = Objects.equals(wheel, symbol.getWheel());
         boolean hasSameColor = Objects.equals(getColor(), symbol.getColor());
-        return hasSamePosition && hasSameWheel && hasSameColor;
+        return hasSamePosition && hasSameColor;
     }
     
     public void moveSlowly(int howMany) {
@@ -120,7 +118,4 @@ public class Symbol {
         symbolShape.frameFlickering();
     }
     
-    public Wheel getWheel() {
-        return wheel;
-    }
 }

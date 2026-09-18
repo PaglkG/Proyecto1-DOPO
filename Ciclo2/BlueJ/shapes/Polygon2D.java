@@ -1,6 +1,6 @@
 package shapes;
 /**
- * StraightSided are the figures that has a height and a width.
+ * Polygon2D are the figures that has a height and a width.
  * This is the class StrightSided.
  * 
  * @author Gualdron - Villagran
