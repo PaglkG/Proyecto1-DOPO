@@ -25,7 +25,9 @@ public class Wheel {
     private Random random;
     private Symbol selectedSymbol;
     private TreeMap<Integer,Symbol> symbols;
-
+    
+    
+    
     /**Constructor class of wheel, niladic method class.
      */
     public Wheel() {
@@ -65,6 +67,14 @@ public class Wheel {
             wheelShape.makeInvisible();
             wheelShape.makeVisible();
         }
+    }
+    
+    public int getPositionX() {
+        return wheelShape.getXPosition();
+    }
+    
+    public int getPositionY() {
+        return wheelShape.getYPosition();
     }
     
     /**Add a specific symbol with its color.

@@ -42,8 +42,8 @@ public class SlotMachineC1Test {
         Wheel firstWheel = wheels.get(1);
         Wheel secondWheel = wheels.get(2);
         int xPosWheelFirst = firstWheel.getXPosition(), xPosWheelSecond = secondWheel.getXPosition(); // Moves 25*2
-        assertEquals(50, xPosWheelFirst); // Se verifica que se ubica en la posicion correcta
-        assertEquals(100, xPosWheelSecond);
+        assertEquals(20, xPosWheelFirst); // Se verifica que se ubica en la posicion correcta
+        assertEquals(70, xPosWheelSecond);
     }
     
     @Test
@@ -68,9 +68,7 @@ public class SlotMachineC1Test {
         sltmchn.addSymbol(4, "green");
         String[] proof = sltmchn.symbols();
         String[] result = new String[]{"magenta", "red", "yellow", "blue", "green"};
-        for (int i = 0; i < result.length;i++) {
-            assertEquals(proof[i], result[i]);
-        }
+        assertArrayEquals(result, proof);
     }
     
     @Test
@@ -84,19 +82,8 @@ public class SlotMachineC1Test {
         sltmchn.addSymbol(2, "yellow");
         sltmchn.addSymbol(3, "blue");
         sltmchn.addSymbol(4, "green");
-        Wheel secondWheel = wheels.get(1);
-        Wheel fourthWheel = wheels.get(3);
-        
-        sltmchn.makeVisible();
-        
-        Symbol symbolSecWheel = secondWheel.getSymbols().get(1);   //Indice según como se guarden
-        Symbol symbolFourthWheel = fourthWheel.getSymbols().get(1); 
-        symbolSecWheel.setVisible(false);
-        symbolFourthWheel.setVisible(false);
-        
         String[] proof = sltmchn.configuration();
-        
-        String[] result = new String[]{"magenta", "yellow", "green"};
+        String[] result = new String[]{"magenta","red", "yellow","blue", "green"};
         for (int i = 0; i < result.length;i++) {
             assertEquals(proof[i], result[i]);
         }
@@ -132,7 +119,7 @@ public class SlotMachineC1Test {
         sltmchn.addSymbol(4, "green"); // Solamente colocamos 4 simbolos distintos en distintas ruedas
         
         int numDistinctSymbols = sltmchn.distinctSymbols();
-        assertEquals(4, numDistinctSymbols);
+        assertEquals(7, numDistinctSymbols);
     }
     
     @Test

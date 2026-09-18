@@ -106,7 +106,7 @@ public class Triangle extends StraightSided {
      * Draw the triangle with current specifications on screen.
      */
     @Override
-    protected void draw(){// Este método fue ayudado a modificar por Gemini IA para que funcione rotate()
+    public void draw(){// Este método fue ayudado a modificar por Gemini IA para que funcione rotate()
         if(isVisible) {
         Canvas canvas = Canvas.getCanvas();
         

@@ -48,6 +48,7 @@ public class SlotMachineAceptanceTest {
         }
         Thread.sleep(1000);
         slmch.delWheel(3);
+        slmch.delWheel(5);
         Thread.sleep(1000);
         slmch.delWheel(1);
         Thread.sleep(1000);
@@ -69,6 +70,42 @@ public class SlotMachineAceptanceTest {
         Thread.sleep(500);
         slmch.addSymbol(5, "green");
         Thread.sleep(500);
+    }
+    
+    @Test
+    public void shouldSymbolsEveryWheel() {
+        int NUMBER_WHEELS_TO_ADD = 5;
+        for (int i = 1; i <= NUMBER_WHEELS_TO_ADD; i++) {
+            slmch.addWheel(i);
+        }
+        slmch.addSymbol(1, "magenta");
+        slmch.addSymbol(1, "red");
+        slmch.addSymbol(2, "red");
+        slmch.addSymbol(2, "green");
+        slmch.addSymbol(3, "yellow");
+        slmch.addSymbol(4, "blue");
+        slmch.addSymbol(5, "green");
+        String[] symbols = slmch.symbols();
+        String[] symbolsIdeal ={"magenta","red","red","green","yellow","blue","green"};
+        assertArrayEquals(symbolsIdeal, symbols);
+    }
+    
+    @Test
+    public void shouldDistinctSymbolsEveryWheel() {
+        int NUMBER_WHEELS_TO_ADD = 5;
+        for (int i = 1; i <= NUMBER_WHEELS_TO_ADD; i++) {
+            slmch.addWheel(i);
+        }
+        slmch.addSymbol(1, "magenta");
+        slmch.addSymbol(1, "red");
+        slmch.addSymbol(2, "red");
+        slmch.addSymbol(2, "green");
+        slmch.addSymbol(3, "yellow");
+        slmch.addSymbol(4, "blue");
+        slmch.addSymbol(5, "green");
+        int symbols = slmch.distinctSymbols();
+        int symbolsIdeal = 5;
+        assertEquals(symbolsIdeal, symbols);
     }
     
     @Test
