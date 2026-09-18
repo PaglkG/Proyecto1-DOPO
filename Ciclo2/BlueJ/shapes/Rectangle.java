@@ -7,7 +7,7 @@ import java.awt.*;
  * @author  Michael Kolling and David J. Barnes (Modified)
  * @version 1.0  (15 July 2000)()
  */
-public class Rectangle extends StraightSided {
+public class Rectangle extends Polygon2D {
 
     public static final int EDGES = 4;
     

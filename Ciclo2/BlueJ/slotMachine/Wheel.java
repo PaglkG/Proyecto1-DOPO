@@ -26,8 +26,6 @@ public class Wheel {
     private Symbol selectedSymbol;
     private TreeMap<Integer,Symbol> symbols;
     
-    
-    
     /**Constructor class of wheel, niladic method class.
      */
     public Wheel() {

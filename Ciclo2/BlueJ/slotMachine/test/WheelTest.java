@@ -1,5 +1,6 @@
-package slotMachine;
+package slotMachine.test;
 
+import slotMachine.*;
 
 
 import static org.junit.jupiter.api.Assertions.*;
