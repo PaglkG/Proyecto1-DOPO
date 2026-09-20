@@ -313,9 +313,10 @@ public class SlotMachine {
             findedWheel1.swap(findedWheel2);
             wheels.put(wheel1, findedWheel2);
             wheels.put(wheel2, findedWheel1);
+            adjustWheels();
             isOk = true;
         } else {
-            isOk = false; // Falla porque alguna está bloqueada
+            isOk = false; // Falla porque alguna o las dos estám bloqueada
         }
     }
     
@@ -345,6 +346,7 @@ public class SlotMachine {
     public void frameFlickering() {
         isOk = false;
         isVisible = true;
+        bodySlotMachine.frameFlickering();
         for (Wheel wheel : wheels.values()) {
             wheel.frameFlickering();
         }

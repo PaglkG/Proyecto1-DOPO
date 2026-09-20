@@ -97,15 +97,15 @@ public class SlotMachineAceptanceTest {
         for (int i = 1; i <= NUMBER_WHEELS_TO_ADD; i++) {
             slmch.addWheel(i);
         }
-        slmch.addSymbol(1, "magenta");
+        slmch.addSymbol(1, "magenta");// 1
         slmch.addSymbol(1, "red");
         slmch.addSymbol(2, "red");
         slmch.addSymbol(2, "green");
-        slmch.addSymbol(3, "yellow");
-        slmch.addSymbol(4, "blue");
+        slmch.addSymbol(3, "yellow"); // 2
+        slmch.addSymbol(4, "blue");   // 3
         slmch.addSymbol(5, "green");
         int symbols = slmch.distinctSymbols();
-        int symbolsIdeal = 5;
+        int symbolsIdeal = 3;
         assertEquals(symbolsIdeal, symbols);
     }
     

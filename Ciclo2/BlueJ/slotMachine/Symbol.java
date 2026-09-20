@@ -40,8 +40,7 @@ public class Symbol {
      * @param newPosY newPosY that going to set like y position of this symbol. 
      */
     public void changePosition(int newPosX, int newPosY) {
-        this.symbolShape.setXPosition(newPosX);
-        this.symbolShape.setYPosition(newPosY);
+        this.symbolShape.setPosition(newPosX, newPosY);
         if (symbolShape.isVisible()) {
             this.symbolShape.frameFlickering();
         }

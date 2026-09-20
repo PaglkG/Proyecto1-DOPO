@@ -51,8 +51,13 @@ public class Wheel {
      */
     public void changePosition(int newPosX, int newPosY) {
         wheelShape.setPosition(newPosX, newPosY);
+        repositionSymbols();
         if (isVisible()) {
             wheelShape.frameFlickering();
+            boolean existsSelectedSymbol = selectedSymbol != null;
+            if (existsSelectedSymbol) {
+                selectedSymbol.frameFlickering();
+            }
         }
     }
     
@@ -279,8 +284,8 @@ public class Wheel {
         if (!isLocked && !isWheelToSwapLocked) {
             int thisPosition = this.getPositionWheel();
             int otherPosition = wheelToSwap.getPositionWheel();
-            this.moveHorizontal(otherPosition);
-            wheelToSwap.moveHorizontal(thisPosition); // Cambian las posisiones
+            //this.moveHorizontal(otherPosition);
+            //wheelToSwap.moveHorizontal(thisPosition); // Cambian las posisiones
             this.setPositionWheel(otherPosition);
             wheelToSwap.setPositionWheel(thisPosition); // Cambian el atributo de posición
             this.repositionSymbols();
@@ -291,12 +296,6 @@ public class Wheel {
             }
         }
         return;
-    }
-    
-    private void moveHorizontal(int times) {
-        int SPACEAMONGWHEEL = 20, LONGITUDEWHEEL = wheelShape.getWidth(); 
-        wheelShape.moveHorizontal(0); // Establecer en el inicio para despues correrla
-        changePosition((SPACEAMONGWHEEL+LONGITUDEWHEEL)*times, 0);
     }
     
     public int getNumberOfSymbols() {
@@ -418,7 +417,7 @@ public class Wheel {
     public boolean canSpin() {
         return !symbols.isEmpty() && !isLocked;
     }
-    
+     
     private String[] getColorSymbols() {
         int sizeSymbols = symbols.size(), indexColorSymbol = 0;
         String[] colorSymbols = new String[sizeSymbols];
