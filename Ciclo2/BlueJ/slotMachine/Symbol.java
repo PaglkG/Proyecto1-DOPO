@@ -67,27 +67,15 @@ public class Symbol {
         return this.symbolShape.getColor();
     }
 
-    public void setColor(String color) {
-        this.symbolShape.setColor(color);
-    }
-
 
     public boolean isVisible() {
         return this.symbolShape.isVisible();
-    }
-
-    public void setVisible(boolean isVisible) {
-        this.symbolShape.setVisible(isVisible);;
     }
 
     public Triangle getSymbolShape() {
         return (Triangle)symbolShape;
     }
 
-    public void setSymbolShape(Triangle symbolShape) {
-        this.symbolShape = symbolShape;
-    }
-    
     public void setPositionAtTheWheel(int newPositionAtTheWheel) {
         this.positionAtTheWheel = newPositionAtTheWheel;
     }

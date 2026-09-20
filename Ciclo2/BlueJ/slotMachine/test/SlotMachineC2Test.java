@@ -1,6 +1,7 @@
 package slotMachine.test;
 
 import slotMachine.*;
+
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -116,7 +117,7 @@ public class SlotMachineC2Test {
         for (int i = 1; i <= NUMBER_WHEELS_TO_ADD; i++) {
             sltmchn.delWheel(i);
         }
-        assertFalse(sltmchn.isOk());
+        assertFalse(sltmchn.ok());
     }
     
     @Test
@@ -133,11 +134,11 @@ public class SlotMachineC2Test {
         sltmchn.lock(2);
         sltmchn.lock(4);
         sltmchn.swap(2, 4);
-        assertFalse(sltmchn.isOk());
+        assertFalse(sltmchn.ok());
         sltmchn.swap(1, 5);
-        assertTrue(sltmchn.isOk());
+        assertTrue(sltmchn.ok());
         sltmchn.swap(2, 5);
-        assertFalse(sltmchn.isOk());
+        assertFalse(sltmchn.ok());
     }
     
     @Test 
@@ -151,18 +152,18 @@ public class SlotMachineC2Test {
         }
         sltmchn.lock(5);
         sltmchn.spin(); // El último spin debió hacer que isOK sea false
-        assertFalse(sltmchn.isOk());
+        assertFalse(sltmchn.ok());
         sltmchn.unlock(5);
         sltmchn.spin(); // Ya desbloqueada debería funcionar
-        assertTrue(sltmchn.isOk());
+        assertTrue(sltmchn.ok());
         sltmchn.lock(1);
         sltmchn.lock(3);
         sltmchn.spin(1); // Solamente deberian de girar la rueda 2, 4, 5 (Cambian de selectedSymbol o el simbolo principal)
-        assertFalse(sltmchn.isOk());
+        assertFalse(sltmchn.ok());
         sltmchn.spin(2);
-        assertTrue(sltmchn.isOk());
+        assertTrue(sltmchn.ok());
         sltmchn.spin(3);
-        assertFalse(sltmchn.isOk());
+        assertFalse(sltmchn.ok());
     }
     
     @Test

@@ -23,19 +23,19 @@ public class Canvas{
     private static Canvas canvasSingleton;
     private static final Map<String, Color> PALETTE = new HashMap<>();
     static {
-        PALETTE.put("red",        Color.red);
-        PALETTE.put("black",      Color.black);
-        PALETTE.put("blue",       Color.blue);
-        PALETTE.put("yellow",     Color.yellow);
-        PALETTE.put("green",      Color.green);
-        PALETTE.put("magenta",    Color.magenta);
-        PALETTE.put("white",      Color.white);
-        PALETTE.put("orange",     Color.orange);
-        PALETTE.put("pink",       Color.pink);
-        PALETTE.put("cyan",       Color.cyan);
-        PALETTE.put("gray",       Color.gray);
-        PALETTE.put("lightGray",  Color.lightGray);
-        PALETTE.put("darkGray",   Color.darkGray);
+        PALETTE.put("red",     Color.red);
+        PALETTE.put("black",   Color.black);
+        PALETTE.put("blue",    Color.blue);
+        PALETTE.put("yellow",  Color.yellow);
+        PALETTE.put("green",   Color.green);
+        PALETTE.put("magenta", Color.magenta);
+        PALETTE.put("white",   Color.white);
+        PALETTE.put("orange",  Color.orange);
+        PALETTE.put("pink",    Color.pink);
+        PALETTE.put("cyan",    Color.cyan);
+        PALETTE.put("gray",    Color.gray);
+        PALETTE.put("lightGray",Color.lightGray);
+        PALETTE.put("darkGray",Color.darkGray);
     }
 
     /**

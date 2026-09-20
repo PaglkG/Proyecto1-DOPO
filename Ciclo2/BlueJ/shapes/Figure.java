@@ -164,24 +164,6 @@ public abstract class Figure {
     }
     
     /**
-     * Set new x and y position
-     * @param x x is the new xPosition of figure.
-     * @param y y is the new yPosition of figure.
-     */
-    public void setXPosition(int x) {
-        this.xPosition = x;
-    }
-    
-    /**
-     * Set new x and y position
-     * @param x x is the new xPosition of figure.
-     * @param y y is the new yPosition of figure.
-     */
-    public void setYPosition(int y) {
-        this.yPosition = y;
-    }
-    
-    /**
      * Erasing shape on canvas
      * 
      */  
