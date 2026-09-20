@@ -405,22 +405,6 @@ public class SlotMachine {
         }
     }
     
-    private void order(NavigableMap<Integer, Wheel> subMap ) {
-        Wheel nextWheel = null, minWheel;
-        Integer posMin = Integer.MAX_VALUE, positionWheelMin = Integer.MAX_VALUE;
-        for (Map.Entry<Integer, slotMachine.Wheel> wheelNext : subMap.entrySet()) {
-            posMin = wheels.lowerKey(wheelNext.getKey());
-            nextWheel = wheelNext.getValue();
-            minWheel = wheels.get(posMin);
-            positionWheelMin = minWheel.getPositionX();
-            if (posMin != null) {
-                nextWheel.changePosition(positionWheelMin + 50, 50);
-            } else {
-                nextWheel.changePosition(20, 50); 
-            }
-        }
-    }
-    
     private boolean proofInvariant(int pos, boolean isAdding) { // Ayudado a perfeccionar con Gemini Pro Avanzado IA
         int sizeWheels = wheels.size(), plusSize = isAdding ? 1 : 0;
         boolean wheelExists = wheels.containsKey(pos), isOutBoundPos = pos <= 0 || pos > sizeWheels+plusSize;
