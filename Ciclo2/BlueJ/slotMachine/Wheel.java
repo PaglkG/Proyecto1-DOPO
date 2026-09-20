@@ -1,6 +1,7 @@
 package slotMachine;
 
 import shapes.Rectangle;
+import java.util.NavigableMap;
 
 import java.util.List;
 import java.util.Random;
@@ -24,7 +25,7 @@ public class Wheel {
     private boolean isLocked;
     private Random random;
     private Symbol selectedSymbol;
-    private TreeMap<Integer,Symbol> symbols;
+    private Map<Integer,Symbol> symbols;
     
     /**Constructor class of wheel, niladic method class.
      */
@@ -91,9 +92,38 @@ public class Wheel {
         symbols.put(symbol.getPositionAtTheWheel(), symbol);
         if (isVisible()) {
             if (symbol == selectedSymbol) {
-                symbol.makeVisible();
+                symbol.frameFlickering();
             } else {
                 symbol.makeInvisible();
+            }
+        }
+    }
+    
+    /** The symbol is added to each wheel; shape and wheel number are requested.
+     * @param wheel wheel is the number (integer) of wheel that will add the symbol. 
+     * @param symbol symbol is the type of symbol that will be added at the specific number wheel.
+     */
+    public void placeSymbol(String symbol) {
+        Symbol symbolToPlace = findJustColorSymbol(symbol);
+        boolean existsSymbol = symbolToPlace != null; 
+        // Se toma ayuda de Gemini IA Pro Avanzado para hacer parte de este método
+        // Añadimos !isLocked para respetar las reglas de bloqueo
+        if (existsSymbol && !isLocked) { 
+            
+            // 1. Ocultar el símbolo que está actualmente al frente
+            if (isVisible() && selectedSymbol != null) {
+                selectedSymbol.makeInvisible();
+            }
+            
+            // 2. Cambiar el puntero al nuevo símbolo
+            selectedSymbol = symbolToPlace;
+            
+            // 3. Acomodar sus coordenadas X y Y en el centro de la rueda
+            positionSymbol(selectedSymbol);
+            
+            // 4. Mostrar el nuevo símbolo si la máquina está visible
+            if (isVisible()) {
+                selectedSymbol.frameFlickering(); // Lo repinta para que quede encima del fondo negro
             }
         }
     }
@@ -103,10 +133,11 @@ public class Wheel {
      */
     public void delSymbol(Symbol triangle) {
         if (!isLocked) {
-            symbols.remove(triangle.getPositionAtTheWheel());
+            int positionAtWheelSymbol = triangle.getPositionAtTheWheel();
+            symbols.remove(positionAtWheelSymbol);
             triangle.makeInvisible();
-            boolean isSymbolsEmpty = this.symbols.isEmpty();
-            if (!isSymbolsEmpty && !isLocked) { 
+            boolean canSpinWheel = canSpin();
+            if (canSpinWheel) { 
                 spin();
             }
         }
@@ -179,16 +210,12 @@ public class Wheel {
     /**Makes this wheel visible.
      */
     public void makeVisible() {
-        if (!isVisible()) {
-            wheelShape.makeVisible();    
+        wheelShape.makeVisible();    
+        for (Symbol symbol : symbols.values()) {
+            symbol.makeVisible();
         }
-        boolean isSymbolsEmpty = symbols.isEmpty();
-        Set<Symbol> symbolsV = new HashSet<>(symbols.values());
-        for (Symbol symbol : symbolsV) {
-            if (isSymbolsEmpty) break;
-            if (!isVisible()) symbol.makeVisible();
-        }
-        if (selectedSymbol != null) selectedSymbol.makeVisible();
+        boolean existsSelectedSymbol = selectedSymbol != null;
+        if (existsSelectedSymbol) selectedSymbol.frameFlickering();
     }
 
     /**Displays all existing symbol colors in order.
@@ -255,7 +282,7 @@ public class Wheel {
 
     /**Gets the list of symbols.
      */   
-    public TreeMap<Integer,Symbol> getSymbols() {
+    public Map<Integer,Symbol> getSymbols() {
         return symbols;
     }
 
@@ -284,12 +311,8 @@ public class Wheel {
         if (!isLocked && !isWheelToSwapLocked) {
             int thisPosition = this.getPositionWheel();
             int otherPosition = wheelToSwap.getPositionWheel();
-            //this.moveHorizontal(otherPosition);
-            //wheelToSwap.moveHorizontal(thisPosition); // Cambian las posisiones
             this.setPositionWheel(otherPosition);
             wheelToSwap.setPositionWheel(thisPosition); // Cambian el atributo de posición
-            this.repositionSymbols();
-            wheelToSwap.repositionSymbols(); // Establecen las posiciones en el lugar correcto
             if (this.isVisible() && wheelToSwap.isVisible()) {
                 this.frameFlickering();
                 wheelToSwap.frameFlickering(); // Si son visibles entonces reponganse en el canvas
@@ -366,7 +389,8 @@ public class Wheel {
         if (symbols.isEmpty() || isLocked) return;
     
         // Determina la posición actual en el TreeMap
-        int currentKey = (selectedSymbol != null) ? selectedSymbol.getPositionAtTheWheel() : symbols.firstKey();
+        NavigableMap<Integer, Symbol> navSymbols = (NavigableMap<Integer, Symbol>) symbols;
+        int currentKey = (selectedSymbol != null) ? selectedSymbol.getPositionAtTheWheel() : navSymbols.firstKey();
 
         for (int i = 0; i < steps; i++) {
             Symbol current = symbols.get(currentKey);
@@ -394,8 +418,9 @@ public class Wheel {
     
     public void spin(int steps) { //Funcionalidad ayudada a corregir por Gemini Flash 3.6
         if (symbols.isEmpty() || isLocked) return;
-    
-        int currentKey = (selectedSymbol != null) ? selectedSymbol.getPositionAtTheWheel() : symbols.firstKey();
+        
+        NavigableMap<Integer, Symbol> navSymbols = (NavigableMap<Integer, Symbol>) symbols;
+        int currentKey = (selectedSymbol != null) ? selectedSymbol.getPositionAtTheWheel() : navSymbols.firstKey();
         int newKey = ((currentKey - 1 + steps) % symbols.size()) + 1;
     
         if (isVisible() && selectedSymbol != null) {
@@ -436,6 +461,21 @@ public class Wheel {
         int xPositionWheel = wheelShape.getXPosition();
         int heightWheel = wheelShape.getYPosition();
         symbol.changePosition(xPositionWheel + 15, heightWheel / 2 + 45);
+    }
+    
+    private Symbol findJustColorSymbol(String colorToFind) {
+        String colorFinded = null, currentColorSymbol = null;
+        Symbol symbolFinded = null;
+        boolean isColorFinded = false;
+        for (Symbol symbol : symbols.values()) {
+            currentColorSymbol = symbol.getColor();
+            isColorFinded = colorToFind.equals(currentColorSymbol);
+            if (isColorFinded) {
+                symbolFinded = symbol;
+                break;
+            }
+        }
+        return symbolFinded;
     }
     
     private void repositionSymbols() {

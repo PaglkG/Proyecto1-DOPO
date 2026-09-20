@@ -34,7 +34,7 @@ public class SlotMachineC1Test {
         assertTrue(wheels != null); // Comprueba que existe
         sltmchn.addWheel(1);
         Wheel wheel1 = wheels.get(1);
-        TreeMap<Integer, Symbol> symbolsCreated = wheel1.getSymbols();
+        Map<Integer, Symbol> symbolsCreated = wheel1.getSymbols();
         assertTrue(symbolsCreated != null); // Se deben crear tambien la existencia de los simbolos
     }
     
@@ -61,14 +61,14 @@ public class SlotMachineC1Test {
     @Test
     public void shouldGiveSymbols() {
         int NUMBER_WHEELS_TO_ADD = 5;
-        for (int i = 0; i < NUMBER_WHEELS_TO_ADD; i++) {
+        for (int i = 1; i <= NUMBER_WHEELS_TO_ADD; i++) {
             sltmchn.addWheel(i);
         }
-        sltmchn.addSymbol(0, "magenta");
-        sltmchn.addSymbol(1, "red");
-        sltmchn.addSymbol(2, "yellow");
-        sltmchn.addSymbol(3, "blue");
-        sltmchn.addSymbol(4, "green");
+        sltmchn.addSymbol(1, "magenta");
+        sltmchn.addSymbol(2, "red");
+        sltmchn.addSymbol(3, "yellow");
+        sltmchn.addSymbol(4, "blue");
+        sltmchn.addSymbol(5, "green");
         String[] proof = sltmchn.symbols();
         String[] result = new String[]{"magenta", "red", "yellow", "blue", "green"};
         assertArrayEquals(result, proof);
@@ -77,14 +77,14 @@ public class SlotMachineC1Test {
     @Test
     public void shouldGiveConfiguration() {
         int NUMBER_WHEELS_TO_ADD = 5;
-        for (int i = 0; i < NUMBER_WHEELS_TO_ADD; i++) {
+        for (int i = 1; i <= NUMBER_WHEELS_TO_ADD; i++) {
             sltmchn.addWheel(i);
         }
-        sltmchn.addSymbol(0, "magenta");
-        sltmchn.addSymbol(1, "red");
-        sltmchn.addSymbol(2, "yellow");
-        sltmchn.addSymbol(3, "blue");
-        sltmchn.addSymbol(4, "green");
+        sltmchn.addSymbol(1, "magenta");
+        sltmchn.addSymbol(2, "red");
+        sltmchn.addSymbol(3, "yellow");
+        sltmchn.addSymbol(4, "blue");
+        sltmchn.addSymbol(5, "green");
         String[] proof = sltmchn.configuration();
         String[] result = new String[]{"magenta","red", "yellow","blue", "green"};
         for (int i = 0; i < result.length;i++) {
@@ -95,14 +95,14 @@ public class SlotMachineC1Test {
     @Test
     public void shouldGiveNumberDistingSymbols() {
         int NUMBER_WHEELS_TO_ADD = 5;
-        for (int i = 0; i < NUMBER_WHEELS_TO_ADD; i++) {
+        for (int i = 1; i <= NUMBER_WHEELS_TO_ADD; i++) {
             sltmchn.addWheel(i);
         }
-        sltmchn.addSymbol(0, "magenta");
-        sltmchn.addSymbol(1, "red");
-        sltmchn.addSymbol(2, "yellow");
-        sltmchn.addSymbol(3, "blue");
-        sltmchn.addSymbol(4, "green");
+        sltmchn.addSymbol(1, "magenta");
+        sltmchn.addSymbol(2, "red");
+        sltmchn.addSymbol(3, "yellow");
+        sltmchn.addSymbol(4, "blue");
+        sltmchn.addSymbol(5, "green");
         int numDistinctSymbols = sltmchn.distinctSymbols();
         assertEquals(5, numDistinctSymbols);
     }
@@ -110,7 +110,7 @@ public class SlotMachineC1Test {
     @Test
     public void shouldGiveOtherNumberDistingSymbols() {
         int NUMBER_WHEELS_TO_ADD = 5;
-        for (int i = 0; i < NUMBER_WHEELS_TO_ADD; i++) {
+        for (int i = 1; i <= NUMBER_WHEELS_TO_ADD; i++) {
             sltmchn.addWheel(i);
             sltmchn.addSymbol(i, "magenta");
             sltmchn.addSymbol(i, "red");
@@ -122,7 +122,7 @@ public class SlotMachineC1Test {
         sltmchn.addSymbol(4, "green"); // Solamente colocamos 4 simbolos distintos en distintas ruedas
         
         int numDistinctSymbols = sltmchn.distinctSymbols();
-        assertEquals(7, numDistinctSymbols);
+        assertEquals(4, numDistinctSymbols);
     }
     
     @Test
@@ -161,6 +161,49 @@ public class SlotMachineC1Test {
         }
         sltmchn.exit();
         assertTrue(wheels.isEmpty());
+    }
+    
+    @Test
+    public void shouldFailWhenAddingSymbolToNonexistentWheel() { //Prueba supervisada y ayudada a hacer con Gemini Pro 3.1 IA
+        sltmchn.addWheel(1);
+        sltmchn.addSymbol(5, "red"); // Se intenta añadir a una rueda que no existe físicamente (si no hay auto-ajuste de índice)
+        
+        // En tu implementación, proofInvariant con isAdding = false lanzará false
+        assertFalse(sltmchn.ok(), "No debe permitir agregar un símbolo a una rueda inexistente");
+    }
+    
+    @Test
+    public void shouldPlaceSymbolCorrectly() {//Prueba supervisada y ayudada a hacer con Gemini Pro 3.1 IA
+        sltmchn.addWheel(1);
+        sltmchn.addSymbol(1, "red");
+        sltmchn.addSymbol(1, "blue");
+        sltmchn.addSymbol(1, "green");
+        
+        // Acción: Forzamos a que el símbolo visible sea el verde
+        sltmchn.placeSymbol(1, "green");
+        
+        // Verificación: Revisamos que el puntero selectedSymbol haya cambiado correctamente
+        String[] currentConfig = sltmchn.configuration();
+        assertEquals("green", currentConfig[0], "El símbolo al frente de la rueda 1 debe ser 'green'");
+        assertTrue(sltmchn.ok(), "La operación de ubicar el símbolo debió marcar ok() como true");
+    }
+
+    @Test
+    public void shouldNotPlaceSymbolWhenWheelIsLocked() {//Prueba supervisada y ayudada a hacer con Gemini Pro 3.1 IA
+        sltmchn.addWheel(1);
+        sltmchn.addSymbol(1, "magenta");
+        sltmchn.addSymbol(1, "yellow");
+        
+        // Forzamos a que inicie en magenta y luego bloqueamos la rueda
+        sltmchn.placeSymbol(1, "magenta");
+        sltmchn.lock(1);
+        
+        // Acción: Intentamos cambiarlo a amarillo mientras está bloqueada
+        sltmchn.placeSymbol(1, "yellow");
+        
+        // Verificación: La rueda debió ignorar el cambio por el condicional !isLocked
+        String[] currentConfig = sltmchn.configuration();
+        assertEquals("magenta", currentConfig[0], "El símbolo no debió cambiar porque la rueda está bloqueada");
     }
     
     @AfterEach

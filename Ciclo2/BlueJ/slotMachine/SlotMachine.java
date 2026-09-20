@@ -36,14 +36,16 @@ public class SlotMachine {
      * @param pos pos is the position of wheel that is added to this object.
      */
     public void addWheel(int pos) { //Ayudado a perfeccionar con Gemini Pro Avanzado IA
+        isOk = false;
         pos = adjustPosition(pos, true); 
         // Desplazar las llaves del mapa hacia la derecha para hacer espacio
-        List<Integer> keysToShift = new ArrayList<>(wheels.tailMap(pos, true).keySet());
+        NavigableMap<Integer, Wheel> cutMapWheels = wheels.tailMap(pos, true);
+        List<Integer> keysToShift = new ArrayList<>(cutMapWheels.keySet());
         Collections.reverse(keysToShift); // Importante: recorrer de mayor a menor para no sobrescribir
         for (Integer key : keysToShift) {
-            Wheel w = wheels.remove(key);
-            w.setPositionWheel(key + 1);
-            wheels.put(key + 1, w);
+            Wheel wheelToMove = wheels.remove(key);
+            wheelToMove.setPositionWheel(key + 1);
+            wheels.put(key + 1, wheelToMove);
         }
         Wheel newWheelToAdd = new Wheel();
         newWheelToAdd.setPositionWheel(pos);
@@ -60,19 +62,20 @@ public class SlotMachine {
      * If a wheel with a wheel to its right is removed, all wheels on the right move one position to the left
      * @param pos pos is the position of wheel
      */
-    public void delWheel(int pos) {
-        if (wheels.isEmpty()) {
-            isOk = false;
-            errorMessage("Esa acción no se puede realizar");
+    public void delWheel(int pos) {//Ayudado a perfeccionar con Gemini Pro Avanzado IA
+        isOk = false;
+        boolean isWheelsEmpty = wheels.isEmpty();
+        if (isWheelsEmpty) {
+            errorMessage("Esa acción no se puede realizar.");
             return;
         }
         // Auto-ajustar la posición sin lanzar error
         pos = adjustPosition(pos, false); 
         
         Wheel wheelToDelete = wheels.get(pos);
-        if (wheelToDelete.isLocked()) {
-            isOk = false;
-            errorMessage("Esa acción no se puede realizar");
+        boolean isWheelToDeleteLocked = wheelToDelete.isLocked();
+        if (isWheelToDeleteLocked) {
+            errorMessage("Esa acción no se puede realizar.");
             return;
         }
         
@@ -80,11 +83,12 @@ public class SlotMachine {
         wheels.remove(pos);
         
         // Desplazar las llaves del mapa hacia la izquierda
-        List<Integer> keysToShift = new ArrayList<>(wheels.tailMap(pos, false).keySet());
+        NavigableMap<Integer, Wheel> cutMapWheels = wheels.tailMap(pos, false);
+        List<Integer> keysToShift = new ArrayList<>(cutMapWheels.keySet());
         for (Integer key : keysToShift) {
-            Wheel w = wheels.remove(key);
-            w.setPositionWheel(key - 1); // Actualiza internamente el atributo
-            wheels.put(key - 1, w);      // Lo guarda en la nueva posición
+            Wheel wheelToMove = wheels.remove(key);
+            wheelToMove.setPositionWheel(key - 1); // Actualiza internamente el atributo
+            wheels.put(key - 1, wheelToMove);      // Lo guarda en la nueva posición
         }
         adjustWheels(); 
         isOk = true;
@@ -95,16 +99,12 @@ public class SlotMachine {
      * @param color color is the color of symbol that going to be created.
      */
     public void addSymbol(int pos, String color) {
-        if (!proofInvariant(pos, false)) return;
+        boolean isAprovedInvariant = proofInvariant(pos, false);
+        if (!isAprovedInvariant) return;
         Wheel wheelToAddSymbol = wheels.get(pos);
-        if (wheelToAddSymbol != null) {
-            Symbol symbolToAdd = new Symbol(color);
-            wheelToAddSymbol.addSymbol(symbolToAdd);
-            isOk = true;
-        } else {
-            isOk = false; // Falla porque no existe la rueda
-            ok();
-        }
+        Symbol symbolToAdd = new Symbol(color);
+        wheelToAddSymbol.addSymbol(symbolToAdd);
+        isOk = true;
     }
 
     /** The symbol; on each wheel is removed, object is deleted.
@@ -123,9 +123,10 @@ public class SlotMachine {
      * @param symbol symbol is the type of symbol that will be added at the specific number wheel.
      */
     public void placeSymbol(int wheel, String symbol) {
-        if (!proofInvariant(wheel, false)) return;
+        boolean isAprovedInvariant = proofInvariant(wheel, false);
+        if (!isAprovedInvariant) return;
         Wheel wheelToPlaceSymbol = wheels.get(wheel);
-        wheelToPlaceSymbol.addSymbol(symbol);   
+        wheelToPlaceSymbol.placeSymbol(symbol);   
         isOk = true;
     }
 
@@ -311,7 +312,7 @@ public class SlotMachine {
         boolean canSwapWheels = !findedWheel1.isLocked() && !findedWheel2.isLocked();
         if (canSwapWheels) {
             findedWheel1.swap(findedWheel2);
-            wheels.put(wheel1, findedWheel2);
+            wheels.put(wheel1, findedWheel2);// Establecen las posiciones en el lugar correcto
             wheels.put(wheel2, findedWheel1);
             adjustWheels();
             isOk = true;
@@ -406,18 +407,17 @@ public class SlotMachine {
     }
     
     private boolean proofInvariant(int pos, boolean isAdding) { // Ayudado a perfeccionar con Gemini Pro Avanzado IA
+        isOk = false;
         int sizeWheels = wheels.size(), plusSize = isAdding ? 1 : 0;
         boolean wheelExists = wheels.containsKey(pos), isOutBoundPos = pos <= 0 || pos > sizeWheels+plusSize;
         // Verifica posiciones negativas o saltos inválidos
         if (isOutBoundPos) {
-            isOk = false;
             errorMessage("Posición inválida o no consecutiva.");
             return false;
         }
         boolean ifIsAddingIsExistsPosition = isAdding ? wheelExists : !wheelExists;
         // Valida la existencia según la acción (agregar vs modificar)
         if (ifIsAddingIsExistsPosition) {
-            isOk = false;
             String messageToShow = isAdding ? "La posición ya está repetida." : "La rueda no existe.";
             errorMessage(messageToShow);
             return false;
