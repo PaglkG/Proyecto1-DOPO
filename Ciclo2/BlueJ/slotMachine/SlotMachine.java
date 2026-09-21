@@ -23,11 +23,11 @@ public class SlotMachine {
     /**Cronstructor, nyadic method class, of SlotMachine.
      */
     public SlotMachine() {
+        isOk = false;
         body = new Rectangle(10,10,270,270,"pink");
-        isOk = true;
         wheels = new TreeMap<>();
         isVisible = false;
-        
+        isOk = true;
         
     }
 
@@ -256,7 +256,8 @@ public class SlotMachine {
     /**Makes the slot machine visible.
      */
     public void makeVisible() {
-        if (!isVisible) isVisible = true;
+        isOk = false;
+        isVisible = true;
         body.makeVisible();
         for (Wheel wheel : wheels.values()) {
             wheel.makeVisible();

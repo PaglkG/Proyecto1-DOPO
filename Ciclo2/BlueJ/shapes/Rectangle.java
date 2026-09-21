@@ -11,13 +11,6 @@ public class Rectangle extends StraightSided {
 
     public static final int EDGES = 4;
     
-    public void setHeight(int newHeight) {
-        this.height = newHeight;
-    }
-    
-    public void setWidth(int newWidth) {
-        this.width = newWidth;
-    }
     
     /**
      * Create a new rectangle at default position with default color.
