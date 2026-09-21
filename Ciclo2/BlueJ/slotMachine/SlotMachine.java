@@ -136,31 +136,32 @@ public class SlotMachine {
     public void spin(int wheel) {
         boolean isAprovedInvariant = proofInvariant(wheel, false);
         if (!isAprovedInvariant) return;
+        wheel = adjustPosition(wheel, false); 
         Wheel wheelToSpin = wheels.get(wheel);
+        
         boolean canWheelSpin = wheelToSpin.canSpin();
         if (canWheelSpin) {
             wheelToSpin.spin();
         }
-        isOk = canWheelSpin;
+        
+        isOk = canWheelSpin; // Si está bloqueada, esto será false
         ok();
-        isOk = true;
     }
 
     /**Moves each of the wheels.
      */
     public void spin() {
         isOk = false;
-        boolean canWheelSpin = false;
+        boolean canWheelSpin = false, allCanSpin = true;
         for (Wheel wheel : wheels.values()) {
             canWheelSpin = wheel.canSpin();
             if (canWheelSpin) {
                 wheel.spin();
-                isOk = true;
             } else {
-                isOk = false;
-                break;
+                allCanSpin = false;
             }
         }
+        isOk = allCanSpin;
         ok();
     }
 

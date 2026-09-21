@@ -182,17 +182,12 @@ public class SlotMachineC2Test {
             sltmchn.addSymbol(i, "pink");
         }
         String[] specificConfiguration = {"blue", "cyan", "yellow", "green", "pink"};
+        
+        // Acción de girar rueda con una especificacion
         sltmchn.spin(specificConfiguration);
-        int indexSpecification = 0;
-        Symbol selectedSymbol;
-        String currentColorSelectedSymbolAtWheel, colorSpecificConfiguration;
-        boolean shouldBeEqualColorConfigurationWithColorSymbol;
-        for (Wheel wheel : wheels.values()) {
-            selectedSymbol = wheel.selectedSymbol();
-            currentColorSelectedSymbolAtWheel = selectedSymbol.getColor();
-            colorSpecificConfiguration = specificConfiguration[indexSpecification];
-            shouldBeEqualColorConfigurationWithColorSymbol = currentColorSelectedSymbolAtWheel.equals(colorSpecificConfiguration);
-            assertTrue(shouldBeEqualColorConfigurationWithColorSymbol);
-        }
+        
+        // Verificación 
+        assertArrayEquals(specificConfiguration, sltmchn.configuration(), "La configuración resultante no coincide con la esperada");
+        assertTrue(sltmchn.ok());
     }
 }
