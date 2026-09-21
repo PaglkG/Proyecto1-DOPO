@@ -134,40 +134,32 @@ public class SlotMachine {
      * @param wheel wheel indicates the number (integer) of wheel that going to be moved.
      */
     public void spin(int wheel) {
-        if (!proofInvariant(wheel, false)) return;
+        boolean isAprovedInvariant = proofInvariant(wheel, false);
+        if (!isAprovedInvariant) return;
         Wheel wheelToSpin = wheels.get(wheel);
-        boolean isWheelToSpinLocked = wheelToSpin.isLocked();
-        if (!isWheelToSpinLocked) {
+        boolean canWheelSpin = wheelToSpin.canSpin();
+        if (canWheelSpin) {
             wheelToSpin.spin();
         }
-        isOk = !isWheelToSpinLocked;
+        isOk = canWheelSpin;
         ok();
+        isOk = true;
     }
 
     /**Moves each of the wheels.
      */
     public void spin() {
-        boolean isWheelToSpinLocked=false;
+        isOk = false;
+        boolean canWheelSpin = false;
         for (Wheel wheel : wheels.values()) {
-            isWheelToSpinLocked = wheel.isLocked();
-            if (!isWheelToSpinLocked) {
+            canWheelSpin = wheel.canSpin();
+            if (canWheelSpin) {
                 wheel.spin();
+                isOk = true;
+            } else {
+                isOk = false;
+                break;
             }
-            isOk = !isWheelToSpinLocked;
-            ok();
-            return;
-        }
-        boolean noExistsSomeWheel = wheels.isEmpty();
-        if (noExistsSomeWheel) {
-            isOk = false;
-        } else {
-            for (Wheel wheel : wheels.values()) {
-                isWheelToSpinLocked = wheel.isLocked();
-                if (!isWheelToSpinLocked) {
-                    wheel.spin();
-                }
-            }
-            isOk = !isWheelToSpinLocked;
         }
         ok();
     }
@@ -177,9 +169,11 @@ public class SlotMachine {
      */
     public String[] symbols() {
         isOk = false;
-        ArrayList<String> colorSymbols = new ArrayList<>();        
+        ArrayList<String> colorSymbols = new ArrayList<>();    
+        String[] symbolsWheel = null;
         for (Wheel wheel : wheels.values()) {
-            for (String color : wheel.symbols()){
+            symbolsWheel = wheel.symbols();
+            for (String color : symbolsWheel) {
                 colorSymbols.add(color);
             }
         }
@@ -201,8 +195,10 @@ public class SlotMachine {
             }
         }
         Set<String> colorSymbols = new HashSet<>();
+        String[] symbolsWheel = null;
         for (Wheel wheel : wheels.values()) {
-            for (String color : wheel.symbols()){
+            symbolsWheel = wheel.symbols();
+            for (String color : symbolsWheel){
                 colorSymbols.add(color);
             }
         }
@@ -215,12 +211,7 @@ public class SlotMachine {
      */
     public String[] configuration() {
         isOk = false;
-        ArrayList<String> colorSymbols = new ArrayList<>();
-        for (Wheel wheel : wheels.values()) {
-            if (wheel.getSelectedSymbol() != null) {
-                colorSymbols.add(wheel.getSelectedSymbol().getColor());
-            }
-        }
+        List<String> colorSymbols = getColorSymbolWheels();
         String[] symbols = colorSymbols.toArray(new String[0]);
         isOk = true;
         return symbols;
@@ -232,21 +223,12 @@ public class SlotMachine {
      */
     public boolean isJackpot() {
         isOk = false;
-        ArrayList<String> colorSymbols = new ArrayList<>();
-        for (Wheel wheel : wheels.values()) {
-            if (wheel.getSelectedSymbol() != null) {
-                colorSymbols.add(wheel.getSelectedSymbol().getColor());
-            }
-        }
-        boolean existsColorsSymbolsOrWheels = colorSymbols.isEmpty() || wheels.isEmpty();
-        if (existsColorsSymbolsOrWheels) {
-            isOk = false;
-            ok();
-            return false;
-        }
-        String first = colorSymbols.get(0);
-        for (int i = 1; i < colorSymbols.size(); i++) {
-            if (!first.equals(colorSymbols.get(i))) {
+        List<String> colorSymbols = getColorSymbolWheels();
+        String firstColor = colorSymbols.get(0);
+        boolean hasTheSameColor = false;
+        for (String color : colorSymbols) {
+            hasTheSameColor = firstColor.equals(color);
+            if (!hasTheSameColor) {
                 isOk = true;
                 return false;
             }
@@ -431,6 +413,22 @@ public class SlotMachine {
             wheel.changePosition(currentX, 50);
             currentX += 50;
         }
+    }
+    
+    private List<String> getColorSymbolWheels() {
+        ArrayList<String> colorSymbols = new ArrayList<>();
+        Symbol selectedSymbolWheel = null;
+        boolean existsSelectedSymbol = false;
+        String colorSelectedSymbol = null;
+        for (Wheel wheel : wheels.values()) {
+            selectedSymbolWheel = wheel.getSelectedSymbol();
+            existsSelectedSymbol = selectedSymbolWheel != null;
+            if (existsSelectedSymbol) {
+                colorSelectedSymbol = selectedSymbolWheel.getColor();
+                colorSymbols.add(colorSelectedSymbol);
+            }
+        }
+        return colorSymbols;
     }
     
     // Ajusta la posición para cumplir con los límites descritos en el documento

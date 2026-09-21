@@ -178,13 +178,14 @@ public class Wheel {
     /**Choose a symbol randomly.
      */
     public void spin() {
-        boolean isSymbolsEmpty = this.symbols.isEmpty();
-        if (!isSymbolsEmpty && !isLocked) {
+        boolean canSpin = canSpin();
+        if (canSpin) {
             List<Integer> keys = new ArrayList<>(this.symbols.keySet());
             int randomIndex = random.nextInt(keys.size());
             int randomKey = keys.get(randomIndex);
             selectedSymbol = symbols.get(randomKey);
-            if (isVisible()) {
+            boolean isVisible = isVisible();
+            if (isVisible) {
                 selectedSymbol.frameFlickering();
             }
         }
