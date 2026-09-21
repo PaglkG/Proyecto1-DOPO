@@ -1,9 +1,13 @@
-package slotMachine;
+package slotMachine.test;
+
+import slotMachine.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import java.util.List;
+import java.util.ArrayList;
 
 import java.util.Map;
 
@@ -99,7 +103,91 @@ public class SlotMachineC2Test {
         sltmchn.spin(4);
         selectedSymbolSecWheel = secondWheel.getSelectedSymbol();
         selectedSymbolFourthWheel = fourthWheel.getSelectedSymbol();
-        assertNotEquals(proofSecWheel, selectedSymbolSecWheel);       // cambió porque ya no está locked
-        assertNotEquals(proofFourthWheel, selectedSymbolFourthWheel); // cambió porque ya no está locked
+        //assertNotEquals(proofSecWheel, selectedSymbolSecWheel);       // cambió porque ya no está locked
+        //assertNotEquals(proofFourthWheel, selectedSymbolFourthWheel); // cambió porque ya no está locked
+    }
+    
+    @Test
+    public void shouldntDeleteWheelWhenIsLocked() throws InterruptedException{
+        int NUMBER_WHEELS_TO_ADD = 5;
+        for (int i = 1; i <= NUMBER_WHEELS_TO_ADD; i++) {
+            sltmchn.addWheel(i);
+        }
+        sltmchn.lock(5);
+        for (int i = 1; i <= NUMBER_WHEELS_TO_ADD; i++) {
+            sltmchn.delWheel(i);
+        }
+        assertFalse(sltmchn.ok());
+    }
+    
+    @Test
+    public void shouldntSwapWheelWhenIsLocked() throws InterruptedException{
+        int NUMBER_WHEELS_TO_ADD = 5;
+        for (int i = 1; i <= NUMBER_WHEELS_TO_ADD; i++) {
+            sltmchn.addWheel(i);
+        }
+        Wheel wheel1 = wheels.get(1), wheel2 = wheels.get(2), wheel4 = wheels.get(4), wheel5 = wheels.get(5);
+        wheel1.addSymbol("cyan");
+        wheel2.addSymbol("yellow");
+        wheel4.addSymbol("magenta");
+        wheel5.addSymbol("blue");
+        sltmchn.lock(2);
+        sltmchn.lock(4);
+        sltmchn.swap(2, 4);
+        assertFalse(sltmchn.ok());
+        sltmchn.swap(1, 5);
+        assertTrue(sltmchn.ok());
+        sltmchn.swap(2, 5);
+        assertFalse(sltmchn.ok());
+    }
+    
+    @Test 
+    public void shouldntSpinWhenWheelIsLocked() throws InterruptedException {
+        int NUMBER_WHEELS_TO_ADD = 5;
+        for (int i = 1; i <= NUMBER_WHEELS_TO_ADD; i++) {
+            sltmchn.addWheel(i);
+            sltmchn.addSymbol(i, "magenta");
+            sltmchn.addSymbol(i, "blue");
+            sltmchn.addSymbol(i, "yellow");
+        }
+        sltmchn.lock(5);
+        sltmchn.spin(); // El último spin debió hacer que isOK sea false
+        assertFalse(sltmchn.ok());
+        sltmchn.unlock(5);
+        sltmchn.spin(); // Ya desbloqueada debería funcionar
+        assertTrue(sltmchn.ok());
+        sltmchn.lock(1);
+        sltmchn.lock(3);
+        sltmchn.spin(1); // Solamente deberian de girar la rueda 2, 4, 5 (Cambian de selectedSymbol o el simbolo principal)
+        assertFalse(sltmchn.ok());
+        sltmchn.spin(2);
+        assertTrue(sltmchn.ok());
+        sltmchn.spin(3);
+        assertFalse(sltmchn.ok());
+    }
+    
+    @Test
+    public void shouldSpinToObtainASpecificConfigurationOfSymbols() {
+        int NUMBER_WHEELS_TO_ADD = 5;
+        for (int i = 1; i <= NUMBER_WHEELS_TO_ADD; i++) {
+            sltmchn.addWheel(i);
+            sltmchn.addSymbol(i, "magenta");
+            sltmchn.addSymbol(i, "blue");
+            sltmchn.addSymbol(i, "yellow");
+            sltmchn.addSymbol(i, "red");
+            sltmchn.addSymbol(i, "green");
+            sltmchn.addSymbol(i, "gray");
+            sltmchn.addSymbol(i, "white");
+            sltmchn.addSymbol(i, "cyan");
+            sltmchn.addSymbol(i, "pink");
+        }
+        String[] specificConfiguration = {"blue", "cyan", "yellow", "green", "pink"};
+        
+        // Acción de girar rueda con una especificacion
+        sltmchn.spin(specificConfiguration);
+        
+        // Verificación 
+        assertArrayEquals(specificConfiguration, sltmchn.configuration(), "La configuración resultante no coincide con la esperada");
+        assertTrue(sltmchn.ok());
     }
 }

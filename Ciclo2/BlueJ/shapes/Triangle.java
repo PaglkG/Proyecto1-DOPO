@@ -8,17 +8,11 @@ import java.awt.*;
  * @version 1.0  (15 July 2000)
  */
 
-public class Triangle extends StraightSided {
+public class Triangle extends Polygon2D {
     
     public static final int VERTICES=3;
 
     private double rotationAngle; // La implementacion de la rotación fue hecha con Gemini IA
-    
-    
-    public void makeInvisible(){
-        erase();
-        isVisible = false;
-    }
     
     /**
      * Create a new triangle at default position with default color.
@@ -40,13 +34,9 @@ public class Triangle extends StraightSided {
         rotationAngle = 0.0;
     }
     
-    /**
-     * Flips triangle vertically. Inspiración: Gemini IA.
-     */
-    public void flip() {
+    public void makeInvisible(){
         erase();
-        height = -height;
-        draw();
+        isVisible = false;
     }
     
     /**
@@ -60,53 +50,11 @@ public class Triangle extends StraightSided {
         draw();
     }
     
-    /**
-     * Make to move triangle # times,
-     * triangle moves 10 units depending on if times is positive this triangle
-     * shifts to the rigth, but if times is negative figure shifts to the left.
-     * @param times times are the number of iterations (10 units per iteration) 
-     * that this figure moves based on if this number is negative or positive.
-     */
-    public void walk(int times) {
-        slowMoveHorizontal(times*10);
-    }
-    
-    /**
-     * Convert this triangle into an equilateral triangle.
-     */
-    public void equilateral() {
-        erase();
-        /* Según area = s^2*(sqrt(3)/4) <- Formula de area del triangulo equilatero
-         * s = sqrt(4*area/sqrt(3))
-         */
-        double s = Math.sqrt((4 * area()) / Math.sqrt(3)); // Lado de triang. equilatero
-    
-        width = (int) s;
-        height = (int) (s * (Math.sqrt(3) / 2)); /* Propiedad de la altura 
-            de una triangulo equilatero: s * sqrt(3)/2*/
-        
-        draw();
-    }
-
-    /**
-     * Give area of triangle.
-     */
-    public int area() {
-        int areaTriangle = (height*width)/2;
-        
-        if (areaTriangle > 0) {
-            return areaTriangle;
-        }
-        width = 0; // Si al calcular el area da negativo o 0 entonces el area es 0
-        height = 0;
-        return 0;
-    }
-
     /*
      * Draw the triangle with current specifications on screen.
      */
     @Override
-    public void draw(){// Este método fue ayudado a modificar por Gemini IA para que funcione rotate()
+    protected void draw(){// Este método fue ayudado a modificar por Gemini IA para que funcione rotate()
         if(isVisible) {
         Canvas canvas = Canvas.getCanvas();
         

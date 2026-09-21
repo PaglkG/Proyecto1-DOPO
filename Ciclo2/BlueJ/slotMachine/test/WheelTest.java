@@ -1,5 +1,6 @@
-package slotMachine;
+package slotMachine.test;
 
+import slotMachine.*;
 
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -26,12 +27,7 @@ public class WheelTest
         wheel.changeColor("black");
         wheel.changeColor("blue");
         wheel.changeColor("white");
-        wheel.changePositionX(30);
-        wheel.changePositionX(300);
-        wheel.changePositionX(120);
-        wheel.changePositionY(200);
-        wheel.changePositionY(400);
-        wheel.changePositionY(40);
+        wheel.changePosition(120, 40);
         assertEquals("white", wheel.getColor(), "The color of the wheel should be 'white'");
         assertEquals(120, wheel.getXPosition(), "The X position should be 120");
         assertEquals(40, wheel.getYPosition(), "The Y position should be 40");
@@ -45,7 +41,7 @@ public class WheelTest
         wheel.addSymbol(triangle1);
         wheel.addSymbol(triangle2);
         wheel.addSymbol(triangle3);
-        assertEquals(triangle1, wheel.selecSymbol());
+        assertEquals(triangle1, wheel.selectedSymbol());
         wheel.delSymbol(triangle3);
         
     }
@@ -60,6 +56,6 @@ public class WheelTest
         wheel.addSymbol(triangle3);
         wheel.delSymbol(triangle1);
         wheel.delSymbol(triangle2);
-        assertEquals(triangle3, wheel.selecSymbol());
+        assertEquals(triangle3, wheel.selectedSymbol());
     }
 }

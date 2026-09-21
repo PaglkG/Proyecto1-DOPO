@@ -13,7 +13,6 @@ import java.awt.*;
  */
 public class Symbol {
     private int positionAtTheWheel;
-    private Wheel wheel;
     private Triangle symbolShape;
     
     /**Constructor symbol, dyadic method class
@@ -23,6 +22,7 @@ public class Symbol {
     public Symbol(String color) {
         symbolShape = new Triangle();
         symbolShape.changeColor(color);
+        symbolShape.changeSize(30, 30);
     }
     
     /**Constructor symbol, dyadic method class
@@ -34,23 +34,13 @@ public class Symbol {
         symbolShape.changeColor(color);
         positionAtTheWheel = pos;
     }
-
-    /**Sets a new X position to this symbol.
-     * @param newPosX newPosX that going to set like x position of this symbol. 
-     */
-    public void changePositionX(int newPosX) {
-        symbolShape.setXPosition(newPosX);
-        if (symbolShape.isVisible()) {
-            this.symbolShape.frameFlickering();
-        }
-        
-    }
-
-    /**Sets a new Y position  to this symbol.
+    
+    /**Sets a new X and Y position to this symbol.
+     * @param newPosX newPosX that going to set like x position of this symbol.
      * @param newPosY newPosY that going to set like y position of this symbol. 
      */
-    public void changePositionY(int newPosY) {
-        this.symbolShape.setYPosition(newPosY);
+    public void changePosition(int newPosX, int newPosY) {
+        this.symbolShape.setPosition(newPosX, newPosY);
         if (symbolShape.isVisible()) {
             this.symbolShape.frameFlickering();
         }
@@ -76,27 +66,15 @@ public class Symbol {
         return this.symbolShape.getColor();
     }
 
-    public void setColor(String color) {
-        this.symbolShape.setColor(color);
-    }
-
 
     public boolean isVisible() {
         return this.symbolShape.isVisible();
-    }
-
-    public void setVisible(boolean isVisible) {
-        this.symbolShape.setVisible(isVisible);;
     }
 
     public Triangle getSymbolShape() {
         return (Triangle)symbolShape;
     }
 
-    public void setSymbolShape(Triangle symbolShape) {
-        this.symbolShape = symbolShape;
-    }
-    
     public void setPositionAtTheWheel(int newPositionAtTheWheel) {
         this.positionAtTheWheel = newPositionAtTheWheel;
     }
@@ -115,16 +93,16 @@ public class Symbol {
     
     public boolean equals(Symbol symbol) {
         boolean hasSamePosition = positionAtTheWheel == symbol.getPositionAtTheWheel();
-        boolean hasSameWheel = Objects.equals(wheel, symbol.getWheel());
         boolean hasSameColor = Objects.equals(getColor(), symbol.getColor());
-        return hasSamePosition && hasSameWheel && hasSameColor;
+        return hasSamePosition && hasSameColor;
+    }
+    
+    public void moveSlowly(int howMany) {
+        symbolShape.slowMoveVertical(howMany);
     }
     
     public void frameFlickering() {
         symbolShape.frameFlickering();
     }
     
-    public Wheel getWheel() {
-        return wheel;
-    }
 }

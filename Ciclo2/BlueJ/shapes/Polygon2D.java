@@ -1,17 +1,17 @@
 package shapes;
 /**
- * StraightSided are the figures that has a height and a width.
+ * Polygon2D are the figures that has a height and a width.
  * This is the class StrightSided.
  * 
  * @author Gualdron - Villagran
  * @version 1.0
  */
-public abstract class StraightSided extends Figure {
+public abstract class Polygon2D extends Figure {
     
     protected int height;
     protected int width;
     
-    protected StraightSided(int x, int y, String color) {
+    protected Polygon2D(int x, int y, String color) {
         super(x, y, color);
     }
     
@@ -20,8 +20,10 @@ public abstract class StraightSided extends Figure {
      */
     public void changeSize(int newHeight, int newWidth) {
         erase();
-        height = newHeight;
-        width = newWidth;
+        if (newHeight >= 0 && newWidth >= 0){
+            height = newHeight;
+            width = newWidth;
+        }
         draw();
     }
     

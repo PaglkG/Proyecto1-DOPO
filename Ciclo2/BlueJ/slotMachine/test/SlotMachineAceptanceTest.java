@@ -1,5 +1,6 @@
-package slotMachine;
+package slotMachine.test;
 
+import slotMachine.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.AfterEach;
@@ -96,22 +97,22 @@ public class SlotMachineAceptanceTest {
         for (int i = 1; i <= NUMBER_WHEELS_TO_ADD; i++) {
             slmch.addWheel(i);
         }
-        slmch.addSymbol(1, "magenta");
+        slmch.addSymbol(1, "magenta");// 1
         slmch.addSymbol(1, "red");
         slmch.addSymbol(2, "red");
         slmch.addSymbol(2, "green");
-        slmch.addSymbol(3, "yellow");
-        slmch.addSymbol(4, "blue");
+        slmch.addSymbol(3, "yellow"); // 2
+        slmch.addSymbol(4, "blue");   // 3
         slmch.addSymbol(5, "green");
         int symbols = slmch.distinctSymbols();
-        int symbolsIdeal = 5;
+        int symbolsIdeal = 3;
         assertEquals(symbolsIdeal, symbols);
     }
     
     @Test
     public void shouldDelSpecificSymbolWheel() throws InterruptedException {
         int NUMBER_WHEELS_TO_ADD = 5;
-        for (int i = 0; i < NUMBER_WHEELS_TO_ADD; i++) {
+        for (int i = 1; i < NUMBER_WHEELS_TO_ADD; i++) {
             slmch.addWheel(i);
             slmch.addSymbol(i, "magenta");
         }
@@ -123,7 +124,7 @@ public class SlotMachineAceptanceTest {
     @Test
     public void shouldDelSpecificSymbolWheelAndSpin() throws InterruptedException {
         int NUMBER_WHEELS_TO_ADD = 5;
-        for (int i = 0; i < NUMBER_WHEELS_TO_ADD; i++) {
+        for (int i = 1; i < NUMBER_WHEELS_TO_ADD; i++) {
             slmch.addWheel(i);
             slmch.addSymbol(i, "magenta");
             slmch.addSymbol(i, "blue");
@@ -136,13 +137,13 @@ public class SlotMachineAceptanceTest {
     @Test
     public void shouldPlaceSymbols() throws InterruptedException {
         int NUMBER_WHEELS_TO_PLACE = 5;
-        for (int i = 0; i < NUMBER_WHEELS_TO_PLACE; i++) {
+        for (int i = 1; i < NUMBER_WHEELS_TO_PLACE; i++) {
             slmch.addWheel(i);
             slmch.placeSymbol(i, "magenta");
             Thread.sleep(500);
         }
         Thread.sleep(1500);
-        for (int i = 0; i < NUMBER_WHEELS_TO_PLACE; i++) {
+        for (int i = 1; i < NUMBER_WHEELS_TO_PLACE; i++) {
             slmch.addSymbol(i, "blue");
             slmch.spin();
             Thread.sleep(500);
@@ -256,7 +257,7 @@ public class SlotMachineAceptanceTest {
             slmch.addWheel(i);
             Thread.sleep(500);
         }
-        Wheel wheel1 = wheels.get(0), wheel2 = wheels.get(1), wheel4 = wheels.get(3), wheel5 = wheels.get(4);
+        Wheel wheel1 = wheels.get(1), wheel2 = wheels.get(2), wheel4 = wheels.get(4), wheel5 = wheels.get(5);
         wheel2.addSymbol("yellow");
         Thread.sleep(500);
         wheel4.addSymbol("magenta");
@@ -273,6 +274,25 @@ public class SlotMachineAceptanceTest {
         Thread.sleep(1500);
         slmch.swap(2, 5);
         Thread.sleep(2500);
+    }
+    
+    @Test
+    public void shouldMoveSlowlyWhenSpinWithSteps() throws InterruptedException {
+        int NUMBER_WHEELS_TO_ADD = 5;
+        for (int i = 1; i <= NUMBER_WHEELS_TO_ADD; i++) {
+            slmch.addWheel(i);
+            Thread.sleep(500);
+            slmch.addSymbol(i, "yellow");
+            slmch.addSymbol(i, "magenta");
+            slmch.addSymbol(i, "blue");
+            slmch.addSymbol(i, "cyan");
+        }
+        slmch.spin(1, 2); // Queda en blue
+        Thread.sleep(2000);
+        slmch.spin(2, 3); // Queda en cyan
+        Thread.sleep(2000);
+        slmch.spin(4, 4); // Queda en yellow
+        Thread.sleep(2000);
     }
     
     @AfterEach
