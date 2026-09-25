@@ -42,7 +42,25 @@ public class SlotMachine implements SlotMachineContest {
         wheels = new TreeMap<>();
         isVisible = false;
         bodySlotMachine = new Rectangle(10, 10, 270, 270, "pink");
+        //esta parte la hizo geminis, todos los posibles 50 colores
+        String[] colorsHex = {
+            "#FF0000", "#8B0000", "#DC143C", "#FF6347", "#FFC0CB", "#FF1493", "#C71585",
+            "#FF4500", "#FF8C00", "#FFA500", "#FFD700", "#FFFF00", "#F0E68C", "#B8860B",
+            "#008000", "#00FF00", "#32CD32", "#228B22", "#8FBC8F", "#00FA9A", "#6B8E23",
+            "#0000FF", "#000080", "#1E90FF", "#4682B4", "#00BFFF", "#00FFFF", "#48D1CC",
+            "#5F9EA0", "#800080", "#4B0082", "#8A2BE2", "#DA70D6", "#EE82EE", "#FF00FF",
+            "#9370DB", "#A52A2A", "#8B4513", "#D2691E", "#F4A460", "#DEB887", "#FFDEAD",
+            "#000000", "#2F4F4F", "#696969", "#808080", "#A9A9A9", "#C0C0C0", "#DCDCDC",
+            "#F5F5DC"
+        };
+        //hasta aca
         
+        for (int i = 0; i<= cant ;i++) {
+            addWheel(i);
+            for (int u = 0; u <= cant ;u++){
+                addSymbol(i,colorsHex[u]);
+            }
+        }
         
         isOk = true;
 
