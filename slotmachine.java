@@ -10,26 +10,23 @@ public class slotmachine {
     private static int n;
     private static int k;
     private static Scanner sc;
+    private static String input;
+    private static PrintWriter out = new PrintWriter(new BufferedOutputStream(System.out));;
+
     public static void main(String[] args){
-        PrintWriter out = new PrintWriter(new BufferedOutputStream(System.out));
         sc = new Scanner(System.in);
-        String input = sc.nextLine();
+        input = sc.nextLine();
         n = Integer.parseInt(input);
         input = sc.nextLine();
         k = Integer.parseInt(input);
         if (k == 1) {
         System.exit(0);
         }
-        diferencia(k,n,sc);
-        int[] movimientos = iguales(k,n,sc);
+        diferencia();
+        int[] movimientos = iguales();
         for (int u = 2; u <= n; u++) {
             int movimiento = movimientos[u]; 
-    
-            String print = u + " " + -movimiento;
-            out.write(print + "\n");
-            out.flush();
-            input = sc.nextLine();
-            k = Integer.parseInt(input);
+            printOI(u,-movimiento);
     
         }
         if (k == 1) {
@@ -38,17 +35,12 @@ public class slotmachine {
         sc.close();
     }
 
-    private static void diferencia(int k, int n,Scanner sc) {
-        PrintWriter out = new PrintWriter(new BufferedOutputStream(System.out));
+    private static void diferencia() {
         int kOld = k;
         for (int i = 2; i <= n; i++) {
             int posicionKmaximo = 0;
             for (int u = 1; u <= n; u++) {
-                String print = i + " " + 1;
-                out.write(print + "\n");
-                out.flush();
-                String input = sc.nextLine();
-                k = Integer.parseInt(input);
+                printOI(i,1);
                 if (k == 1) {
                     System.exit(0);
                 }
@@ -58,11 +50,7 @@ public class slotmachine {
                 }
             }
             if (posicionKmaximo != 0) {
-                String print = i + " " + posicionKmaximo;
-                out.write(print + "\n");
-                out.flush();
-                String input = sc.nextLine();
-                k = Integer.parseInt(input);
+                printOI(i,posicionKmaximo);
                 if (k == 1) {
                     System.exit(0);
                 }
@@ -71,58 +59,46 @@ public class slotmachine {
        
     }
 
-    private static int[] iguales(int k, int n,Scanner sc) {
+    private static int[] iguales() {
         int[] movimientos = new int[n + 1];
-        PrintWriter out = new PrintWriter(new BufferedOutputStream(System.out));
         for (int i = 1; i < n; i++) {
-            String print = 1 + " " + 1;
-            out.write(print + "\n");
-            out.flush();
-            String input = sc.nextLine();
-            k = Integer.parseInt(input);
+            printOI(1,1);
             if (k == 1) {
                 System.exit(0);
             }
             int kOld = k;
             for (int u = 2; u <= n; u++) {
-                print = u + " " + -i;
-                out.write(print + "\n");
-                out.flush();
-                input = sc.nextLine();
-                k = Integer.parseInt(input);
+                printOI(u,-i);
                 if (k == 1) {
                     System.exit(0);
                 }
                 if(kOld < k) {
                     movimientos[u] = i;
-                    print = u + " " + i;
-                    out.write(print + "\n");
-                    out.flush();
-                    input = sc.nextLine();
-                    k = Integer.parseInt(input);
+                    printOI(u,i);
                     if (k == 1) {
                         System.exit(0);
                     }
                     break;
                 }
                 else {
-                    print = u + " " + i;
-                    out.write(print + "\n");
-                    out.flush();
-                    input = sc.nextLine();
-                    k = Integer.parseInt(input);
+                    printOI(u,i);
                     if (k == 1) {
                         System.exit(0);
                     }
                 }
             }
         }
-        String print = 1 + " " + 1;
-        out.write(print + "\n");
-        out.flush();
-        String input = sc.nextLine();
+        printOI(1,1);
     
 
         return movimientos;
+    }
+
+    private static void printOI(int m, int u) {
+        String print = m + " " + u;
+        out.write(print + "\n");
+        out.flush();
+        String input = sc.nextLine();
+        k = Integer.parseInt(input);
     }
 }
