@@ -25,6 +25,7 @@ public class Wheel {
     private boolean isLocked;
     private Random random;
     private Symbol selectedSymbol;
+    private Integer selectedSymbolInteger;
     private Map<Integer,Symbol> symbols;
     
     /**Constructor class of wheel, niladic method class.
@@ -38,6 +39,37 @@ public class Wheel {
         random = new Random();
         symbols = new TreeMap<>();
     }
+    
+  
+
+    public void changePositionSymbol(int post) {
+        if (symbols.isEmpty() || isLocked) {
+            return;
+        }
+        int currentPosition = selectedSymbolInteger != null ? selectedSymbolInteger : 1;
+        int totalSymbols = symbols.size();
+        int newPosition = (currentPosition - 1 + post) % totalSymbols;
+        if (newPosition < 0) {
+            newPosition += totalSymbols;
+        }
+        newPosition += 1; 
+        Symbol newSymbol = symbols.get(newPosition);
+        if (newSymbol != null) {
+            if (isVisible() && selectedSymbol != null) {
+                selectedSymbol.makeInvisible();
+            }
+
+            selectedSymbol = newSymbol;
+            selectedSymbolInteger = newPosition;
+
+            positionSymbol(selectedSymbol);
+            if (isVisible()) {
+                selectedSymbol.frameFlickering();
+            }
+        }
+    }
+
+    
     
     /**To set the wheel color.
      * @param newColor newColor is the color that will be set on this wheel.
@@ -86,6 +118,7 @@ public class Wheel {
         boolean isSymbolsEmpty = symbols.isEmpty();
         if (isSymbolsEmpty) {
             selectedSymbol = symbol;
+            selectedSymbolInteger = symbols.size() + 1; 
         }
         symbol.setPositionAtTheWheel(symbols.size()+1);
         positionSymbol(symbol);
@@ -118,6 +151,7 @@ public class Wheel {
             // 2. Cambiar el puntero al nuevo símbolo
             selectedSymbol = symbolToPlace;
             
+            selectedSymbolInteger = symbolToPlace.getPositionAtTheWheel();
             // 3. Acomodar sus coordenadas X y Y en el centro de la rueda
             positionSymbol(selectedSymbol);
             
@@ -184,6 +218,7 @@ public class Wheel {
             int randomIndex = random.nextInt(keys.size());
             int randomKey = keys.get(randomIndex);
             selectedSymbol = symbols.get(randomKey);
+            selectedSymbolInteger = randomKey;
             boolean isVisible = isVisible();
             if (isVisible) {
                 selectedSymbol.frameFlickering();
@@ -483,5 +518,9 @@ public class Wheel {
         for (Symbol symbol : symbols.values()) {
             positionSymbol(symbol);
         }
+    }
+    
+     public Integer getSelectedSymbolPosition() {
+        return selectedSymbolInteger;
     }
 }

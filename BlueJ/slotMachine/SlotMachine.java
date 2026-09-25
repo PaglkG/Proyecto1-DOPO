@@ -20,9 +20,9 @@ public class SlotMachine implements SlotMachineContest {
     private NavigableMap<Integer, Wheel> wheels; //Key represents the position of wheel at the slotmachine
     private boolean isVisible;
     private Rectangle bodySlotMachine;
-    private static int n;
-    private static int k;
-    private static ArrayList<int[]> steps;
+    private  int n;
+    private  int k;
+    private  ArrayList<int[]> steps;
     
     /**Cronstructor, nyadic method class, of SlotMachine.
      */
@@ -492,6 +492,9 @@ public class SlotMachine implements SlotMachineContest {
     
     private void printResolve(int i, int u) {
         steps.add(new int[]{i,u});
+        Wheel targetWheel = wheels.get(i);
+        targetWheel.changePositionSymbol(u);
+        k = distinctSymbols();
     }
     
     /**
