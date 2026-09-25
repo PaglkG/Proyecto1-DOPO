@@ -483,7 +483,26 @@ public class SlotMachine implements SlotMachineContest {
     
     // ------------------------------------------------------------------------------------
     private void different() {
-        
+        int kOld = k;
+        for (int i = 2; i <= n; i++) {
+            int posicionKmaximo = 0;
+            for (int u = 1; u <= n; u++) {
+                printResolve(i,1);
+                if (k == 1) {
+                    System.exit(0);
+                }
+                if (kOld < k) {
+                    posicionKmaximo = u;
+                    kOld = k;
+                }
+            }
+            if (posicionKmaximo != 0) {
+                printResolve(i,posicionKmaximo);
+                if (k == 1) {
+                    System.exit(0);
+                }
+            }
+        }
     }
     
     private int[] identical() {
