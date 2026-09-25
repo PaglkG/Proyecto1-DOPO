@@ -41,7 +41,7 @@ public class SlotMachine implements SlotMachineContest {
         ArrayList<int[]> steps = new ArrayList<>();
         wheels = new TreeMap<>();
         isVisible = false;
-        bodySlotMachine = new Rectangle(10, 10, 270, 270, "pink");
+        bodySlotMachine = new Rectangle(10, 10, 270, 273*(cant/5), "pink");
         //esta parte la hizo geminis, todos los posibles 50 colores
         String[] colorsHex = {
             "#FF0000", "#8B0000", "#DC143C", "#FF6347", "#FFC0CB", "#FF1493", "#C71585",
@@ -54,7 +54,7 @@ public class SlotMachine implements SlotMachineContest {
             "#F5F5DC"
         };
         //hasta aca
-        
+        Canvas.getCanvas().resizeAndRefresh(60*cant, 283);
         for (int i = 0; i<= cant ;i++) {
             addWheel(i);
             for (int u = 0; u <= cant ;u++){
