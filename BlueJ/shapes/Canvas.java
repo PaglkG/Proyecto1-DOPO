@@ -231,5 +231,10 @@ public class Canvas{
             graphic.fill(shape);
         }
     }
+    
+    public void resizeAndRefresh(int width, int height) {
+        setDimension(width, height);
+        redraw();
+    }
 
 }
