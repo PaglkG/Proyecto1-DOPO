@@ -36,6 +36,57 @@ public class Canvas{
         PALETTE.put("gray",    Color.gray);
         PALETTE.put("lightGray",Color.lightGray);
         PALETTE.put("darkGray",Color.darkGray);
+        
+        PALETTE.put("#FF0000", Color.decode("#FF0000"));
+        PALETTE.put("#8B0000", Color.decode("#8B0000"));
+        PALETTE.put("#DC143C", Color.decode("#DC143C"));
+        PALETTE.put("#FF6347", Color.decode("#FF6347"));
+        PALETTE.put("#FFC0CB", Color.decode("#FFC0CB"));
+        PALETTE.put("#FF1493", Color.decode("#FF1493"));
+        PALETTE.put("#C71585", Color.decode("#C71585"));
+        PALETTE.put("#FF4500", Color.decode("#FF4500"));
+        PALETTE.put("#FF8C00", Color.decode("#FF8C00"));
+        PALETTE.put("#FFA500", Color.decode("#FFA500"));
+        PALETTE.put("#FFD700", Color.decode("#FFD700"));
+        PALETTE.put("#FFFF00", Color.decode("#FFFF00"));
+        PALETTE.put("#F0E68C", Color.decode("#F0E68C"));
+        PALETTE.put("#B8860B", Color.decode("#B8860B"));
+        PALETTE.put("#008000", Color.decode("#008000"));
+        PALETTE.put("#00FF00", Color.decode("#00FF00"));
+        PALETTE.put("#32CD32", Color.decode("#32CD32"));
+        PALETTE.put("#228B22", Color.decode("#228B22"));
+        PALETTE.put("#8FBC8F", Color.decode("#8FBC8F"));
+        PALETTE.put("#00FA9A", Color.decode("#00FA9A"));
+        PALETTE.put("#6B8E23", Color.decode("#6B8E23"));
+        PALETTE.put("#0000FF", Color.decode("#0000FF"));
+        PALETTE.put("#000080", Color.decode("#000080"));
+        PALETTE.put("#1E90FF", Color.decode("#1E90FF"));
+        PALETTE.put("#4682B4", Color.decode("#4682B4"));
+        PALETTE.put("#00BFFF", Color.decode("#00BFFF"));
+        PALETTE.put("#00FFFF", Color.decode("#00FFFF"));
+        PALETTE.put("#48D1CC", Color.decode("#48D1CC"));
+        PALETTE.put("#5F9EA0", Color.decode("#5F9EA0"));
+        PALETTE.put("#800080", Color.decode("#800080"));
+        PALETTE.put("#4B0082", Color.decode("#4B0082"));
+        PALETTE.put("#8A2BE2", Color.decode("#8A2BE2"));
+        PALETTE.put("#DA70D6", Color.decode("#DA70D6"));
+        PALETTE.put("#EE82EE", Color.decode("#EE82EE"));
+        PALETTE.put("#FF00FF", Color.decode("#FF00FF"));
+        PALETTE.put("#9370DB", Color.decode("#9370DB"));
+        PALETTE.put("#A52A2A", Color.decode("#A52A2A"));
+        PALETTE.put("#8B4513", Color.decode("#8B4513"));
+        PALETTE.put("#D2691E", Color.decode("#D2691E"));
+        PALETTE.put("#F4A460", Color.decode("#F4A460"));
+        PALETTE.put("#DEB887", Color.decode("#DEB887"));
+        PALETTE.put("#FFDEAD", Color.decode("#FFDEAD"));
+        PALETTE.put("#000000", Color.decode("#000000"));
+        PALETTE.put("#2F4F4F", Color.decode("#2F4F4F"));
+        PALETTE.put("#696969", Color.decode("#696969"));
+        PALETTE.put("#808080", Color.decode("#808080"));
+        PALETTE.put("#A9A9A9", Color.decode("#A9A9A9"));
+        PALETTE.put("#C0C0C0", Color.decode("#C0C0C0"));
+        PALETTE.put("#DCDCDC", Color.decode("#DCDCDC"));
+        PALETTE.put("#F5F5DC", Color.decode("#F5F5DC"));
     }
 
     /**
