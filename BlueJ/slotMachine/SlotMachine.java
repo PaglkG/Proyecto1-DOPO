@@ -2,7 +2,7 @@ package slotMachine;
 import shapes.Rectangle;
 import shapes.Canvas;
 import shapes.Rectangle;
-
+import java.util.ArrayList;
 import java.util.List;
 import java.util.*;
 import javax.swing.JOptionPane;
@@ -20,19 +20,34 @@ public class SlotMachine implements SlotMachineContest {
     private NavigableMap<Integer, Wheel> wheels; //Key represents the position of wheel at the slotmachine
     private boolean isVisible;
     private Rectangle bodySlotMachine;
-
+    private static int n;
+    private static int k;
+    private static ArrayList<int[]> steps;
+    
     /**Cronstructor, nyadic method class, of SlotMachine.
      */
     public SlotMachine() {
         isOk = false;
-
+        ArrayList<int[]> steps = new ArrayList<>();
         wheels = new TreeMap<>();
         isVisible = false;
         bodySlotMachine = new Rectangle(10, 10, 270, 270, "pink");
         isOk = true;
 
     }
+    
+    public SlotMachine(int cant) {
+        isOk = false;
+        ArrayList<int[]> steps = new ArrayList<>();
+        wheels = new TreeMap<>();
+        isVisible = false;
+        bodySlotMachine = new Rectangle(10, 10, 270, 270, "pink");
+        
+        
+        isOk = true;
 
+    }
+    
     /**
      * Add a wheel to this slot machine, place the roulette wheel on the left or right side.
      * @param pos pos is the position of wheel that is added to this object.
@@ -445,5 +460,38 @@ public class SlotMachine implements SlotMachineContest {
             return max;
         }
         return pos;
+    }
+    
+    
+    // ------------------------------------------------------------------------------------
+    private void different() {
+        
+    }
+    
+    private int[] identical() {
+        return null;
+    }
+    
+    private void printResolve(int i, int u) {
+        steps.add(new int[]{i,u});
+    }
+    
+    /**
+     * @param u is the number of reels and symbols.
+     * @return moves made for k = 1
+     */
+    @Override
+    public int[][] solve(int u) {
+        makeInvisible();
+        return null;
+    }
+    
+    /**
+     * @param u is the number of reels and symbols.
+     * @return moves made for k = 1
+     */
+    @Override
+    public void simulate(int u) {
+        makeVisible();
     }
 }

@@ -9,6 +9,6 @@ package slotMachine;
  */
 public interface SlotMachineContest
 {
-    public abstract void solve(int n);
-    public abstract void simulate(int n);
+    public abstract int[][] solve(int u);
+    public abstract void simulate(int u);
 }
