@@ -29,19 +29,15 @@ public class Problem
     public void simulate() throws InterruptedException {
         slmch = new SlotMachine(3);
         slmch.simulate(3);
-        Thread.sleep(500);
         slmch.solve(3);
         slmch = new SlotMachine(5);
         slmch.simulate(5);
-        Thread.sleep(500);
         slmch.solve(5);
         slmch = new SlotMachine(10);
         slmch.simulate(10);
-        Thread.sleep(500);
         slmch.solve(10);
         slmch = new SlotMachine(4);
         slmch.simulate(4);
-        Thread.sleep(500);
         slmch.solve(4);
     }
 }

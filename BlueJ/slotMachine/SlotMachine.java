@@ -494,75 +494,79 @@ public class SlotMachine implements SlotMachineContest {
     
     
     // ------------------------------------------------------------------------------------
-    private void different(int n, int k) {
-        int kOld = k;
+    private void different() {
+        int oldK = k;
         for (int i = 2; i <= n; i++) {
-            int posicionKmaximo = 0;
+            int maxKPosition = 0;
+        
             for (int u = 1; u <= n; u++) {
-                printResolve(i,1);
-                if (distinctSymbolsVisible() == 1) {
-                    return;
-                }
-                if (kOld < k) {
-                    posicionKmaximo = u;
-                    kOld = k;
-                }
-            }
-            if (posicionKmaximo != 0) {
-                printResolve(i,posicionKmaximo);
-                if (distinctSymbolsVisible() == 1) {
-                    return;
-                }
-            }
-        }
-    }
-    
-    private int[] identical(int n, int k) {
-        int[] movimientos = new int[n + 1];
-        for (int i = 1; i < n; i++) {
-            printResolve(1,1);
-            if (k == 1) {
-                return movimientos;
-            }
-            int kOld = k;
-            for (int u = 2; u <= n; u++) {
-                printResolve(u,-i);
+                printOI(i, 1);
+        
                 if (k == 1) {
-                    return movimientos;
+                    return;
                 }
-                if(kOld < k) {
-                    printResolve(u,i);
-                    movimientos[u] = i;
+        
+                if (oldK < k) {
+                    maxKPosition = u;
+                    oldK = k;
+                }
+            }
+        
+            if (maxKPosition != 0) {
+                printOI(i, maxKPosition);
+        
+                if (k == 1) {
+                    return;
+                }
+            }
+    
+        }
+    }
+    private int[] identical() {
+        int[] moves = new int[n + 1];
+
+        for (int i = 1; i < n; i++) {
+            printOI(1, 1);
+        
+            if (k == 1) {
+                return moves;
+            }
+        
+            int oldK = k;
+        
+            for (int u = 2; u <= n; u++) {
+                printOI(u, -i);
+        
+                if (k == 1) {
+                    return moves;
+                }
+        
+                if (oldK < k) {
+                    moves[u] = i;
+                    printOI(u, i);
+        
                     if (k == 1) {
-                        return movimientos;
+                        return moves;
                     }
+        
                     break;
-                }
-                else {
-                    printResolve(u,i);
+                } else {
+                    printOI(u, i);
+        
                     if (k == 1) {
-                        return movimientos;
+                        return moves;
                     }
                 }
             }
         }
-        printResolve(1,1);
 
-        return movimientos;
+        printOI(1, 1);
+        
+        return moves;
     }
     
     
-    private void printResolve(int i, int u) {
-        steps.add(new int[]{i,u});
-        Wheel targetWheel = wheels.get(i);
-        targetWheel.changePositionSymbol(u);
-        k = distinctSymbolsVisible();
-    }
     
-    public void changePositionSymbol(int i, int u) {
-        Wheel targetWheel = wheels.get(i);
-        targetWheel.changePositionSymbol(u);
-    }
     
     /**
      * @param u is the number of reels and symbols.
@@ -570,31 +574,31 @@ public class SlotMachine implements SlotMachineContest {
      */
     @Override
     public int[][] solve(int n) {
-
+        this.n = n;
         spin();
         makeInvisible();
         k = distinctSymbolsVisible();
+        
         if (k == 1) {
-            int[][] array = steps.toArray(new int[0][]);
-            return array;
+            return steps.toArray(new int[steps.size()][]);
         }
-        different(n,k);
-        if (distinctSymbolsVisible() == 1) {
-            int[][] array = steps.toArray(new int[0][]);
-            return array;
+        
+        different();
+        
+        if (k == 1) {
+            return steps.toArray(new int[steps.size()][]);
         }
-        int[] movimientos = identical(n,k);
-        if (distinctSymbolsVisible() == 1) {
-            int[][] array = steps.toArray(new int[0][]);
-            return array;
-        }
+        
+        int[] moves = identical();
+        
         for (int u = 2; u <= n; u++) {
-            int movimiento = movimientos[u]; 
-            printResolve(u,-movimiento);
+            int move = moves[u];
+            printOI(u, -move);
         }
-        int[][] array = steps.toArray(new int[0][]);
-        System.out.println(Arrays.deepToString(steps.toArray(new int[0][])));
-        return array;
+
+        return steps.toArray(new int[steps.size()][]);
+         
+    
     }
     
     /**
@@ -602,29 +606,39 @@ public class SlotMachine implements SlotMachineContest {
      */
     @Override
     public void simulate(int n) {
-    
+        this.n = n;
         spin();
         makeVisible();
         k = distinctSymbolsVisible();
-        System.out.println(k);
+        
         if (k == 1) {
             return;
         }
-        different(n,k);
-        if (distinctSymbolsVisible() == 1) {
+        
+        different();
+        
+        if (k == 1) {
             return;
         }
-        int[] movimientos = identical(n,k);
-        if (distinctSymbolsVisible() == 1) {
+        
+        int[] moves = identical();
+        
+        if (k == 1) {
             return;
         }
+        
         for (int u = 2; u <= n; u++) {
-            int movimiento = movimientos[u]; 
-            printResolve(u,-movimiento);
-            if (distinctSymbolsVisible() == 1) {
-                return;
-            }
+            int move = moves[u]; 
+            printOI(u, -move);
         }
         
     }
+    
+    private void printOI(int i, int u) {
+        steps.add(new int[]{i,u});
+        Wheel targetWheel = wheels.get(i);
+        targetWheel.changePositionSymbol(u);
+        k = distinctSymbolsVisible();
+    }
+    
 }
