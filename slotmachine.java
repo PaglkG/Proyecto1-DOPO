@@ -3,9 +3,6 @@ import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.Scanner;
 
-/**1
- * main
- */
 public class slotmachine {
     private static int n;
     private static int k;
@@ -14,6 +11,7 @@ public class slotmachine {
     private static PrintWriter out = new PrintWriter(new BufferedOutputStream(System.out));;
 
     public static void main(String[] args){
+        sc = new Scanner(System.in);
         input = sc.nextLine();
         n = Integer.parseInt(input);
         input = sc.nextLine();
@@ -31,6 +29,11 @@ public class slotmachine {
         if (k == 1) {
         System.exit(0);
         }
+        /**
+         * if (k == 1) {
+         * return paso a paso
+         * }
+         */
         sc.close();
     }
 

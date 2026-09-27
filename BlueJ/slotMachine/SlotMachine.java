@@ -234,6 +234,7 @@ public class SlotMachine implements SlotMachineContest {
                 countDistincSymbols++;
             }
         }
+        
         Set<String> colorSymbols = new HashSet<>();
         String[] symbolsWheel = null;
         for (Wheel wheel : wheels.values()) {
@@ -335,7 +336,7 @@ public class SlotMachine implements SlotMachineContest {
      * @param wheel2 wheel2 is the nunmber of second wheel at the slotmachine that will be swaped by first wheel.
      */
     public void swap(int wheel1, int wheel2) {
-        if (!proofInvariant(wheel1, false)) return;
+        if (!proofInvariant(wheel1, false)) return;  
         if (!proofInvariant(wheel2, false)) return;
         Wheel findedWheel1 = wheels.get(wheel1);
         Wheel findedWheel2 = wheels.get(wheel2);
@@ -449,7 +450,7 @@ public class SlotMachine implements SlotMachineContest {
         // Valida la existencia según la acción (agregar vs modificar)
         if (ifIsAddingIsExistsPosition) {
             String messageToShow = isAdding ? "La posición ya está repetida." : "La rueda no existe.";
-            errorMessage(messageToShow);
+            if (isVisible) errorMessage(messageToShow);
             return false;
         }
         return true; // Retorna true si pasó todas las pruebas

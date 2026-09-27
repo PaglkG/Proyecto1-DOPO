@@ -28,6 +28,7 @@ public class Wheel {
     private Integer selectedSymbolInteger;
     private Map<Integer,Symbol> symbols;
     
+    
     /**Constructor class of wheel, niladic method class.
      */
     public Wheel() {
