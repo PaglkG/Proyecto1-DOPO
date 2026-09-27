@@ -12,3 +12,12 @@
 
 # Ignorar los temporales de astah
 *.asta.lock
+
+# Ignore .zip
+*.zip
+
+# Ignore .project VS
+.project
+
+# Ignore .classpath VS
+.classpath
