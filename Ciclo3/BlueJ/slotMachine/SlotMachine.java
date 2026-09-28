@@ -2,7 +2,7 @@ package slotMachine;
 import shapes.Rectangle;
 import shapes.Canvas;
 import shapes.Rectangle;
-
+import java.util.ArrayList;
 import java.util.List;
 import java.util.*;
 import javax.swing.JOptionPane;
@@ -15,22 +15,60 @@ import java.util.TreeMap;
  * @author Steveen-Gualdron
  * @version 0.1
  */
-public class SlotMachine {
+public class SlotMachine implements SlotMachineContest {
     private boolean isOk;
     private NavigableMap<Integer, Wheel> wheels; //Key represents the position of wheel at the slotmachine
     private boolean isVisible;
     private Rectangle bodySlotMachine;
-
+    private  static int n;
+    private  static int k;
+    private  static ArrayList<int[]> steps;
+    
     /**Cronstructor, nyadic method class, of SlotMachine.
      */
     public SlotMachine() {
         isOk = false;
+        ArrayList<int[]> steps = new ArrayList<>();
         wheels = new TreeMap<>();
         isVisible = false;
         bodySlotMachine = new Rectangle(10, 10, 270, 270, "pink");
         isOk = true;
-    }
 
+    }
+    
+    public SlotMachine(int cant) {
+        steps = new ArrayList<>();
+        isOk = false;
+        ArrayList<int[]> steps = new ArrayList<>();
+        wheels = new TreeMap<>();
+        isVisible = false;
+        bodySlotMachine = new Rectangle(10, 10, 270, 273*(cant/5), "pink");
+        //esta parte la hizo geminis, todos los posibles 50 colores
+        String[] colorsHex = {
+            "#FF0000", "#8B0000", "#DC143C", "#FF6347", "#FFC0CB", "#FF1493", "#C71585",
+            "#FF4500", "#FF8C00", "#FFA500", "#FFD700", "#FFFF00", "#F0E68C", "#B8860B",
+            "#008000", "#00FF00", "#32CD32", "#228B22", "#8FBC8F", "#00FA9A", "#6B8E23",
+            "#0000FF", "#000080", "#1E90FF", "#4682B4", "#00BFFF", "#00FFFF", "#48D1CC",
+            "#5F9EA0", "#800080", "#4B0082", "#8A2BE2", "#DA70D6", "#EE82EE", "#FF00FF",
+            "#9370DB", "#A52A2A", "#8B4513", "#D2691E", "#F4A460", "#DEB887", "#FFDEAD",
+            "#000000", "#2F4F4F", "#696969", "#808080", "#A9A9A9", "#C0C0C0", "#DCDCDC",
+            "#F5F5DC"
+        };
+        //hasta aca
+        Canvas.getCanvas().resizeAndRefresh(60*cant, 283);
+        for (int i = 0; i < cant; i++) {
+            int requestedPos = i; 
+            addWheel(requestedPos);
+            int correctedPos = adjustPosition(requestedPos, true);
+            
+            for (int u = 0; u < cant; u++) {
+                addSymbol(correctedPos, colorsHex[u]);
+            }
+        }
+        isOk = true;
+
+    }
+    
     /**
      * Add a wheel to this slot machine, place the roulette wheel on the left or right side.
      * @param pos pos is the position of wheel that is added to this object.
@@ -117,7 +155,6 @@ public class SlotMachine {
         }
         isOk = true;
     }
-    
 
     /** The symbol is added to each wheel; shape and wheel number are requested.
      * @param wheel wheel is the number (integer) of wheel that will add the symbol. 
@@ -127,7 +164,8 @@ public class SlotMachine {
         boolean isAprovedInvariant = proofInvariant(wheel, false);
         if (!isAprovedInvariant) return;
         Wheel wheelToPlaceSymbol = wheels.get(wheel);
-        isOk = wheelToPlaceSymbol.placeSymbol(symbol); 
+        wheelToPlaceSymbol.placeSymbol(symbol);   
+        isOk = true;
     }
 
     /**Moves a specific number of wheel.
@@ -147,6 +185,7 @@ public class SlotMachine {
         isOk = canWheelSpin; // Si está bloqueada, esto será false
         ok();
     }
+    
 
     /**Moves each of the wheels.
      */
@@ -205,6 +244,14 @@ public class SlotMachine {
         }
         isOk = true;
         return countDistincSymbols;
+    }
+    
+    private int distinctSymbolsVisible() {
+        isOk = false;
+        List<String> visibleColors = getColorSymbolWheels();
+        Set<String> uniqueVisibleColors = new HashSet<>(visibleColors);
+        isOk = true;
+        return uniqueVisibleColors.size();
     }
 
     /**Gives all colors selected by the wheels from left to right.
@@ -354,26 +401,9 @@ public class SlotMachine {
         ok();
         isOk = true;
     }
-
-    /**Spin the wheels to place an specific configuration given.
-     * @param setSymbols setSymbols is the specific configuration that if it's possible can set, this will be to setted.
-     */
+    
     public void spin(String[] setSymbols) {
-        isOk = false;
-        String specificSymbolToPut = null;
-        int lengthArray = setSymbols.length;
-        boolean specificInvariant = lengthArray == wheels.size();
-        if (!specificInvariant) { // No cumple la condición para hacerse 
-            ok();
-            return;
-        } 
-        boolean allPlaced = true;
-        for (int i = 0; i < setSymbols.length; i++) {
-            specificSymbolToPut = setSymbols[i];
-            placeSymbol(i+1, specificSymbolToPut);
-            allPlaced &= isOk;   // acumula si alguna falló
-        }
-        isOk = allPlaced;
+        
     }
     
     public Map<Integer, Wheel> getWheels() {
@@ -461,4 +491,154 @@ public class SlotMachine {
         }
         return pos;
     }
+    
+    
+    // ------------------------------------------------------------------------------------
+    private void different() {
+        int oldK = k;
+        for (int i = 2; i <= n; i++) {
+            int maxKPosition = 0;
+        
+            for (int u = 1; u <= n; u++) {
+                printOI(i, 1);
+        
+                if (k == 1) {
+                    return;
+                }
+        
+                if (oldK < k) {
+                    maxKPosition = u;
+                    oldK = k;
+                }
+            }
+        
+            if (maxKPosition != 0) {
+                printOI(i, maxKPosition);
+        
+                if (k == 1) {
+                    return;
+                }
+            }
+    
+        }
+    }
+    private int[] identical() {
+        int[] moves = new int[n + 1];
+
+        for (int i = 1; i < n; i++) {
+            printOI(1, 1);
+        
+            if (k == 1) {
+                return moves;
+            }
+        
+            int oldK = k;
+        
+            for (int u = 2; u <= n; u++) {
+                printOI(u, -i);
+        
+                if (k == 1) {
+                    return moves;
+                }
+        
+                if (oldK < k) {
+                    moves[u] = i;
+                    printOI(u, i);
+        
+                    if (k == 1) {
+                        return moves;
+                    }
+        
+                    break;
+                } else {
+                    printOI(u, i);
+        
+                    if (k == 1) {
+                        return moves;
+                    }
+                }
+            }
+        }
+
+        printOI(1, 1);
+        
+        return moves;
+    }
+    
+    
+    
+    
+    /**
+     * @param u is the number of reels and symbols.
+     * @return moves made for k = 1
+     */
+    @Override
+    public int[][] solve(int n) {
+        this.n = n;
+        spin();
+        makeInvisible();
+        k = distinctSymbolsVisible();
+        
+        if (k == 1) {
+            return steps.toArray(new int[steps.size()][]);
+        }
+        
+        different();
+        
+        if (k == 1) {
+            return steps.toArray(new int[steps.size()][]);
+        }
+        
+        int[] moves = identical();
+        
+        for (int u = 2; u <= n; u++) {
+            int move = moves[u];
+            printOI(u, -move);
+        }
+
+        return steps.toArray(new int[steps.size()][]);
+         
+    
+    }
+    
+    /**
+     * @param u is the number of reels and symbols.
+     */
+    @Override
+    public void simulate(int n) {
+        this.n = n;
+        spin();
+        makeVisible();
+        k = distinctSymbolsVisible();
+        
+        if (k == 1) {
+            return;
+        }
+        
+        different();
+        
+        if (k == 1) {
+            return;
+        }
+        
+        int[] moves = identical();
+        
+        if (k == 1) {
+            return;
+        }
+        
+        for (int u = 2; u <= n; u++) {
+            int move = moves[u]; 
+            printOI(u, -move);
+        }
+        
+    }
+    
+    private void printOI(int i, int u) {
+        steps.add(new int[]{i,u});
+        Wheel targetWheel = wheels.get(i);
+        targetWheel.changePositionSymbol(u);
+        k = distinctSymbolsVisible();
+    }
+    
 }
