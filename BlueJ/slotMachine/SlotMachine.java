@@ -2,7 +2,6 @@ package slotMachine;
 import shapes.Rectangle;
 import shapes.Canvas;
 import shapes.Rectangle;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.*;
 import javax.swing.JOptionPane;
@@ -15,14 +14,11 @@ import java.util.TreeMap;
  * @author Steveen-Gualdron
  * @version 0.1
  */
-public class SlotMachine implements SlotMachineContest {
+public class SlotMachine{
     private boolean isOk;
     private NavigableMap<Integer, Wheel> wheels; //Key represents the position of wheel at the slotmachine
     private boolean isVisible;
     private Rectangle bodySlotMachine;
-    private  static int n;
-    private  static int k;
-    private  static ArrayList<int[]> steps;
     
     /**Cronstructor, nyadic method class, of SlotMachine.
      */
@@ -36,8 +32,11 @@ public class SlotMachine implements SlotMachineContest {
 
     }
     
+    public Wheel wheelsGet(int i) {
+        return wheels.get(i);
+    }
+    
     public SlotMachine(int cant) {
-        steps = new ArrayList<>();
         isOk = false;
         ArrayList<int[]> steps = new ArrayList<>();
         wheels = new TreeMap<>();
@@ -246,7 +245,7 @@ public class SlotMachine implements SlotMachineContest {
         return countDistincSymbols;
     }
     
-    private int distinctSymbolsVisible() {
+    public int distinctSymbolsVisible() {
         isOk = false;
         List<String> visibleColors = getColorSymbolWheels();
         Set<String> uniqueVisibleColors = new HashSet<>(visibleColors);
@@ -493,152 +492,5 @@ public class SlotMachine implements SlotMachineContest {
     }
     
     
-    // ------------------------------------------------------------------------------------
-    private void different() {
-        int oldK = k;
-        for (int i = 2; i <= n; i++) {
-            int maxKPosition = 0;
-        
-            for (int u = 1; u <= n; u++) {
-                printOI(i, 1);
-        
-                if (k == 1) {
-                    return;
-                }
-        
-                if (oldK < k) {
-                    maxKPosition = u;
-                    oldK = k;
-                }
-            }
-        
-            if (maxKPosition != 0) {
-                printOI(i, maxKPosition);
-        
-                if (k == 1) {
-                    return;
-                }
-            }
-    
-        }
-    }
-    private int[] identical() {
-        int[] moves = new int[n + 1];
-
-        for (int i = 1; i < n; i++) {
-            printOI(1, 1);
-        
-            if (k == 1) {
-                return moves;
-            }
-        
-            int oldK = k;
-        
-            for (int u = 2; u <= n; u++) {
-                printOI(u, -i);
-        
-                if (k == 1) {
-                    return moves;
-                }
-        
-                if (oldK < k) {
-                    moves[u] = i;
-                    printOI(u, i);
-        
-                    if (k == 1) {
-                        return moves;
-                    }
-        
-                    break;
-                } else {
-                    printOI(u, i);
-        
-                    if (k == 1) {
-                        return moves;
-                    }
-                }
-            }
-        }
-
-        printOI(1, 1);
-        
-        return moves;
-    }
-    
-    
-    
-    
-    /**
-     * @param u is the number of reels and symbols.
-     * @return moves made for k = 1
-     */
-    @Override
-    public int[][] solve(int n) {
-        this.n = n;
-        spin();
-        makeInvisible();
-        k = distinctSymbolsVisible();
-        
-        if (k == 1) {
-            return steps.toArray(new int[steps.size()][]);
-        }
-        
-        different();
-        
-        if (k == 1) {
-            return steps.toArray(new int[steps.size()][]);
-        }
-        
-        int[] moves = identical();
-        
-        for (int u = 2; u <= n; u++) {
-            int move = moves[u];
-            printOI(u, -move);
-        }
-
-        return steps.toArray(new int[steps.size()][]);
-         
-    
-    }
-    
-    /**
-     * @param u is the number of reels and symbols.
-     */
-    @Override
-    public void simulate(int n) {
-        this.n = n;
-        spin();
-        makeVisible();
-        k = distinctSymbolsVisible();
-        
-        if (k == 1) {
-            return;
-        }
-        
-        different();
-        
-        if (k == 1) {
-            return;
-        }
-        
-        int[] moves = identical();
-        
-        if (k == 1) {
-            return;
-        }
-        
-        for (int u = 2; u <= n; u++) {
-            int move = moves[u]; 
-            printOI(u, -move);
-        }
-        
-    }
-    
-    private void printOI(int i, int u) {
-        steps.add(new int[]{i,u});
-        Wheel targetWheel = wheels.get(i);
-        targetWheel.changePositionSymbol(u);
-        k = distinctSymbolsVisible();
-    }
     
 }
