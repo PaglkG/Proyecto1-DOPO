@@ -427,7 +427,7 @@ public class Wheel {
     /**To set the wheel color.
      * @param newColor newColor is the color that will be set on this wheel.
      */
-    protected void changeColor(String newColor) {
+    public void changeColor(String newColor) {
         wheelShape.changeColor(newColor);
     }
 
