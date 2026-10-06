@@ -295,6 +295,29 @@ public class SlotMachineAceptanceTest {
         Thread.sleep(2000);
     }
     
+    @Test
+    public void shouldSpinToObtainASpecificConfigurationOfSymbols() throws InterruptedException {
+        int NUMBER_WHEELS_TO_ADD = 5;
+        for (int i = 1; i <= NUMBER_WHEELS_TO_ADD; i++) {
+            slmch.addWheel(i);
+            slmch.addSymbol(i, "magenta");
+            slmch.addSymbol(i, "blue");
+            slmch.addSymbol(i, "yellow");
+            slmch.addSymbol(i, "red");
+            slmch.addSymbol(i, "green");
+            slmch.addSymbol(i, "gray");
+            slmch.addSymbol(i, "white");
+            slmch.addSymbol(i, "cyan");
+            slmch.addSymbol(i, "pink");
+            Thread.sleep(500);
+        }
+        String[] specificConfiguration = {"blue", "cyan", "yellow", "green", "pink"};
+        Thread.sleep(2000);
+        // Acción de girar rueda con una especificacion
+        slmch.spin(specificConfiguration);
+        Thread.sleep(2000);
+    }
+    
     @AfterEach
     void tearsDown() {
         slmch.makeInvisible();

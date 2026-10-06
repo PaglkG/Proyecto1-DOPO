@@ -66,7 +66,6 @@ public class SlotMachine implements SlotMachineContest {
             }
         }
         isOk = true;
-
     }
     
     /**
@@ -162,10 +161,12 @@ public class SlotMachine implements SlotMachineContest {
      */
     public void placeSymbol(int wheel, String symbol) {
         boolean isAprovedInvariant = proofInvariant(wheel, false);
-        if (!isAprovedInvariant) return;
+        if (!isAprovedInvariant) {
+            ok();
+            return;    
+        }
         Wheel wheelToPlaceSymbol = wheels.get(wheel);
-        wheelToPlaceSymbol.placeSymbol(symbol);   
-        isOk = true;
+        isOk = wheelToPlaceSymbol.placeSymbol(symbol); 
     }
 
     /**Moves a specific number of wheel.
@@ -402,8 +403,25 @@ public class SlotMachine implements SlotMachineContest {
         isOk = true;
     }
     
+    /**Spin the wheels to place an specific configuration given.
+     * @param setSymbols setSymbols is the specific configuration that if it's possible can set, this will be to setted.
+     */
     public void spin(String[] setSymbols) {
-        
+        isOk = false;
+        int lengthArray = setSymbols.length;
+        boolean specificInvariant = lengthArray == wheels.size();
+        if (!specificInvariant) { // No cumple la condición para hacerse 
+            ok();
+            return;
+        } 
+        boolean allPlaced = true;
+        String specificSymbolToPut = null;
+        for (int i = 0; i < lengthArray; i++) {
+            specificSymbolToPut = setSymbols[i];
+            placeSymbol(i+1, specificSymbolToPut);
+            allPlaced &= isOk;   // acumula si alguna falló
+        }
+        isOk = allPlaced;
     }
     
     public Map<Integer, Wheel> getWheels() {

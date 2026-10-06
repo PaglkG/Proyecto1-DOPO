@@ -39,8 +39,6 @@ public class Wheel {
         random = new Random();
         symbols = new TreeMap<>();
     }
-    
-  
 
     public void changePositionSymbol(int post) {
         if (symbols.isEmpty() || isLocked) {
@@ -133,33 +131,30 @@ public class Wheel {
     }
     
     /** The symbol is added to each wheel; shape and wheel number are requested.
-     * @param wheel wheel is the number (integer) of wheel that will add the symbol. 
      * @param symbol symbol is the type of symbol that will be added at the specific number wheel.
      */
-    public void placeSymbol(String symbol) {
+    public boolean placeSymbol(String symbol) {
         Symbol symbolToPlace = findJustColorSymbol(symbol);
         boolean existsSymbol = symbolToPlace != null; 
+        if (!existsSymbol || isLocked) return false;
         // Se toma ayuda de Gemini IA Pro Avanzado para hacer parte de este método
         // Añadimos !isLocked para respetar las reglas de bloqueo
-        if (existsSymbol && !isLocked) { 
-            
-            // 1. Ocultar el símbolo que está actualmente al frente
-            if (isVisible() && selectedSymbol != null) {
-                selectedSymbol.makeInvisible();
-            }
-            
-            // 2. Cambiar el puntero al nuevo símbolo
-            selectedSymbol = symbolToPlace;
-            
-            selectedSymbolInteger = symbolToPlace.getPositionAtTheWheel();
-            // 3. Acomodar sus coordenadas X y Y en el centro de la rueda
-            positionSymbol(selectedSymbol);
-            
-            // 4. Mostrar el nuevo símbolo si la máquina está visible
-            if (isVisible()) {
-                selectedSymbol.frameFlickering(); // Lo repinta para que quede encima del fondo negro
-            }
+        // 1. Ocultar el símbolo que está actualmente al frente
+        if (isVisible() && selectedSymbol != null) {
+            selectedSymbol.makeInvisible();
         }
+            
+        // 2. Cambiar el puntero al nuevo símbolo
+        selectedSymbol = symbolToPlace;
+            
+        // 3. Acomodar sus coordenadas X y Y en el centro de la rueda
+        positionSymbol(selectedSymbol);
+            
+        // 4. Mostrar el nuevo símbolo si la máquina está visible
+        if (isVisible()) {
+            selectedSymbol.frameFlickering(); // Lo repinta para que quede encima del fondo negro
+        }
+        return true;
     }
 
     /**Remove a specific symbol with its color.
