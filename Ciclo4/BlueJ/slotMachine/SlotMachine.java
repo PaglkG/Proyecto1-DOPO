@@ -15,7 +15,7 @@ import java.util.TreeMap;
  * @author Steveen-Gualdron
  * @version 0.1
  */
-public class SlotMachine implements SlotMachineContest {
+public class SlotMachine {
     private boolean isOk;
     private NavigableMap<Integer, Wheel> wheels; //Key represents the position of wheel at the slotmachine
     private boolean isVisible;
@@ -424,8 +424,8 @@ public class SlotMachine implements SlotMachineContest {
         isOk = allPlaced;
     }
     
-    public Map<Integer, Wheel> getWheels() {
-        return wheels;
+    protected  Wheel wheelsGet(int i) {
+        return wheels.get(i);
     }
     
     /* Obtains information of all symbol of all wheel (Key: Color, Value: time color repeats).
@@ -581,75 +581,6 @@ public class SlotMachine implements SlotMachineContest {
         printOI(1, 1);
         
         return moves;
-    }
-    
-    
-    
-    
-    /**
-     * @param u is the number of reels and symbols.
-     * @return moves made for k = 1
-     */
-    @Override
-    public int[][] solve(int n) {
-        this.n = n;
-        spin();
-        makeInvisible();
-        k = distinctSymbolsVisible();
-        
-        if (k == 1) {
-            return steps.toArray(new int[steps.size()][]);
-        }
-        
-        different();
-        
-        if (k == 1) {
-            return steps.toArray(new int[steps.size()][]);
-        }
-        
-        int[] moves = identical();
-        
-        for (int u = 2; u <= n; u++) {
-            int move = moves[u];
-            printOI(u, -move);
-        }
-
-        return steps.toArray(new int[steps.size()][]);
-         
-    
-    }
-    
-    /**
-     * @param u is the number of reels and symbols.
-     */
-    @Override
-    public void simulate(int n) {
-        this.n = n;
-        spin();
-        makeVisible();
-        k = distinctSymbolsVisible();
-        
-        if (k == 1) {
-            return;
-        }
-        
-        different();
-        
-        if (k == 1) {
-            return;
-        }
-        
-        int[] moves = identical();
-        
-        if (k == 1) {
-            return;
-        }
-        
-        for (int u = 2; u <= n; u++) {
-            int move = moves[u]; 
-            printOI(u, -move);
-        }
-        
     }
     
     private void printOI(int i, int u) {

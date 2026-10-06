@@ -1,8 +1,6 @@
 package slotMachine;
 import shapes.Rectangle;
 import shapes.Canvas;
-import shapes.Rectangle;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.*;
 import javax.swing.JOptionPane;
@@ -15,14 +13,11 @@ import java.util.TreeMap;
  * @author Steveen-Gualdron
  * @version 0.1
  */
-public class SlotMachine implements SlotMachineContest {
+public class SlotMachine{
     private boolean isOk;
     private NavigableMap<Integer, Wheel> wheels; //Key represents the position of wheel at the slotmachine
     private boolean isVisible;
     private Rectangle bodySlotMachine;
-    private  static int n;
-    private  static int k;
-    private  static ArrayList<int[]> steps;
     
     /**Cronstructor, nyadic method class, of SlotMachine.
      */
@@ -37,7 +32,6 @@ public class SlotMachine implements SlotMachineContest {
     }
     
     public SlotMachine(int cant) {
-        steps = new ArrayList<>();
         isOk = false;
         ArrayList<int[]> steps = new ArrayList<>();
         wheels = new TreeMap<>();
@@ -66,6 +60,7 @@ public class SlotMachine implements SlotMachineContest {
             }
         }
         isOk = true;
+
     }
     
     /**
@@ -131,6 +126,47 @@ public class SlotMachine implements SlotMachineContest {
         isOk = true;
     }
 
+    /**Swap two specific wheel of position 
+     * @param wheel1 wheel1 is the number of first wheel at the slotmachine that will be swaped by second wheel.
+     * @param wheel2 wheel2 is the nunmber of second wheel at the slotmachine that will be swaped by first wheel.
+     */
+    public void swap(int wheel1, int wheel2) {
+        if (!proofInvariant(wheel1, false)) return;
+        if (!proofInvariant(wheel2, false)) return;
+        Wheel findedWheel1 = wheels.get(wheel1);
+        Wheel findedWheel2 = wheels.get(wheel2);
+        boolean canSwapWheels = !findedWheel1.isLocked() && !findedWheel2.isLocked();
+        if (canSwapWheels) {
+            findedWheel1.swap(findedWheel2);
+            wheels.put(wheel1, findedWheel2);// Establecen las posiciones en el lugar correcto
+            wheels.put(wheel2, findedWheel1);
+            adjustWheels();
+            isOk = true;
+        } else {
+            isOk = false; // Falla porque alguna o las dos estám bloqueada
+        }
+    }
+    
+    /**This locked a specific wheel to this wheel can't spin
+     * @param wheel wheel is an integer that means the number of this slotmachine; That wheel will be locked. 
+     */
+    public void lock(int wheel) {
+        if (!proofInvariant(wheel, false)) return;
+        Wheel wheelToLock = wheels.get(wheel);
+        wheelToLock.lock();
+        isOk = false;
+    }
+    
+    /**Make a wheel unlock, this able to the wheel spin corectly 
+     * @param wheel wheel is an integer that means the number of this slotmachine; That wheel will be locked. 
+     */
+    public void unlock(int wheel) {
+       if (!proofInvariant(wheel, false)) return;
+        Wheel wheelToUnlock = wheels.get(wheel);
+        wheelToUnlock.unlock();
+        isOk = true;
+    }
+
     /**The symbol object is created at a specific position and color.
      * @param pos pos is the position of wheel going to add symbol.
      * @param color color is the color of symbol that going to be created.
@@ -161,12 +197,10 @@ public class SlotMachine implements SlotMachineContest {
      */
     public void placeSymbol(int wheel, String symbol) {
         boolean isAprovedInvariant = proofInvariant(wheel, false);
-        if (!isAprovedInvariant) {
-            ok();
-            return;    
-        }
+        if (!isAprovedInvariant) return;
         Wheel wheelToPlaceSymbol = wheels.get(wheel);
-        isOk = wheelToPlaceSymbol.placeSymbol(symbol); 
+        wheelToPlaceSymbol.placeSymbol(symbol);   
+        isOk = true;
     }
 
     /**Moves a specific number of wheel.
@@ -187,6 +221,27 @@ public class SlotMachine implements SlotMachineContest {
         ok();
     }
     
+    /**Spin a specific wheel a specific steps
+     * @param wheel wheel is the number of wheel will be to spined,
+     * @param steps steps is the number of symbols the specific wheel will be moved.
+     */
+    public void spin(int wheel, int steps) throws InterruptedException {
+        if (!proofInvariant(wheel, false)) return;
+        Wheel wheelToSpin = wheels.get(wheel);
+        if (isVisible) {
+            wheelToSpin.spinSlowly(steps);
+        } else if (!isVisible) {
+            wheelToSpin.spin(steps);
+        }
+        boolean canSpin = wheelToSpin.canSpin();
+        isOk = canSpin;
+        ok();
+        isOk = true;
+    }
+    
+    public void spin(String[] setSymbols) {
+        
+    }
 
     /**Moves each of the wheels.
      */
@@ -227,27 +282,6 @@ public class SlotMachine implements SlotMachineContest {
      * @return Number of distinct colors of the flipped symbols.
      */
     public int distinctSymbols() {
-        isOk = false;
-        int countDistincSymbols = 0;
-        Map<String, Integer> infoAllSymbols = getAllSymbolsAtSlotMachine();
-        for (Integer numTimesColorRepeat : infoAllSymbols.values()) {
-            if (numTimesColorRepeat.equals(1)) {
-                countDistincSymbols++;
-            }
-        }
-        Set<String> colorSymbols = new HashSet<>();
-        String[] symbolsWheel = null;
-        for (Wheel wheel : wheels.values()) {
-            symbolsWheel = wheel.symbols();
-            for (String color : symbolsWheel){
-                colorSymbols.add(color);
-            }
-        }
-        isOk = true;
-        return countDistincSymbols;
-    }
-    
-    private int distinctSymbolsVisible() {
         isOk = false;
         List<String> visibleColors = getColorSymbolWheels();
         Set<String> uniqueVisibleColors = new HashSet<>(visibleColors);
@@ -331,101 +365,11 @@ public class SlotMachine implements SlotMachineContest {
         return isOk;
     }
     
-    /**Swap two specific wheel of position 
-     * @param wheel1 wheel1 is the number of first wheel at the slotmachine that will be swaped by second wheel.
-     * @param wheel2 wheel2 is the nunmber of second wheel at the slotmachine that will be swaped by first wheel.
-     */
-    public void swap(int wheel1, int wheel2) {
-        if (!proofInvariant(wheel1, false)) return;
-        if (!proofInvariant(wheel2, false)) return;
-        Wheel findedWheel1 = wheels.get(wheel1);
-        Wheel findedWheel2 = wheels.get(wheel2);
-        boolean canSwapWheels = !findedWheel1.isLocked() && !findedWheel2.isLocked();
-        if (canSwapWheels) {
-            findedWheel1.swap(findedWheel2);
-            wheels.put(wheel1, findedWheel2);// Establecen las posiciones en el lugar correcto
-            wheels.put(wheel2, findedWheel1);
-            adjustWheels();
-            isOk = true;
-        } else {
-            isOk = false; // Falla porque alguna o las dos estám bloqueada
-        }
-    }
     
-    /**This locked a specific wheel to this wheel can't spin
-     * @param wheel wheel is an integer that means the number of this slotmachine; That wheel will be locked. 
-     */
-    public void lock(int wheel) {
-        if (!proofInvariant(wheel, false)) return;
-        Wheel wheelToLock = wheels.get(wheel);
-        wheelToLock.lock();
-        isOk = false;
-    }
+    // --- MÉTODOS AUXILIARES
     
-    /**Make a wheel unlock, this able to the wheel spin corectly 
-     * @param wheel wheel is an integer that means the number of this slotmachine; That wheel will be locked. 
-     */
-    public void unlock(int wheel) {
-       if (!proofInvariant(wheel, false)) return;
-        Wheel wheelToUnlock = wheels.get(wheel);
-        wheelToUnlock.unlock();
-        isOk = true;
-    }
-    
-    /**Makes a update visually of SlotMachine
-     * 
-     */
-    public void frameFlickering() {
-        isOk = false;
-        isVisible = true;
-        bodySlotMachine.frameFlickering();
-        for (Wheel wheel : wheels.values()) {
-            wheel.frameFlickering();
-        }
-        isOk = true;
-    }
-    
-    /**Spin a specific wheel a specific steps
-     * @param wheel wheel is the number of wheel will be to spined,
-     * @param steps steps is the number of symbols the specific wheel will be moved.
-     */
-    public void spin(int wheel, int steps) throws InterruptedException {
-        if (!proofInvariant(wheel, false)) return;
-        Wheel wheelToSpin = wheels.get(wheel);
-        if (isVisible) {
-            wheelToSpin.spinSlowly(steps);
-        } else if (!isVisible) {
-            wheelToSpin.spin(steps);
-        }
-        boolean canSpin = wheelToSpin.canSpin();
-        isOk = canSpin;
-        ok();
-        isOk = true;
-    }
-    
-    /**Spin the wheels to place an specific configuration given.
-     * @param setSymbols setSymbols is the specific configuration that if it's possible can set, this will be to setted.
-     */
-    public void spin(String[] setSymbols) {
-        isOk = false;
-        int lengthArray = setSymbols.length;
-        boolean specificInvariant = lengthArray == wheels.size();
-        if (!specificInvariant) { // No cumple la condición para hacerse 
-            ok();
-            return;
-        } 
-        boolean allPlaced = true;
-        String specificSymbolToPut = null;
-        for (int i = 0; i < lengthArray; i++) {
-            specificSymbolToPut = setSymbols[i];
-            placeSymbol(i+1, specificSymbolToPut);
-            allPlaced &= isOk;   // acumula si alguna falló
-        }
-        isOk = allPlaced;
-    }
-    
-    public Map<Integer, Wheel> getWheels() {
-        return wheels;
+    protected  Wheel wheelsGet(int i) {
+        return wheels.get(i);
     }
     
     /* Obtains information of all symbol of all wheel (Key: Color, Value: time color repeats).
@@ -437,6 +381,39 @@ public class SlotMachine implements SlotMachineContest {
             wheel.getInformationSymbols(allSymbols);
         }
         return allSymbols;
+    }
+
+    private List<String> getColorSymbolWheels() {
+        ArrayList<String> colorSymbols = new ArrayList<>();
+        Symbol selectedSymbolWheel = null;
+        boolean existsSelectedSymbol = false;
+        String colorSelectedSymbol = null;
+        for (Wheel wheel : wheels.values()) {
+            selectedSymbolWheel = wheel.getSelectedSymbol();
+            existsSelectedSymbol = selectedSymbolWheel != null;
+            if (existsSelectedSymbol) {
+                colorSelectedSymbol = selectedSymbolWheel.getColor();
+                colorSymbols.add(colorSelectedSymbol);
+            }
+        }
+        return colorSymbols;
+    }
+
+    /**Makes a update visually of SlotMachine
+     * 
+     */
+    private void frameFlickering() {
+        isOk = false;
+        isVisible = true;
+        bodySlotMachine.frameFlickering();
+        for (Wheel wheel : wheels.values()) {
+            wheel.frameFlickering();
+        }
+        isOk = true;
+    }
+
+    private Map<Integer, Wheel> getWheels() {
+        return wheels;
     }
     
     /*
@@ -481,22 +458,6 @@ public class SlotMachine implements SlotMachineContest {
         }
     }
     
-    private List<String> getColorSymbolWheels() {
-        ArrayList<String> colorSymbols = new ArrayList<>();
-        Symbol selectedSymbolWheel = null;
-        boolean existsSelectedSymbol = false;
-        String colorSelectedSymbol = null;
-        for (Wheel wheel : wheels.values()) {
-            selectedSymbolWheel = wheel.getSelectedSymbol();
-            existsSelectedSymbol = selectedSymbolWheel != null;
-            if (existsSelectedSymbol) {
-                colorSelectedSymbol = selectedSymbolWheel.getColor();
-                colorSymbols.add(colorSelectedSymbol);
-            }
-        }
-        return colorSymbols;
-    }
-    
     // Ajusta la posición para cumplir con los límites descritos en el documento
     private int adjustPosition(int pos, boolean isAdding) { // Ayudado a hacer por Gemini IA
         int max = wheels.size() + (isAdding ? 1 : 0);
@@ -509,154 +470,4 @@ public class SlotMachine implements SlotMachineContest {
         }
         return pos;
     }
-    
-    
-    // ------------------------------------------------------------------------------------
-    private void different() {
-        int oldK = k;
-        for (int i = 2; i <= n; i++) {
-            int maxKPosition = 0;
-        
-            for (int u = 1; u <= n; u++) {
-                printOI(i, 1);
-        
-                if (k == 1) {
-                    return;
-                }
-        
-                if (oldK < k) {
-                    maxKPosition = u;
-                    oldK = k;
-                }
-            }
-        
-            if (maxKPosition != 0) {
-                printOI(i, maxKPosition);
-        
-                if (k == 1) {
-                    return;
-                }
-            }
-    
-        }
-    }
-    private int[] identical() {
-        int[] moves = new int[n + 1];
-
-        for (int i = 1; i < n; i++) {
-            printOI(1, 1);
-        
-            if (k == 1) {
-                return moves;
-            }
-        
-            int oldK = k;
-        
-            for (int u = 2; u <= n; u++) {
-                printOI(u, -i);
-        
-                if (k == 1) {
-                    return moves;
-                }
-        
-                if (oldK < k) {
-                    moves[u] = i;
-                    printOI(u, i);
-        
-                    if (k == 1) {
-                        return moves;
-                    }
-        
-                    break;
-                } else {
-                    printOI(u, i);
-        
-                    if (k == 1) {
-                        return moves;
-                    }
-                }
-            }
-        }
-
-        printOI(1, 1);
-        
-        return moves;
-    }
-    
-    
-    
-    
-    /**
-     * @param u is the number of reels and symbols.
-     * @return moves made for k = 1
-     */
-    @Override
-    public int[][] solve(int n) {
-        this.n = n;
-        spin();
-        makeInvisible();
-        k = distinctSymbolsVisible();
-        
-        if (k == 1) {
-            return steps.toArray(new int[steps.size()][]);
-        }
-        
-        different();
-        
-        if (k == 1) {
-            return steps.toArray(new int[steps.size()][]);
-        }
-        
-        int[] moves = identical();
-        
-        for (int u = 2; u <= n; u++) {
-            int move = moves[u];
-            printOI(u, -move);
-        }
-
-        return steps.toArray(new int[steps.size()][]);
-         
-    
-    }
-    
-    /**
-     * @param u is the number of reels and symbols.
-     */
-    @Override
-    public void simulate(int n) {
-        this.n = n;
-        spin();
-        makeVisible();
-        k = distinctSymbolsVisible();
-        
-        if (k == 1) {
-            return;
-        }
-        
-        different();
-        
-        if (k == 1) {
-            return;
-        }
-        
-        int[] moves = identical();
-        
-        if (k == 1) {
-            return;
-        }
-        
-        for (int u = 2; u <= n; u++) {
-            int move = moves[u]; 
-            printOI(u, -move);
-        }
-        
-    }
-    
-    private void printOI(int i, int u) {
-        steps.add(new int[]{i,u});
-        Wheel targetWheel = wheels.get(i);
-        targetWheel.changePositionSymbol(u);
-        k = distinctSymbolsVisible();
-    }
-    
 }
