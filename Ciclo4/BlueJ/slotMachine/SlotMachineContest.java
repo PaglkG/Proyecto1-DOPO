@@ -10,15 +10,17 @@ public class SlotMachineContest {
     private  static int n;
     private  static int k;
     private  static ArrayList<int[]> steps;
-   
+    private static SlotMachine machine;
     
-    
+    public SlotMachineContest(int cant) {
+        machine = new SlotMachine(n);
+    }
     
     /**
      * @param u is the number of reels and symbols.
      * @return moves made for k = 1
      */
-    public static  int[][] solve(int n) {
+    public static int[][] solve(int n) {
         SlotMachineContest.n = n;
         steps = new ArrayList();
         SlotMachine machine = new SlotMachine(n);
@@ -54,7 +56,7 @@ public class SlotMachineContest {
     public static  void simulate(int n) {
         SlotMachineContest.n = n;
         steps = new ArrayList();
-        SlotMachine machine = new SlotMachine(n);
+        machine = new SlotMachine(n);
         machine.spin();
         machine.makeVisible();
         k = machine.distinctSymbols();

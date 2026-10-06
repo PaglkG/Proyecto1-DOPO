@@ -19,14 +19,13 @@ import java.util.Objects;
  * @version 1.0
  */
 public class Wheel {
-    private int positionWheel;
-    private Rectangle wheelShape; 
-    private boolean isStoped;
-    private boolean isLocked;
-    private Random random;
-    private Symbol selectedSymbol;
-    private Integer selectedSymbolInteger;
-    private Map<Integer,Symbol> symbols;
+    protected int positionWheel;
+    protected Rectangle wheelShape; 
+    protected boolean isLocked;
+    protected Random random;
+    protected Symbol selectedSymbol;
+    protected Integer selectedSymbolInteger;
+    protected Map<Integer,Symbol> symbols;
     
     /**Constructor class of wheel, niladic method class.
      */
@@ -268,7 +267,7 @@ public class Wheel {
      */
     public boolean equals(Wheel wheel) {
         boolean hasSamePosition = this.positionWheel == wheel.getPositionWheel();
-        boolean hasSameBoolean = isStoped == wheel.isStoped() && isLocked == wheel.isLocked();
+        boolean hasSameBoolean = isLocked == wheel.isLocked();
         boolean hasSameSelectedSymbol = Objects.equals(selectedSymbol, wheel.getSelectedSymbol());
         boolean hasSameSymbols = symbols.equals(wheel.getSymbols());
         return hasSamePosition && hasSameBoolean && hasSameSelectedSymbol && hasSameSymbols;
@@ -284,13 +283,6 @@ public class Wheel {
     
     public boolean isLocked() {
         return isLocked;
-    }
-
-    /**
-     * Checks if the wheel is stopped.
-     */
-    public boolean isStoped() {
-        return isStoped;
     }
 
     /**
@@ -385,7 +377,10 @@ public class Wheel {
         }
     }
     
-    
+    public int getSelectedSymbolInteger() {
+        return (int) selectedSymbolInteger;
+    }
+            
     
     /**This locked this wheel to can´t spin, delete and swap it.
      */

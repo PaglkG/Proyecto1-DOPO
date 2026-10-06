@@ -23,6 +23,7 @@ public class SlotMachine {
     private  static int n;
     private  static int k;
     private  static ArrayList<int[]> steps;
+    private Set<Updatable> thingsToUpdate;
     
     /**Cronstructor, nyadic method class, of SlotMachine.
      */
@@ -30,10 +31,10 @@ public class SlotMachine {
         isOk = false;
         ArrayList<int[]> steps = new ArrayList<>();
         wheels = new TreeMap<>();
+        thingsToUpdate = new HashSet<>();
         isVisible = false;
         bodySlotMachine = new Rectangle(10, 10, 270, 270, "pink");
         isOk = true;
-
     }
     
     public SlotMachine(int cant) {
@@ -424,6 +425,10 @@ public class SlotMachine {
         isOk = allPlaced;
     }
     
+    public Map<Integer, Wheel> getWheels() {
+        return wheels;
+    }
+    
     protected  Wheel wheelsGet(int i) {
         return wheels.get(i);
     }
@@ -590,4 +595,9 @@ public class SlotMachine {
         k = distinctSymbolsVisible();
     }
     
+    private void update() {
+        for (Updatable toUpdate : thingsToUpdate) {
+            toUpdate.update();
+        }
+    }
 }
