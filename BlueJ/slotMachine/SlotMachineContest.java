@@ -25,7 +25,7 @@ public class SlotMachineContest
         SlotMachine machine = new SlotMachine(n);
         machine.spin();
         machine.makeInvisible();
-        k = machine.distinctSymbolsVisible();
+        k = machine.distinctSymbols();
         
         if (k == 1) {
             return steps.toArray(new int[steps.size()][]);
@@ -58,7 +58,7 @@ public class SlotMachineContest
         SlotMachine machine = new SlotMachine(n);
         machine.spin();
         machine.makeVisible();
-        k = machine.distinctSymbolsVisible();
+        k = machine.distinctSymbols();
         
         if (k == 1) {
             return;
@@ -87,7 +87,7 @@ public class SlotMachineContest
         steps.add(new int[]{i,u});
         Wheel targetWheel = machine.wheelsGet(i);
         targetWheel.changePositionSymbol(u);
-        k = machine.distinctSymbolsVisible();
+        k = machine.distinctSymbols();
     }
     
     private static  void different(SlotMachine machine) {

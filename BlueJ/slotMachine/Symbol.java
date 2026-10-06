@@ -4,20 +4,21 @@ import shapes.Triangle;
 
 import java.util.Objects;
 import java.awt.*;
+
 /**
  * this class is the Symbol in the slotMachine
  * this class is the Symbol in the Wheel
  *
  * @author Steveen-Gualdron
- * @version 0.1
+ * @version 0.2
  */
 public class Symbol {
+    
     private int positionAtTheWheel;
     private Triangle symbolShape;
     
     /**Constructor symbol, dyadic method class
      * @param color color is the color of this symbol.
-     * @param pos pos is the position of this symbol at the wheel.
      */
     public Symbol(String color) {
         symbolShape = new Triangle();
@@ -34,7 +35,7 @@ public class Symbol {
         symbolShape.changeColor(color);
         positionAtTheWheel = pos;
     }
-    
+
     /**Sets a new X and Y position to this symbol.
      * @param newPosX newPosX that going to set like x position of this symbol.
      * @param newPosY newPosY that going to set like y position of this symbol. 
@@ -46,8 +47,8 @@ public class Symbol {
         }
     }
     
-    public void changeSize(int newHeight, int newWidth) {
-        this.symbolShape.changeSize(newHeight, newWidth);
+    public void moveSlowly(int howMany) {
+        symbolShape.slowMoveVertical(howMany);
     }
 
     /**Makes this symbol visible.
@@ -61,18 +62,17 @@ public class Symbol {
     public void makeInvisible() {
         this.symbolShape.makeInvisible();
     }
+    
+    public void frameFlickering() {
+        symbolShape.frameFlickering();
+    }
 
     public String getColor() {
         return this.symbolShape.getColor();
     }
 
-
     public boolean isVisible() {
         return this.symbolShape.isVisible();
-    }
-
-    public Triangle getSymbolShape() {
-        return (Triangle)symbolShape;
     }
 
     public void setPositionAtTheWheel(int newPositionAtTheWheel) {
@@ -83,6 +83,12 @@ public class Symbol {
         return positionAtTheWheel;
     }
     
+    public boolean equals(Symbol symbol) {
+        boolean hasSamePosition = positionAtTheWheel == symbol.getPositionAtTheWheel();
+        boolean hasSameColor = Objects.equals(getColor(), symbol.getColor());
+        return hasSamePosition && hasSameColor;
+    }
+    
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
@@ -90,19 +96,18 @@ public class Symbol {
         Symbol symbol = (Symbol) obj;
         return this.equals(symbol);
     }
-    
-    public boolean equals(Symbol symbol) {
-        boolean hasSamePosition = positionAtTheWheel == symbol.getPositionAtTheWheel();
-        boolean hasSameColor = Objects.equals(getColor(), symbol.getColor());
-        return hasSamePosition && hasSameColor;
+
+    /**
+     * Permite a las clases hijas (como Ephemeral) modificar el tamaño.
+     */
+    protected void changeSize(int newHeight, int newWidth) {
+        this.symbolShape.changeSize(newHeight, newWidth);
     }
-    
-    public void moveSlowly(int howMany) {
-        symbolShape.slowMoveVertical(howMany);
+
+    /**
+     * Permite a las clases hijas acceder a la figura sin exponerla públicamente.
+     */
+    protected Triangle getSymbolShape() {
+        return (Triangle)symbolShape;
     }
-    
-    public void frameFlickering() {
-        symbolShape.frameFlickering();
-    }
-    
 }
