@@ -19,7 +19,8 @@ public class SlotMachine{
     private boolean isVisible;
     private Rectangle bodySlotMachine;
     
-    /**Cronstructor, nyadic method class, of SlotMachine.
+    /**
+     * Constructor, niladic method class, of SlotMachine.
      */
     public SlotMachine() {
         isOk = false;
@@ -30,6 +31,11 @@ public class SlotMachine{
         isOk = true;
 
     }
+    
+    /**
+     * Constructor, niladic method class, of SlotMachine.
+     * this constructor generete n wheel and n symbols
+     */
     
     public SlotMachine(int cant) {
         isOk = false;
