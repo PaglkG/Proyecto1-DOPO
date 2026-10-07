@@ -122,23 +122,25 @@ public class SlotMachine{
     }
 
     /**Swap two specific wheel of position 
-     * @param wheel1 wheel1 is the number of first wheel at the slotmachine that will be swaped by second wheel.
-     * @param wheel2 wheel2 is the nunmber of second wheel at the slotmachine that will be swaped by first wheel.
+     * @param wheel1 wheel1 is the number of first wheel at the slotmachine that will be swapped by second wheel.
+     * @param wheel2 wheel2 is the number of second wheel at the slotmachine that will be swapped by first wheel.
      */
-    public void swap(int wheel1, int wheel2) {
-        if (!proofInvariant(wheel1, false)) return;
-        if (!proofInvariant(wheel2, false)) return;
-        Wheel findedWheel1 = wheels.get(wheel1);
-        Wheel findedWheel2 = wheels.get(wheel2);
+    public void swap(int pos1, int pos2) {
+        isOk = false; 
+        if (!proofInvariant(pos1, false)) return;
+        if (!proofInvariant(pos2, false)) return;
+        Wheel findedWheel1 = wheels.get(pos1);
+        Wheel findedWheel2 = wheels.get(pos2);
         boolean canSwapWheels = !findedWheel1.isLocked() && !findedWheel2.isLocked();
         if (canSwapWheels) {
             findedWheel1.swap(findedWheel2);
-            wheels.put(wheel1, findedWheel2);// Establecen las posiciones en el lugar correcto
-            wheels.put(wheel2, findedWheel1);
+            wheels.put(pos1, findedWheel2);
+            wheels.put(pos2, findedWheel1);
             adjustWheels();
             isOk = true;
-        } else {
-            isOk = false; // Falla porque alguna o las dos estám bloqueada
+        } 
+        else {
+            isOk = false; 
         }
     }
     
