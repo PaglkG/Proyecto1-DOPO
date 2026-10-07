@@ -89,7 +89,7 @@ public class SlotMachine{
      * If a wheel with a wheel to its right is removed, all wheels on the right move one position to the left
      * @param pos pos is the position of wheel
      */
-    public void delWheel(int pos) {//Ayudado a perfeccionar con Gemini Pro Avanzado IA
+    public void delWheel(int pos) {
         isOk = false;
         boolean isWheelsEmpty = wheels.isEmpty();
         if (isWheelsEmpty) {
@@ -110,12 +110,12 @@ public class SlotMachine{
         wheels.remove(pos);
         
         // Desplazar las llaves del mapa hacia la izquierda
-        NavigableMap<Integer, Wheel> cutMapWheels = wheels.tailMap(pos, false);
-        List<Integer> keysToShift = new ArrayList<>(cutMapWheels.keySet());
+        NavigableMap<Integer, Wheel> tailWheels = wheels.tailMap(pos, false);
+        List<Integer> keysToShift = new ArrayList<>(tailWheels.keySet());
         for (Integer key : keysToShift) {
             Wheel wheelToMove = wheels.remove(key);
-            wheelToMove.setPositionWheel(key - 1); // Actualiza internamente el atributo
-            wheels.put(key - 1, wheelToMove);      // Lo guarda en la nueva posición
+            wheelToMove.setPositionWheel(key - 1); 
+            wheels.put(key - 1, wheelToMove);     
         }
         adjustWheels(); 
         isOk = true;
