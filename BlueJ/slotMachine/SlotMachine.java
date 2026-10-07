@@ -159,6 +159,7 @@ public class SlotMachine{
      * @param wheel wheel is an integer that means the number of this slotmachine; That wheel will be locked. 
      */
     public void unlock(int wheel) {
+       isOk = false;
        if (!proofInvariant(wheel, false)) return;
         Wheel wheelToUnlock = wheels.get(wheel);
         wheelToUnlock.unlock();
@@ -170,6 +171,7 @@ public class SlotMachine{
      * @param color color is the color of symbol that going to be created.
      */
     public void addSymbol(int pos, String color) {
+        isOk = false;
         boolean isAprovedInvariant = proofInvariant(pos, false);
         if (!isAprovedInvariant) return;
         Wheel wheelToAddSymbol = wheels.get(pos);
