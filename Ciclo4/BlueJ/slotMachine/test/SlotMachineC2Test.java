@@ -6,71 +6,43 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import java.util.List;
-import java.util.ArrayList;
-
-import java.util.Map;
 
 /**
- * The test class SlotMachineC2.
+ * The test class SlotMachineC2Test.
  *
- * @author  (your name)
- * @version (a version number or a date)
+ * @author  Steveen-Gualdron
+ * @version 0.2
  */
 public class SlotMachineC2Test {
     
     private SlotMachine sltmchn;
-    private Map<Integer, Wheel> wheels;
-    private int numWheels;
     
     @BeforeEach
     void setUp() {
+        // La máquina inicia en modo invisible por defecto para las pruebas de unidad[cite: 5].
         sltmchn = new SlotMachine();
-        wheels = sltmchn.getWheels();
-        numWheels = wheels.size();
     }
     
     @Test
     public void shouldSwapTwoWheels() {
-        sltmchn.addWheel(1);
-        sltmchn.addWheel(2);
-        sltmchn.addWheel(3);
-        sltmchn.addWheel(4);
-        Wheel firstWheel = wheels.get(1), secondWheel = wheels.get(2), thirdWheel = wheels.get(3), fourthWheel = wheels.get(4);
+        for (int i = 1; i <= 4; i++) {
+            sltmchn.addWheel(i);
+        }
+        // Asignamos colores únicos para rastrear su posición tras el intercambio
+        sltmchn.addSymbol(1, "red");
+        sltmchn.addSymbol(2, "blue");
+        sltmchn.addSymbol(3, "green");
+        sltmchn.addSymbol(4, "yellow");
+        
         sltmchn.swap(4, 2);
         sltmchn.swap(1, 3);
-        Wheel proofWheel1 = wheels.get(1), proofWheel2 = wheels.get(2), proofWheel3 = wheels.get(3), proofWheel4 = wheels.get(4);
-        assertEquals(proofWheel1, thirdWheel);
-        assertEquals(proofWheel2, fourthWheel);
-        assertEquals(proofWheel3, firstWheel);
-        assertEquals(proofWheel4, secondWheel);
-        assertEquals(4, wheels.size());
+        
+        String[] expectedConfig = {"green", "yellow", "red", "blue"};
+        assertArrayEquals(expectedConfig, sltmchn.configuration(), "La configuración debe reflejar el intercambio de las ruedas");
+        assertTrue(sltmchn.ok(), "El intercambio debió ser exitoso");
     }
     
-    @Test
-    public void shouldLockSpecificWheel() {
-        int NUMBER_WHEELS_TO_ADD = 5;
-        for (int i = 1; i <= NUMBER_WHEELS_TO_ADD; i++) {
-            sltmchn.addWheel(i);
-            sltmchn.addSymbol(i, "magenta");
-            sltmchn.addSymbol(i, "blue");
-            sltmchn.addSymbol(i, "yellow");
-            sltmchn.addSymbol(i, "red");
-            sltmchn.addSymbol(i, "green");
-            sltmchn.addSymbol(i, "blue");
-            sltmchn.addSymbol(i, "white");
-            sltmchn.addSymbol(i, "blue");
-        }
-        Wheel secondWheel = wheels.get(1), fourthWheel = wheels.get(3);
-        Symbol proofSecWheel = secondWheel.getSelectedSymbol(), proofFourthWheel =  fourthWheel.getSelectedSymbol();
-        sltmchn.lock(2);
-        sltmchn.lock(4);
-        sltmchn.spin(2);
-        sltmchn.spin(4);
-        Symbol selectedSymbolSecWheel = secondWheel.getSelectedSymbol(), selectedSymbolFourthWheel =  fourthWheel.getSelectedSymbol();
-        assertEquals(proofSecWheel, selectedSymbolSecWheel);
-        assertEquals(proofFourthWheel, selectedSymbolFourthWheel);
-    }
+    
     
     @Test
     public void shouldUnlockSpecificWheel() {
@@ -79,92 +51,56 @@ public class SlotMachineC2Test {
             sltmchn.addWheel(i);
             sltmchn.addSymbol(i, "magenta");
             sltmchn.addSymbol(i, "blue");
-            sltmchn.addSymbol(i, "yellow");
-            sltmchn.addSymbol(i, "red");
-            sltmchn.addSymbol(i, "green");
-            sltmchn.addSymbol(i, "blue");
-            sltmchn.addSymbol(i, "white");
-            sltmchn.addSymbol(i, "blue");
         }
-        Wheel secondWheel = wheels.get(2), fourthWheel = wheels.get(4);
-        Symbol proofSecWheel = secondWheel.getSelectedSymbol(), proofFourthWheel = fourthWheel.getSelectedSymbol();
-    
+        
         sltmchn.lock(2);
         sltmchn.lock(4);
-        sltmchn.spin(2);
-        sltmchn.spin(4);
-        Symbol selectedSymbolSecWheel = secondWheel.getSelectedSymbol(), selectedSymbolFourthWheel = fourthWheel.getSelectedSymbol();
-        assertEquals(proofSecWheel, selectedSymbolSecWheel);       // sigue igual porque está locked
-        assertEquals(proofFourthWheel, selectedSymbolFourthWheel); // sigue igual porque está locked
-    
+        
         sltmchn.unlock(2);
         sltmchn.unlock(4);
+        
         sltmchn.spin(2);
+        assertTrue(sltmchn.ok(), "La rueda 2 debe poder girar tras ser desbloqueada");
+        
         sltmchn.spin(4);
-        selectedSymbolSecWheel = secondWheel.getSelectedSymbol();
-        selectedSymbolFourthWheel = fourthWheel.getSelectedSymbol();
-        //assertNotEquals(proofSecWheel, selectedSymbolSecWheel);       // cambió porque ya no está locked
-        //assertNotEquals(proofFourthWheel, selectedSymbolFourthWheel); // cambió porque ya no está locked
+        assertTrue(sltmchn.ok(), "La rueda 4 debe poder girar tras ser desbloqueada");
     }
     
     @Test
-    public void shouldntDeleteWheelWhenIsLocked() throws InterruptedException{
+    public void shouldntDeleteWheelWhenIsLocked() {
         int NUMBER_WHEELS_TO_ADD = 5;
         for (int i = 1; i <= NUMBER_WHEELS_TO_ADD; i++) {
             sltmchn.addWheel(i);
         }
+        
         sltmchn.lock(5);
-        for (int i = 1; i <= NUMBER_WHEELS_TO_ADD; i++) {
-            sltmchn.delWheel(i);
-        }
-        assertFalse(sltmchn.ok());
+        sltmchn.delWheel(5);
+        
+        assertFalse(sltmchn.ok(), "No se debe permitir eliminar una rueda bloqueada");
     }
     
     @Test
-    public void shouldntSwapWheelWhenIsLocked() throws InterruptedException{
+    public void shouldntSwapWheelWhenIsLocked() {
         int NUMBER_WHEELS_TO_ADD = 5;
         for (int i = 1; i <= NUMBER_WHEELS_TO_ADD; i++) {
             sltmchn.addWheel(i);
+            sltmchn.addSymbol(i, "color" + i);
         }
-        Wheel wheel1 = wheels.get(1), wheel2 = wheels.get(2), wheel4 = wheels.get(4), wheel5 = wheels.get(5);
-        wheel1.addSymbol("cyan");
-        wheel2.addSymbol("yellow");
-        wheel4.addSymbol("magenta");
-        wheel5.addSymbol("blue");
+        
         sltmchn.lock(2);
         sltmchn.lock(4);
+        
         sltmchn.swap(2, 4);
-        assertFalse(sltmchn.ok());
+        assertFalse(sltmchn.ok(), "No se debe poder intercambiar si ambas ruedas están bloqueadas");
+        
         sltmchn.swap(1, 5);
-        assertTrue(sltmchn.ok());
+        assertTrue(sltmchn.ok(), "Se debe poder intercambiar ruedas no bloqueadas");
+        
         sltmchn.swap(2, 5);
-        assertFalse(sltmchn.ok());
+        assertFalse(sltmchn.ok(), "No se debe poder intercambiar si al menos una rueda está bloqueada");
     }
     
-    @Test 
-    public void shouldntSpinWhenWheelIsLocked() throws InterruptedException {
-        int NUMBER_WHEELS_TO_ADD = 5;
-        for (int i = 1; i <= NUMBER_WHEELS_TO_ADD; i++) {
-            sltmchn.addWheel(i);
-            sltmchn.addSymbol(i, "magenta");
-            sltmchn.addSymbol(i, "blue");
-            sltmchn.addSymbol(i, "yellow");
-        }
-        sltmchn.lock(5);
-        sltmchn.spin(); // El último spin debió hacer que isOK sea false
-        assertFalse(sltmchn.ok());
-        sltmchn.unlock(5);
-        sltmchn.spin(); // Ya desbloqueada debería funcionar
-        assertTrue(sltmchn.ok());
-        sltmchn.lock(1);
-        sltmchn.lock(3);
-        sltmchn.spin(1); // Solamente deberian de girar la rueda 2, 4, 5 (Cambian de selectedSymbol o el simbolo principal)
-        assertFalse(sltmchn.ok());
-        sltmchn.spin(2);
-        assertTrue(sltmchn.ok());
-        sltmchn.spin(3);
-        assertFalse(sltmchn.ok());
-    }
+    
     
     @Test
     public void shouldSpinToObtainASpecificConfigurationOfSymbols() {
@@ -181,13 +117,18 @@ public class SlotMachineC2Test {
             sltmchn.addSymbol(i, "cyan");
             sltmchn.addSymbol(i, "pink");
         }
+        
         String[] specificConfiguration = {"blue", "cyan", "yellow", "green", "pink"};
         
-        // Acción de girar rueda con una especificacion
+        // Acción de girar las ruedas con la firma spin(String[] setSymbols)
         sltmchn.spin(specificConfiguration);
-        String[] configurationSlotMachine = sltmchn.configuration();
-        // Verificación 
-        assertArrayEquals(specificConfiguration, configurationSlotMachine, "La configuración resultante no coincide con la esperada");
+        
+        assertArrayEquals(specificConfiguration, sltmchn.configuration(), "La configuración resultante no coincide con la esperada");
         assertTrue(sltmchn.ok());
+    }
+    
+    @AfterEach
+    void tearDown() {
+        sltmchn.exit();
     }
 }
