@@ -19,14 +19,14 @@ import java.util.Objects;
  */
 public class Wheel {
     
-    private int positionWheel;
-    private Rectangle wheelShape; 
-    private boolean isStoped;
-    private boolean isLocked;
+    protected int positionWheel;
+    protected Rectangle wheelShape; 
+    protected boolean isStoped;
+    protected boolean isLocked;
     private Random random;
-    private Symbol selectedSymbol;
-    private Integer selectedSymbolInteger;
-    private Map<Integer,Symbol> symbols;
+    protected Symbol selectedSymbol;
+    protected Integer selectedSymbolInteger;
+    protected Map<Integer,Symbol> symbols;
     
     /**Constructor class of wheel, niladic method class.
      */
@@ -346,6 +346,10 @@ public class Wheel {
      */
     public Symbol getSelectedSymbol() {
         return selectedSymbol;
+    }
+    
+     public int getSelectedSymbolInteger() {
+        return (int) selectedSymbolInteger;
     }
 
     public void setPositionWheel(int positionWheel) {
