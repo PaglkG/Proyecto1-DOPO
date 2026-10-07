@@ -148,10 +148,11 @@ public class SlotMachine{
      * @param wheel wheel is an integer that means the number of this slotmachine; That wheel will be locked. 
      */
     public void lock(int wheel) {
+        isOk = false;
         if (!proofInvariant(wheel, false)) return;
         Wheel wheelToLock = wheels.get(wheel);
         wheelToLock.lock();
-        isOk = false;
+        isOk = true;
     }
     
     /**Make a wheel unlock, this able to the wheel spin corectly 
