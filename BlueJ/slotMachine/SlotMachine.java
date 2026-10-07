@@ -196,6 +196,7 @@ public class SlotMachine{
      * @param symbol symbol is the type of symbol that will be added at the specific number wheel.
      */
     public void placeSymbol(int wheel, String symbol) {
+        isOk = false;
         boolean isAprovedInvariant = proofInvariant(wheel, false);
         if (!isAprovedInvariant) return;
         Wheel wheelToPlaceSymbol = wheels.get(wheel);
@@ -207,6 +208,7 @@ public class SlotMachine{
      * @param wheel wheel indicates the number (integer) of wheel that going to be moved.
      */
     public void spin(int wheel) {
+        isOk = false;
         boolean isAprovedInvariant = proofInvariant(wheel, false);
         if (!isAprovedInvariant) return;
         wheel = adjustPosition(wheel, false); 
@@ -217,8 +219,9 @@ public class SlotMachine{
             wheelToSpin.spin();
         }
         
-        isOk = canWheelSpin; // Si está bloqueada, esto será false
+        isOk = canWheelSpin;
         ok();
+        isOk = true;
     }
     
     /**Spin a specific wheel a specific steps
