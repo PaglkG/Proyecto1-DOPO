@@ -320,22 +320,28 @@ public class SlotMachine{
         return symbols;
     }
 
-    /**Tells whether all shapes selected by the wheels are identical.
-     * @return true if all shapes selected by the wheels are identical,
-     * false otherwise
+    /**
+     * Tells whether all symbols currently selected by the wheels are identical in color.
+     * @return true if all visible symbols have the same color, false otherwise.
      */
     public boolean isJackpot() {
         isOk = false;
+        
         List<String> colorSymbols = getColorSymbolWheels();
+        
+        if (colorSymbols.isEmpty()) {
+            return false;
+        }
+        
         String firstColor = colorSymbols.get(0);
-        boolean hasTheSameColor = false;
+        
         for (String color : colorSymbols) {
-            hasTheSameColor = firstColor.equals(color);
-            if (!hasTheSameColor) {
+            if (!firstColor.equals(color)) {
                 isOk = true;
                 return false;
             }
         }
+        
         isOk = true;
         return true;
     }
