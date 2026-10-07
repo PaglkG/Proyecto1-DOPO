@@ -244,24 +244,37 @@ public class SlotMachine{
     }
     
     public void spin(String[] setSymbols) {
-        
+        isOk = false;
+        int lengthArray = setSymbols.length;
+        boolean specificInvariant = lengthArray == wheels.size();
+        if (!specificInvariant) { 
+            ok();
+            return;
+        } 
+        boolean allPlaced = true;
+        String specificSymbolToPut = null;
+        for (int i = 0; i < lengthArray; i++) {
+            specificSymbolToPut = setSymbols[i];
+            placeSymbol(i+1, specificSymbolToPut);
+            allPlaced &= isOk;   
+        }
+        isOk = true;
     }
 
     /**Moves each of the wheels.
      */
     public void spin() {
         isOk = false;
-        boolean canWheelSpin = false, allCanSpin = true;
+        boolean allCanSpin = true;
         for (Wheel wheel : wheels.values()) {
-            canWheelSpin = wheel.canSpin();
+            boolean canWheelSpin = wheel.canSpin();
             if (canWheelSpin) {
                 wheel.spin();
             } else {
                 allCanSpin = false;
             }
         }
-        isOk = allCanSpin;
-        ok();
+        isOk = true;
     }
 
     /**Displays all existing symbol colors in order.
