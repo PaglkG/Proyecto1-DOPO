@@ -185,9 +185,9 @@ public class SlotMachineC2Test {
         
         // Acción de girar rueda con una especificacion
         sltmchn.spin(specificConfiguration);
-        
+        String[] configurationSlotMachine = sltmchn.configuration();
         // Verificación 
-        assertArrayEquals(specificConfiguration, sltmchn.configuration(), "La configuración resultante no coincide con la esperada");
+        assertArrayEquals(specificConfiguration, configurationSlotMachine, "La configuración resultante no coincide con la esperada");
         assertTrue(sltmchn.ok());
     }
 }

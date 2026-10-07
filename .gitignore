@@ -15,3 +15,10 @@
 
 # Ignore .classpath VS
 .classpath
+
+# Ignore uml
+*.uml
+*.umlcd
+
+# temp astah
+*.asta.lock

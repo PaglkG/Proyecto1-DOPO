@@ -25,18 +25,10 @@ public class SlotMachine {
      */
     public SlotMachine() {
         isOk = false;
-<<<<<<< HEAD
-        body = new Rectangle(10,10,270,270,"pink");
-        wheels = new TreeMap<>();
-        isVisible = false;
-        isOk = true;
-        
-=======
         wheels = new TreeMap<>();
         isVisible = false;
         bodySlotMachine = new Rectangle(10, 10, 270, 270, "pink");
         isOk = true;
->>>>>>> develop
     }
 
     /**
@@ -50,8 +42,9 @@ public class SlotMachine {
         NavigableMap<Integer, Wheel> cutMapWheels = wheels.tailMap(pos, true);
         List<Integer> keysToShift = new ArrayList<>(cutMapWheels.keySet());
         Collections.reverse(keysToShift); // Importante: recorrer de mayor a menor para no sobrescribir
+        Wheel wheelToMove = null;
         for (Integer key : keysToShift) {
-            Wheel wheelToMove = wheels.remove(key);
+            wheelToMove = wheels.remove(key);
             wheelToMove.setPositionWheel(key + 1);
             wheels.put(key + 1, wheelToMove);
         }
@@ -125,6 +118,7 @@ public class SlotMachine {
         }
         isOk = true;
     }
+    
 
     /** The symbol is added to each wheel; shape and wheel number are requested.
      * @param wheel wheel is the number (integer) of wheel that will add the symbol. 
@@ -132,10 +126,12 @@ public class SlotMachine {
      */
     public void placeSymbol(int wheel, String symbol) {
         boolean isAprovedInvariant = proofInvariant(wheel, false);
-        if (!isAprovedInvariant) return;
+        if (!isAprovedInvariant) {
+            ok();
+            return;    
+        }
         Wheel wheelToPlaceSymbol = wheels.get(wheel);
-        wheelToPlaceSymbol.placeSymbol(symbol);   
-        isOk = true;
+        isOk = wheelToPlaceSymbol.placeSymbol(symbol); 
     }
 
     /**Moves a specific number of wheel.
@@ -143,7 +139,10 @@ public class SlotMachine {
      */
     public void spin(int wheel) {
         boolean isAprovedInvariant = proofInvariant(wheel, false);
-        if (!isAprovedInvariant) return;
+        if (!isAprovedInvariant) {
+            ok();
+            return;    
+        }
         wheel = adjustPosition(wheel, false); 
         Wheel wheelToSpin = wheels.get(wheel);
         
@@ -203,14 +202,6 @@ public class SlotMachine {
                 countDistincSymbols++;
             }
         }
-        Set<String> colorSymbols = new HashSet<>();
-        String[] symbolsWheel = null;
-        for (Wheel wheel : wheels.values()) {
-            symbolsWheel = wheel.symbols();
-            for (String color : symbolsWheel){
-                colorSymbols.add(color);
-            }
-        }
         isOk = true;
         return countDistincSymbols;
     }
@@ -238,7 +229,6 @@ public class SlotMachine {
         for (String color : colorSymbols) {
             hasTheSameColor = firstColor.equals(color);
             if (!hasTheSameColor) {
-                isOk = true;
                 return false;
             }
         }
@@ -251,11 +241,7 @@ public class SlotMachine {
     public void makeVisible() {
         isOk = false;
         isVisible = true;
-<<<<<<< HEAD
-        body.makeVisible();
-=======
         bodySlotMachine.makeVisible();
->>>>>>> develop
         for (Wheel wheel : wheels.values()) {
             wheel.makeVisible();
         }
@@ -300,8 +286,8 @@ public class SlotMachine {
      * @param wheel2 wheel2 is the nunmber of second wheel at the slotmachine that will be swaped by first wheel.
      */
     public void swap(int wheel1, int wheel2) {
-        if (!proofInvariant(wheel1, false)) return;
-        if (!proofInvariant(wheel2, false)) return;
+        boolean isAprovedInvariantWheel1 = proofInvariant(wheel1, false), isAprovedInvariantWheel2 = proofInvariant(wheel2, false);
+        if (!isAprovedInvariantWheel1 || isAprovedInvariantWheel2) return;
         Wheel findedWheel1 = wheels.get(wheel1);
         Wheel findedWheel2 = wheels.get(wheel2);
         boolean canSwapWheels = !findedWheel1.isLocked() && !findedWheel2.isLocked();
@@ -311,8 +297,6 @@ public class SlotMachine {
             wheels.put(wheel2, findedWheel1);
             adjustWheels();
             isOk = true;
-        } else {
-            isOk = false; // Falla porque alguna o las dos estám bloqueada
         }
     }
     
@@ -323,7 +307,7 @@ public class SlotMachine {
         if (!proofInvariant(wheel, false)) return;
         Wheel wheelToLock = wheels.get(wheel);
         wheelToLock.lock();
-        isOk = false;
+        isOk = true;
     }
     
     /**Make a wheel unlock, this able to the wheel spin corectly 
@@ -364,11 +348,27 @@ public class SlotMachine {
         boolean canSpin = wheelToSpin.canSpin();
         isOk = canSpin;
         ok();
-        isOk = true;
     }
-    
+
+    /**Spin the wheels to place an specific configuration given.
+     * @param setSymbols setSymbols is the specific configuration that if it's possible can set, this will be to setted.
+     */
     public void spin(String[] setSymbols) {
-        
+        isOk = false;
+        int lengthArray = setSymbols.length;
+        boolean specificInvariant = lengthArray == wheels.size();
+        if (!specificInvariant) { // No cumple la condición para hacerse 
+            ok();
+            return;
+        } 
+        boolean allPlaced = true;
+        String specificSymbolToPut = null;
+        for (int i = 0; i < lengthArray; i++) {
+            specificSymbolToPut = setSymbols[i];
+            placeSymbol(i+1, specificSymbolToPut);
+            allPlaced &= isOk;   // acumula si alguna falló
+        }
+        isOk = allPlaced;
     }
     
     public Map<Integer, Wheel> getWheels() {

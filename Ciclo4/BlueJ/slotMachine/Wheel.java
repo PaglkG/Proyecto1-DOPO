@@ -130,8 +130,7 @@ public class Wheel {
         }
     }
     
-    
-    /**
+    /** The symbol is added to each wheel; shape and wheel number are requested.
      * @param symbol symbol is the type of symbol that will be added at the specific number wheel.
      */
     public boolean placeSymbol(String symbol) {
