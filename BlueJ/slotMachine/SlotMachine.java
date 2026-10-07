@@ -243,6 +243,9 @@ public class SlotMachine{
         }
     }
     
+    /**Spin the wheels to place an specific configuration given.
+     * @param setSymbols setSymbols is the specific configuration that if it's possible can set, this will be to setted.
+     */
     public void spin(String[] setSymbols) {
         isOk = false;
         int lengthArray = setSymbols.length;
@@ -255,8 +258,7 @@ public class SlotMachine{
         String specificSymbolToPut = null;
         for (int i = 0; i < lengthArray; i++) {
             specificSymbolToPut = setSymbols[i];
-            placeSymbol(i+1, specificSymbolToPut);
-            allPlaced &= isOk;   
+            placeSymbol(i+1, specificSymbolToPut); 
         }
         isOk = true;
     }
