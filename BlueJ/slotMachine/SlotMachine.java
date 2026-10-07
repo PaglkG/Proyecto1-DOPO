@@ -229,17 +229,18 @@ public class SlotMachine{
      * @param steps steps is the number of symbols the specific wheel will be moved.
      */
     public void spin(int wheel, int steps) throws InterruptedException {
+        isOk = false;
         if (!proofInvariant(wheel, false)) return;
         Wheel wheelToSpin = wheels.get(wheel);
-        if (isVisible) {
-            wheelToSpin.spinSlowly(steps);
-        } else if (!isVisible) {
-            wheelToSpin.spin(steps);
-        }
         boolean canSpin = wheelToSpin.canSpin();
-        isOk = canSpin;
-        ok();
-        isOk = true;
+        if (canSpin) {
+            if (isVisible) {
+                wheelToSpin.spinSlowly(steps);
+            } else {
+                wheelToSpin.spin(steps);
+            }
+            isOk = true;
+        }
     }
     
     public void spin(String[] setSymbols) {
