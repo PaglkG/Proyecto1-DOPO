@@ -37,34 +37,23 @@ public class SlotMachine{
      * this constructor generete n wheel and n symbols
      */
     
-    public SlotMachine(int cant) {
+    public SlotMachine(int n) {
         isOk = false;
-        ArrayList<int[]> steps = new ArrayList<>();
         wheels = new TreeMap<>();
         isVisible = false;
-        bodySlotMachine = new Rectangle(10, 10, 270, 273*(cant/5), "pink");
-        //esta parte la hizo geminis, todos los posibles 50 colores
-        String[] colorsHex = {
-            "#FF0000", "#8B0000", "#DC143C", "#FF6347", "#FFC0CB", "#FF1493", "#C71585",
-            "#FF4500", "#FF8C00", "#FFA500", "#FFD700", "#FFFF00", "#F0E68C", "#B8860B",
-            "#008000", "#00FF00", "#32CD32", "#228B22", "#8FBC8F", "#00FA9A", "#6B8E23",
-            "#0000FF", "#000080", "#1E90FF", "#4682B4", "#00BFFF", "#00FFFF", "#48D1CC",
-            "#5F9EA0", "#800080", "#4B0082", "#8A2BE2", "#DA70D6", "#EE82EE", "#FF00FF",
-            "#9370DB", "#A52A2A", "#8B4513", "#D2691E", "#F4A460", "#DEB887", "#FFDEAD",
-            "#000000", "#2F4F4F", "#696969", "#808080", "#A9A9A9", "#C0C0C0", "#DCDCDC",
-            "#F5F5DC"
-        };
-        //hasta aca
-        Canvas.getCanvas().resizeAndRefresh(60*cant, 283);
-        for (int i = 0; i < cant; i++) {
+        bodySlotMachine = new Rectangle(10, 10, 270, 273*(n/5), "pink");
+        
+        Canvas.getCanvas().resizeAndRefresh(60*n, 283);
+        
+        for (int i = 0; i < n; i++) {
             int requestedPos = i; 
             addWheel(requestedPos);
             int correctedPos = adjustPosition(requestedPos, true);
-            
-            for (int u = 0; u < cant; u++) {
-                addSymbol(correctedPos, colorsHex[u]);
+            for (int u = 0; u < n; u++) {
+                addSymbol(correctedPos, COLORS_HEX[u]);
             }
         }
+        spin();
         isOk = true;
 
     }
@@ -73,12 +62,12 @@ public class SlotMachine{
      * Add a wheel to this slot machine, place the roulette wheel on the left or right side.
      * @param pos pos is the position of wheel that is added to this object.
      */
-    public void addWheel(int pos) { //Ayudado a perfeccionar con Gemini Pro Avanzado IA
+    public void addWheel(int pos) { 
         isOk = false;
         pos = adjustPosition(pos, true); 
         // Desplazar las llaves del mapa hacia la derecha para hacer espacio
-        NavigableMap<Integer, Wheel> cutMapWheels = wheels.tailMap(pos, true);
-        List<Integer> keysToShift = new ArrayList<>(cutMapWheels.keySet());
+        NavigableMap<Integer, Wheel> tailWheels = wheels.tailMap(pos, true);
+        List<Integer> keysToShift = new ArrayList<>(tailWheels.keySet());
         Collections.reverse(keysToShift); // Importante: recorrer de mayor a menor para no sobrescribir
         for (Integer key : keysToShift) {
             Wheel wheelToMove = wheels.remove(key);
@@ -476,4 +465,16 @@ public class SlotMachine{
         }
         return pos;
     }
+    
+    //metodo con ayuda de geminis 
+    private static final String[] COLORS_HEX = {
+        "#FF0000", "#8B0000", "#DC143C", "#FF6347", "#FFC0CB", "#FF1493", "#C71585",
+        "#FF4500", "#FF8C00", "#FFA500", "#FFD700", "#FFFF00", "#F0E68C", "#B8860B",
+        "#008000", "#00FF00", "#32CD32", "#228B22", "#8FBC8F", "#00FA9A", "#6B8E23",
+        "#0000FF", "#000080", "#1E90FF", "#4682B4", "#00BFFF", "#00FFFF", "#48D1CC",
+        "#5F9EA0", "#800080", "#4B0082", "#8A2BE2", "#DA70D6", "#EE82EE", "#FF00FF",
+        "#9370DB", "#A52A2A", "#8B4513", "#D2691E", "#F4A460", "#DEB887", "#FFDEAD",
+        "#000000", "#2F4F4F", "#696969", "#808080", "#A9A9A9", "#C0C0C0", "#DCDCDC",
+        "#F5F5DC"
+    };
 }
