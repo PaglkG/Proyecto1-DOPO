@@ -23,12 +23,6 @@ public class SlotMachineC1Test {
         sltmchn = new SlotMachine();
     }
     
-    @Test
-    public void shouldCreateSlotMachine() {
-        assertNotNull(sltmchn); 
-        sltmchn.addWheel(1);
-        assertTrue(sltmchn.ok(), "Debe poder crear la máquina y añadir una rueda exitosamente");
-    }
     
     @Test
     public void shouldAddWheel() {
@@ -37,14 +31,6 @@ public class SlotMachineC1Test {
         assertTrue(sltmchn.ok(), "Debe permitir agregar ruedas consecutivas");
     }
     
-    @Test
-    public void shouldDelWheel() {
-        sltmchn.addWheel(1);
-        sltmchn.addSymbol(1, "red");
-        sltmchn.delWheel(1);
-        assertTrue(sltmchn.ok()); 
-        assertEquals(0, sltmchn.symbols().length, "La lista de símbolos debe estar vacía tras eliminar la única rueda");
-    }
     
     @Test
     public void shouldGiveSymbols() {

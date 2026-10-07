@@ -279,22 +279,23 @@ public class SlotMachine{
         isOk = true;
     }
 
-    /**Displays all existing symbol colors in order.
-     * @return A string array with exiting symbols colors of this slot machine.
+    /**
+     * Displays all existing symbol colors in order.
+     * @return a string array with the existing symbol colors of this slot machine.
      */
     public String[] symbols() {
         isOk = false;
-        ArrayList<String> colorSymbols = new ArrayList<>();    
-        String[] symbolsWheel = null;
+        List<String> colorSymbols = new ArrayList<>();    
+        
         for (Wheel wheel : wheels.values()) {
-            symbolsWheel = wheel.symbols();
+            String[] symbolsWheel = wheel.symbols();
             for (String color : symbolsWheel) {
                 colorSymbols.add(color);
             }
         }
-        String[] symbols = colorSymbols.toArray(new String[0]);
+        
         isOk = true;
-        return symbols;
+        return colorSymbols.toArray(new String[0]);
     }
 
     /**Displays the number of distinct colors among the symbols on the wheel that are flipped.

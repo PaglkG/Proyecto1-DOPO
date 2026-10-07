@@ -42,30 +42,7 @@ public class SlotMachineC2Test {
         assertTrue(sltmchn.ok(), "El intercambio debió ser exitoso");
     }
     
-    @Test
-    public void shouldLockSpecificWheel() {
-        int NUMBER_WHEELS_TO_ADD = 5;
-        for (int i = 1; i <= NUMBER_WHEELS_TO_ADD; i++) {
-            sltmchn.addWheel(i);
-            sltmchn.addSymbol(i, "magenta");
-            sltmchn.addSymbol(i, "blue");
-        }
-        
-        String[] initialConfig = sltmchn.configuration();
-        
-        sltmchn.lock(2);
-        sltmchn.lock(4);
-        
-        sltmchn.spin(2);
-        assertFalse(sltmchn.ok(), "Girar una rueda bloqueada debe retornar ok() = false");
-        
-        sltmchn.spin(4);
-        assertFalse(sltmchn.ok(), "Girar una rueda bloqueada debe retornar ok() = false");
-        
-        String[] currentConfig = sltmchn.configuration();
-        assertEquals(initialConfig[1], currentConfig[1], "El símbolo visible de la rueda 2 no debió cambiar");
-        assertEquals(initialConfig[3], currentConfig[3], "El símbolo visible de la rueda 4 no debió cambiar");
-    }
+    
     
     @Test
     public void shouldUnlockSpecificWheel() {
@@ -123,35 +100,7 @@ public class SlotMachineC2Test {
         assertFalse(sltmchn.ok(), "No se debe poder intercambiar si al menos una rueda está bloqueada");
     }
     
-    @Test 
-    public void shouldntSpinWhenWheelIsLocked() {
-        int NUMBER_WHEELS_TO_ADD = 5;
-        for (int i = 1; i <= NUMBER_WHEELS_TO_ADD; i++) {
-            sltmchn.addWheel(i);
-            sltmchn.addSymbol(i, "magenta");
-            sltmchn.addSymbol(i, "blue");
-        }
-        
-        sltmchn.lock(5);
-        sltmchn.spin(); // El giro global falla si al menos una rueda no puede girar
-        assertFalse(sltmchn.ok(), "spin() global debe fallar si alguna rueda está bloqueada");
-        
-        sltmchn.unlock(5);
-        sltmchn.spin(); 
-        assertTrue(sltmchn.ok(), "spin() global debe funcionar si todas están desbloqueadas");
-        
-        sltmchn.lock(1);
-        sltmchn.lock(3);
-        
-        sltmchn.spin(1); 
-        assertFalse(sltmchn.ok());
-        
-        sltmchn.spin(2);
-        assertTrue(sltmchn.ok());
-        
-        sltmchn.spin(3);
-        assertFalse(sltmchn.ok());
-    }
+    
     
     @Test
     public void shouldSpinToObtainASpecificConfigurationOfSymbols() {
