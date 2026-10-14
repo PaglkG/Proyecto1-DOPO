@@ -18,4 +18,8 @@ public class Lefty extends Wheel {
     public void copy() {
         
     }
+    
+    public void getWheelToCopy(Wheel wheel) {
+        wheelToCopy = wheel;
+    }
 }
