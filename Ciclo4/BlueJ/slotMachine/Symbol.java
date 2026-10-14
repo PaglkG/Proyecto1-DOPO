@@ -110,4 +110,11 @@ public class Symbol {
     protected Triangle getSymbolShape() {
         return (Triangle)symbolShape;
     }
+    
+    /**
+     * efect specials symbols 
+     */
+    protected void efect() {
+        
+    }
 }
