@@ -1,7 +1,4 @@
-package slotMachine.test;
-
-import slotMachine.*;
-
+package slotMachine;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.AfterEach;
@@ -32,4 +29,26 @@ public class WheelRebelTest
         assertArrayEquals(new String[]{"red", "blue", "black"}, wheel.symbols());
     }
     
+    @Test
+    public void shouldNotBlock() {
+        wheel.lock();
+        assertFalse(wheel.isLocked());
+    }
+    
+    @Test
+    public void shouldNotExchange() {
+        int pos = wheel.getPositionWheel();
+        Wheel wheelCange = new Rebel();
+        wheel.swap(wheelCange);
+        assertArrayEquals(new int[]{pos}, new int[]{wheel.getPositionWheel()});
+    }
+    
+    @Test
+    public void shouldNotDelete() {
+        SlotMachine machine = new SlotMachine();
+        machine.addWheel("rebel", "blue",1);
+        machine.addSymbol(1, "blue");
+        machine.delWheel(1);
+        assertArrayEquals(new String[]{"blue"}, machine.symbols());        
+    }
 }
