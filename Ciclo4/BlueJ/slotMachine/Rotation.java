@@ -7,9 +7,9 @@ package slotMachine;
  * @author (your name)
  * @version (a version number or a date)
  */
-public class Rotetion extends Symbol
+public class Rotation extends Symbol
 {
-    public Rotetion(String color) {
+    public Rotation(String color) {
         super(color);
     }
     
