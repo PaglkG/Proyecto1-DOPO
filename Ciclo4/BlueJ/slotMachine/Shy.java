@@ -1,24 +1,42 @@
 package slotMachine;
 
-
 /**
  * Write a description of class Shy here.
- *
- * @author (your name)
- * @version (a version number or a date)
+ * This symbol toggles its visibility every time it is selected in the wheel.
+ * 
+ * @version 1.0
  */
-public class Shy extends Symbol
-{
+public class Shy extends Symbol {
+
+    private boolean isVisible;
+
+    /**
+     * Constructor for objects of class Shy
+     * @param color The color of the shy symbol.
+     */
     public Shy(String color) {
         super(color);
+        this.isVisible = super.isVisible();
     }
-    
-    @Override 
-    public void efect() {
-        
-    }
-    
+
+    /**
+     * Toggles the visibility of the symbol.
+     */
     public void visible() {
-        
+        if (this.isVisible) {
+            makeInvisible();
+            this.isVisible = false;
+        } else {
+            makeVisible();
+            this.isVisible = true;
+        }
+    }
+
+    /**
+     * Applies the specific effect of the shy symbol.
+     */
+    @Override
+    protected void efect() {
+        visible();
     }
 }

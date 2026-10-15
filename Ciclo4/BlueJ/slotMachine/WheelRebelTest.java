@@ -46,9 +46,9 @@ public class WheelRebelTest
     @Test
     public void shouldNotDelete() {
         SlotMachine machine = new SlotMachine();
-        machine.addWheel("rebel", "blue",1);
-        machine.addSymbol(1, "blue");
-        machine.delWheel(1);
-        assertArrayEquals(new String[]{"blue"}, machine.symbols());        
+        machine.addWheel("rebel", "blue", 1);
+        assertThrows(UnsupportedOperationException.class, () -> {
+            machine.delWheel(1);
+        });
     }
 }

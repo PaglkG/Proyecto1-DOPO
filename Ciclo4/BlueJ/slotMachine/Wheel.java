@@ -506,7 +506,11 @@ public class Wheel {
     protected Integer getSelectedSymbolPosition() {
         return selectedSymbolInteger;
     }
-
+    
+    protected void validateDeletion() {
+        
+    }
+    
     private String[] getColorSymbols() {
         int sizeSymbols = symbols.size(), indexColorSymbol = 0;
         String[] colorSymbols = new String[sizeSymbols];

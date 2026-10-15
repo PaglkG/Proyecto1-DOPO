@@ -128,6 +128,11 @@ public class SlotMachine{
         pos = adjustPosition(pos, false); 
         
         Wheel wheelToDelete = wheels.get(pos);
+
+        if (wheelToDelete != null) {
+            wheelToDelete.validateDeletion();
+        }
+
         boolean isWheelToDeleteLocked = wheelToDelete.isLocked();
         if (isWheelToDeleteLocked) {
             errorMessage("Esa acción no se puede realizar.");
@@ -461,6 +466,8 @@ public class SlotMachine{
         }
         isOk = true;
     }
+    
+
     
     /* Obtains information of all symbol of all wheel (Key: Color, Value: time color repeats).
      * @return A map with the information of all symbol of SlotMachine 
