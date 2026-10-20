@@ -103,10 +103,9 @@ public class SlotMachine{
             wheels.put(key + 1, wheelToMove);
         }
         
-        Class newWheelToAdd = Class.forName(type);
-
-        
-                
+        try {
+        Class<?> wheelClass = Class.forName(type);
+        Wheel newWheelToAdd = (Wheel) wheelClass.getDeclaredConstructor().newInstance();        
         newWheelToAdd.setPositionWheel(pos); 
         
         wheels.put(pos, newWheelToAdd);
@@ -116,6 +115,12 @@ public class SlotMachine{
             newWheelToAdd.makeVisible();
         }
         isOk = true;
+        }
+        catch (ClassNotFoundException e) {
+            System.out.println("Error: La clase '" + type + "' no existe en el proyecto.");
+        } catch (Exception e) {
+            System.out.println("Error al intentar crear la instancia de la rueda: " + e.getMessage());
+        }
     }
     
     /**To remove a wheel, pass its left or right position.
