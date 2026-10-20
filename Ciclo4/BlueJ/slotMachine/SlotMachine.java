@@ -104,7 +104,8 @@ public class SlotMachine{
         }
         
         try {
-        Class<?> wheelClass = Class.forName(type);
+        String packageName = this.getClass().getPackageName();
+        Class<?> wheelClass = Class.forName(packageName + "." + type);
         Wheel newWheelToAdd = (Wheel) wheelClass.getDeclaredConstructor().newInstance();        
         newWheelToAdd.setPositionWheel(pos); 
         
@@ -117,9 +118,9 @@ public class SlotMachine{
         isOk = true;
         }
         catch (ClassNotFoundException e) {
-            System.out.println("Error: La clase '" + type + "' no existe en el proyecto.");
+            System.out.println("Error: The class '" + type + "' does not exist in the project.");
         } catch (Exception e) {
-            System.out.println("Error al intentar crear la instancia de la rueda: " + e.getMessage());
+            System.out.println("Error while attempting to create the wheel instance:" + e.getMessage());
         }
     }
     
@@ -150,8 +151,8 @@ public class SlotMachine{
         
         wheelToDelete.makeInvisible();
         wheels.remove(pos);
-        NavigableMap<Integer, Wheel> tailWheels = wheels.tailMap(pos, false);
-        List<Integer> keysToShift = new ArrayList<>(tailWheels.keySet());
+        NavigableMap<Integer, Wheel> cutMapWheel = wheels.tailMap(pos, false);
+        List<Integer> keysToShift = new ArrayList<>(cutMapWheel.keySet());
         for (Integer key : keysToShift) {
             Wheel wheelToMove = wheels.remove(key);
             wheelToMove.setPositionWheel(key - 1); 

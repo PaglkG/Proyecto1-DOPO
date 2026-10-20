@@ -38,7 +38,9 @@ public class Rebel extends Wheel {
      * @param wheelToSwap The wheel to attempt to swap with.
      */
     @Override
+
     public void swap(Wheel wheelToSwap) {
+        throw new UnsupportedOperationException("A rebel wheel cannot be swap.");
     }
     
     /**
