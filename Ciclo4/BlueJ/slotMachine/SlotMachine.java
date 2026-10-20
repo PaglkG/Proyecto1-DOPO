@@ -85,11 +85,13 @@ public class SlotMachine{
     }
     
     /**
-     * Add a wheel to this slot machine, place the roulette wheel on the left or right side.
-     * and change color
+     * Add a wheel to this slot machine, place the roulette wheel on the left or right side,
+     * specify its type, and change its color.
+     * @param type type is the specific kind of wheel to add (e.g., "rebel").
+     * @param color color is the color of the wheel.
      * @param pos pos is the position of wheel that is added to this object.
      */
-    public void addWheel(String color, int pos) { 
+    public void addWheel(String type, int pos) { 
         isOk = false;
         pos = adjustPosition(pos, true); 
         NavigableMap<Integer, Wheel> tailWheels = wheels.tailMap(pos, true);
@@ -101,9 +103,11 @@ public class SlotMachine{
             wheels.put(key + 1, wheelToMove);
         }
         
-        Wheel newWheelToAdd = new Wheel();
-        newWheelToAdd.setPositionWheel(pos);
-        newWheelToAdd.changeColor(color); 
+        Class newWheelToAdd = Class.forName(type);
+
+        
+                
+        newWheelToAdd.setPositionWheel(pos); 
         
         wheels.put(pos, newWheelToAdd);
         
@@ -429,43 +433,7 @@ public class SlotMachine{
         return wheels.get(i);
     }
     
-    /**
-     * Add a wheel to this slot machine, place the roulette wheel on the left or right side,
-     * specify its type, and change its color.
-     * @param type type is the specific kind of wheel to add (e.g., "rebel").
-     * @param color color is the color of the wheel.
-     * @param pos pos is the position of wheel that is added to this object.
-     */
-    protected void addWheel(String type, String color, int pos) { 
-        isOk = false;
-        pos = adjustPosition(pos, true); 
-        NavigableMap<Integer, Wheel> tailWheels = wheels.tailMap(pos, true);
-        List<Integer> keysToShift = new ArrayList<>(tailWheels.keySet());
-        Collections.reverse(keysToShift); 
-        for (Integer key : keysToShift) {
-            Wheel wheelToMove = wheels.remove(key);
-            wheelToMove.setPositionWheel(key + 1);
-            wheels.put(key + 1, wheelToMove);
-        }
-        
-        Wheel newWheelToAdd;
-        if (type.equalsIgnoreCase("rebel")) {
-            newWheelToAdd = new Rebel();
-        } else {
-            newWheelToAdd = new Wheel(); 
-        }
-        
-        newWheelToAdd.setPositionWheel(pos);
-        newWheelToAdd.changeColor(color); 
-        
-        wheels.put(pos, newWheelToAdd);
-        
-        adjustWheels(); 
-        if (isVisible) {
-            newWheelToAdd.makeVisible();
-        }
-        isOk = true;
-    }
+    
     
 
     
