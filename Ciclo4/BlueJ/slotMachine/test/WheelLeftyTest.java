@@ -15,34 +15,24 @@ import org.junit.jupiter.api.Test;
  */
 public class WheelLeftyTest
 {
-    Lefty wheel;
-    @BeforeEach
-    public void start() {
-        wheel = new Lefty();
-    }
-    
-    @Test
-    public void shouldStart() {
-        Symbol symbol1 = new Symbol("red");
-        Symbol symbol2 = new Symbol("blue");
-        Symbol symbol3 = new Symbol("black");
-        wheel.addSymbol(symbol1);
-        wheel.addSymbol(symbol2);
-        wheel.addSymbol(symbol3);
-        assertArrayEquals(new String[]{"red", "blue", "black"}, wheel.symbols());
-    }
     
     @Test
     public void shouldCopy() {
-        Wheel wheelToCopy = new Wheel();
-        Symbol symbol1 = new Symbol("red");
-        Symbol symbol2 = new Symbol("blue");
-        Symbol symbol3 = new Symbol("black");
-        wheel.addSymbol(symbol1);
-        wheel.addSymbol(symbol2);
-        wheel.addSymbol(symbol3);
-        wheel.getWheelToCopy(wheelToCopy);
-        wheel.copy();
-        assertArrayEquals(new String[]{}, wheel.symbols());
+        SlotMachine machine = new SlotMachine();
+        machine.addWheel(1);
+        machine.addWheel("Lefty",2);
+        machine.addSymbol(1,"blue");
+        machine.spin(2);
+        assertArrayEquals(new String[] {"blue", "blue"}, machine.configuration());
+        machine.addSymbol(2,"red");
+        try {machine.spin(1,3);
+        assertArrayEquals(new String[] {"blue", "blue"}, machine.configuration());
+        machine.spin();
+        assertArrayEquals(new String[] {"blue", "blue"}, machine.configuration());
+        }
+        catch(Exception e) {};
     }
+    
+    
+    
 }

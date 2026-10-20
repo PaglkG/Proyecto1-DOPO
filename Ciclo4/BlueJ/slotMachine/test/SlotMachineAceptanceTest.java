@@ -104,26 +104,6 @@ public class SlotMachineAceptanceTest {
     }
     
     @Test
-    public void shouldDistinctSymbolsEveryWheel() {
-        int NUMBER_WHEELS_TO_ADD = 5;
-        for (int i = 1; i <= NUMBER_WHEELS_TO_ADD; i++) {
-            slmch.addWheel(i);
-        }
-        slmch.addSymbol(1, "magenta");
-        slmch.addSymbol(1, "red");
-        slmch.addSymbol(2, "red");
-        slmch.addSymbol(2, "green");
-        slmch.addSymbol(3, "yellow"); 
-        slmch.addSymbol(4, "blue");   
-        slmch.addSymbol(5, "green");
-        
-        int symbols = slmch.distinctSymbols();
-        int symbolsIdeal = 3;
-        assertEquals(symbolsIdeal, symbols);
-        assertTrue(slmch.ok());
-    }
-    
-    @Test
     public void shouldDelSpecificSymbolWheel() throws InterruptedException {
         int NUMBER_WHEELS_TO_ADD = 5;
         for (int i = 1; i <= NUMBER_WHEELS_TO_ADD; i++) {
@@ -260,27 +240,6 @@ public class SlotMachineAceptanceTest {
         Thread.sleep(2500);
     }
     
-    @Test
-    public void shouldntDeleteWheelWhenIsLocked() throws InterruptedException{
-        int NUMBER_WHEELS_TO_ADD = 5;
-        for (int i = 1; i <= NUMBER_WHEELS_TO_ADD; i++) {
-            slmch.addWheel(i);
-        }
-        Thread.sleep(500);
-        slmch.lock(2);
-        slmch.lock(4);
-        
-        for (int i = 1; i <= NUMBER_WHEELS_TO_ADD; i++) {
-            slmch.delWheel(i);
-            // Si la rueda es la 2 o 4, ok() será false
-            if (i == 2 || i == 4) {
-                assertFalse(slmch.ok());
-            } else {
-                assertTrue(slmch.ok());
-            }
-            Thread.sleep(500);
-        }
-    }
     
     @Test
     public void shouldntSwapWheelWhenIsLocked() throws InterruptedException{

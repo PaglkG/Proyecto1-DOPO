@@ -256,7 +256,11 @@ public class SlotMachine{
         Wheel wheelToSpin = wheels.get(wheel);
         
         boolean canWheelSpin = wheelToSpin.canSpin();
-        if (canWheelSpin) {
+        if (wheelToSpin instanceof Lefty && canWheelSpin) {
+            Lefty leftyWheel = (Lefty) wheelToSpin;
+            leftyWheel.spin(wheels.get(wheel - 1));
+        }
+        else if (canWheelSpin) {
             wheelToSpin.spin();
         }
         
@@ -274,14 +278,19 @@ public class SlotMachine{
         if (!proofInvariant(wheel, false)) return;
         Wheel wheelToSpin = wheels.get(wheel);
         boolean canSpin = wheelToSpin.canSpin();
-        if (canSpin) {
+        if (wheelToSpin instanceof Lefty && canSpin) {
+            Lefty leftyWheel = (Lefty) wheelToSpin;
+            leftyWheel.spin(wheels.get(wheel - 1));
+        }
+        else if (canSpin && !(wheelToSpin instanceof Lefty)) {
             if (isVisible) {
                 wheelToSpin.spinSlowly(steps);
             } else {
                 wheelToSpin.spin(steps);
             }
-            isOk = true;
+            
         }
+        isOk = true;
     }
     
     /**Spin the wheels to place an specific configuration given.
@@ -307,17 +316,24 @@ public class SlotMachine{
     /**Moves each of the wheels.
      */
     public void spin() {
-        isOk = false;
-        boolean allCanSpin = true;
-        for (Wheel wheel : wheels.values()) {
-            boolean canWheelSpin = wheel.canSpin();
-            if (canWheelSpin) {
-                wheel.spin();
+    isOk = false;
+    boolean allCanSpin = true;
+    for (Integer pos : wheels.keySet()) {
+        Wheel wheelObj = wheels.get(pos);
+        boolean canWheelSpin = wheelObj.canSpin();
+        if (canWheelSpin) {
+            if (wheelObj instanceof Lefty) {
+                Lefty leftyWheel = (Lefty) wheelObj;
+                leftyWheel.spin(wheels.get(pos - 1));
             } else {
-                allCanSpin = false;
+                wheelObj.spin();
             }
+        } else {
+            allCanSpin = false;
         }
-        isOk = true;
+    }
+    
+    isOk = allCanSpin; 
     }
 
     /**

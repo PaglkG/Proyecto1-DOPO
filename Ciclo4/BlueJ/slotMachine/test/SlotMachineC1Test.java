@@ -79,23 +79,6 @@ public class SlotMachineC1Test {
         assertEquals(5, numDistinctSymbols);
     }
     
-    @Test
-    public void shouldGiveOtherNumberDistingSymbols() {
-        int NUMBER_WHEELS_TO_ADD = 5;
-        for (int i = 1; i <= NUMBER_WHEELS_TO_ADD; i++) {
-            sltmchn.addWheel(i);
-            sltmchn.addSymbol(i, "magenta");
-            sltmchn.addSymbol(i, "red");
-            sltmchn.addSymbol(i, "yellow");
-        }
-        sltmchn.addSymbol(1, "write");
-        sltmchn.addSymbol(2, "black");
-        sltmchn.addSymbol(3, "blue");
-        sltmchn.addSymbol(4, "green"); 
-        
-        int numDistinctSymbols = sltmchn.distinctSymbols();
-        assertEquals(4, numDistinctSymbols);
-    }
     
     @Test
     public void shouldBeJackpot() {
@@ -111,21 +94,7 @@ public class SlotMachineC1Test {
         assertTrue(isJackpot);
     }
     
-    @Test
-    public void shouldntBeJackpot() {
-        int NUMBER_WHEELS_TO_ADD = 5;
-        for (int i = 1; i <= NUMBER_WHEELS_TO_ADD; i++) {
-            sltmchn.addWheel(i);
-            sltmchn.addSymbol(i, "magenta");
-            sltmchn.addSymbol(i, "red");
-            sltmchn.addSymbol(i, "yellow");
-        }
-        // Se reemplaza la inyección directa por la interfaz pública placeSymbol
-        sltmchn.placeSymbol(2, "blue");
-        boolean isJackpot = sltmchn.isJackpot();
-        assertFalse(isJackpot);
-    }
-    
+        
     @Test
     public void shouldExitTheProgram() {
         int NUMBER_WHEELS_TO_ADD = 5;

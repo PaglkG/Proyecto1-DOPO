@@ -1,9 +1,10 @@
-package slotMachine;
+package slotMachine.test;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import slotMachine.*;
 /**
  * Write a description of class WheelRebelTest here.
  *
@@ -39,14 +40,15 @@ public class WheelRebelTest
     public void shouldNotExchange() {
         int pos = wheel.getPositionWheel();
         Wheel wheelCange = new Rebel();
-        wheel.swap(wheelCange);
-        assertArrayEquals(new int[]{pos}, new int[]{wheel.getPositionWheel()});
+        Exception miError = assertThrows(Exception.class, () -> {
+            wheel.swap(wheelCange);
+        });
     }
     
     @Test
     public void shouldNotDelete() {
         SlotMachine machine = new SlotMachine();
-        machine.addWheel("rebel", "blue", 1);
+        machine.addWheel("Rebel",1);
         assertThrows(UnsupportedOperationException.class, () -> {
             machine.delWheel(1);
         });
