@@ -65,8 +65,8 @@ public class SlotMachine{
     public void addWheel(int pos) { 
         isOk = false;
         pos = adjustPosition(pos, true); 
-        NavigableMap<Integer, Wheel> tailWheels = wheels.tailMap(pos, true);
-        List<Integer> keysToShift = new ArrayList<>(tailWheels.keySet());
+        NavigableMap<Integer, Wheel> cutMapWheel = wheels.tailMap(pos, true);
+        List<Integer> keysToShift = new ArrayList<>(cutMapWheel.keySet());
         Collections.reverse(keysToShift); 
         for (Integer key : keysToShift) {
             Wheel wheelToMove = wheels.remove(key);
