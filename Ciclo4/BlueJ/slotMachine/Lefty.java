@@ -1,37 +1,55 @@
 package slotMachine;
 import java.util.Map;
-
-
 /**
  * Write a description of class Lefty here.
+ * This class represents a wheel that copies the symbols and state of the wheel to its left.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @version 1.0
  */
-public class Lefty extends Wheel implements Updatable {
-    private Wheel wheelToCopy;
-    
-    public Lefty(Wheel wheelToCopy) {
-        this.wheelToCopy = wheelToCopy;
+public class Lefty extends Wheel {
+
+    /**
+     * Constructor for objects of class Lefty
+     */
+    public Lefty() {
+        super();
     }
-    
-    public void update() {
-        copyWheel();
-        boolean isVisible = this.wheelShape.isVisible();
-        if (isVisible) {
-            this.wheelShape.frameFlickering();
+
+ 
+    /**
+     * Clears its current symbols and copies the symbols and selected state from the left wheel.
+     */
+    private void copy(Wheel leftWheel) {
+    if (!isLocked() && leftWheel != null) {
+        this.symbols.clear();
+        
+        // Asumiendo que symbols es un Map (si es un ArrayList usa .addAll en lugar de .putAll)
+        this.symbols.putAll(leftWheel.getSymbols());
+        
+        // Debes usar getters en lugar de acceder directamente a la variable si es privada
+        this.selectedSymbol = leftWheel.getSelectedSymbol(); 
+        this.selectedSymbolInteger = leftWheel.getSelectedSymbolInteger();
+        
+        if (isVisible() && this.selectedSymbol != null) {
+            this.selectedSymbol.frameFlickering();
+            }
         }
     }
-    
-    private void copyWheel() {
-        int positionWheelCopy = wheelToCopy.getPositionWheel(), selectedSymbolIntToCopy = wheelToCopy.getSelectedSymbolInteger();
-        boolean isLockedToCopy = wheelToCopy.isLocked();
-        Symbol selectedSymbolToCopy = wheelToCopy.getSelectedSymbol();
-        Map<Integer,Symbol> symbolsToCopy = wheelToCopy.getSymbols();
-        this.positionWheel = positionWheelCopy;
-        this.selectedSymbolInteger = selectedSymbolIntToCopy;
-        this.isLocked = isLockedToCopy;
-        this.selectedSymbol = selectedSymbolToCopy;
-        this.symbols = symbolsToCopy;
+
+    @Override
+    public boolean canSpin() {
+        return true;
+    }   
+
+    /**
+     * Overrides the spin method to perform a copy if a left wheel exists, 
+     * otherwise it spins normally.
+     */
+    public void spin(Wheel leftWheel) {
+        if (!isLocked() && leftWheel != null) {
+            copy(leftWheel);
+        } else {
+            super.spin();
+        }
     }
 }

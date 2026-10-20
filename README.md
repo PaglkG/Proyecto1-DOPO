@@ -1,7 +1,10 @@
 <div align="center">
 
 El link de oneDrive lo utilizamos para guardar el astah y el documento word de respaldo.
+<<<<<<< HEAD
 https://pruebacorreoescuelaingeduco-my.sharepoint.com/:f:/r/personal/pablo_gualdron-l_mail_escuelaing_edu_co/Documents/proyecto1%20DOPO?d=w4c797642b0d9485189e7c813519d1ef8&csf=1&web=1&e=LxEJe3
+=======
+>>>>>>> 12f6933b140ee25f2fab97781eb6fe67b2ecd77f
 
 # 🎰 slotMachine
 
