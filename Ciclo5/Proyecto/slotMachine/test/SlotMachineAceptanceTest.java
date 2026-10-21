@@ -8,11 +8,10 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 
-
 /**
  * The test class SlotMachineAceptanceTest.
  *
- * @author  Steveen-Gualdron
+ * @author  Pablo Andrés Gualdrón Lindo y Santiago Cristancho Rodríguez
  * @version 0.3
  */
 public class SlotMachineAceptanceTest {
@@ -27,8 +26,8 @@ public class SlotMachineAceptanceTest {
     
     @Test
     public void shouldAddWheelsCorrectly() throws InterruptedException {
-        int NUMBER_WHEELS_TO_ADD = 3;
-        for (int i = 1; i <= NUMBER_WHEELS_TO_ADD; i++) {
+        final int numberWheelsToAdd = 3;
+        for (int i = 1; i <= numberWheelsToAdd; i++) {
             slmch.addWheel(i);
             assertTrue(slmch.ok());
             Thread.sleep(500);
@@ -37,8 +36,8 @@ public class SlotMachineAceptanceTest {
     
     @Test
     public void shouldDeleteWheelsCorrectly() throws InterruptedException {
-        int NUMBER_WHEELS_TO_ADD = 5;
-        for (int i = 1; i <= NUMBER_WHEELS_TO_ADD; i++) {
+        final int numberWheelsToAdd = 5;
+        for (int i = 1; i <= numberWheelsToAdd; i++) {
             slmch.addWheel(i);
         }
         Thread.sleep(1000);
@@ -56,8 +55,8 @@ public class SlotMachineAceptanceTest {
     
     @Test
     public void shouldAddSymbolEveryWheel() throws InterruptedException {
-        int NUMBER_WHEELS_TO_ADD = 5;
-        for (int i = 1; i <= NUMBER_WHEELS_TO_ADD; i++) {
+        final int numberWheelsToAdd = 5;
+        for (int i = 1; i <= numberWheelsToAdd; i++) {
             slmch.addWheel(i);
         }
         slmch.addSymbol(1, "magenta");
@@ -83,8 +82,8 @@ public class SlotMachineAceptanceTest {
     
     @Test
     public void shouldSymbolsEveryWheel() {
-        int NUMBER_WHEELS_TO_ADD = 5;
-        for (int i = 1; i <= NUMBER_WHEELS_TO_ADD; i++) {
+        final int numberWheelsToAdd = 5;
+        for (int i = 1; i <= numberWheelsToAdd; i++) {
             slmch.addWheel(i);
         }
         slmch.addSymbol(1, "magenta");
@@ -96,15 +95,15 @@ public class SlotMachineAceptanceTest {
         slmch.addSymbol(5, "green");
         
         String[] symbols = slmch.symbols();
-        String[] symbolsIdeal ={"magenta","red","red","green","yellow","blue","green"};
+        String[] symbolsIdeal = {"magenta","red","red","green","yellow","blue","green"};
         assertArrayEquals(symbolsIdeal, symbols);
         assertTrue(slmch.ok());
     }
     
     @Test
     public void shouldDelSpecificSymbolWheel() throws InterruptedException {
-        int NUMBER_WHEELS_TO_ADD = 5;
-        for (int i = 1; i <= NUMBER_WHEELS_TO_ADD; i++) {
+        final int numberWheelsToAdd = 5;
+        for (int i = 1; i <= numberWheelsToAdd; i++) {
             slmch.addWheel(i);
             slmch.addSymbol(i, "magenta");
         }
@@ -116,8 +115,8 @@ public class SlotMachineAceptanceTest {
     
     @Test
     public void shouldDelSpecificSymbolWheelAndSpin() throws InterruptedException {
-        int NUMBER_WHEELS_TO_ADD = 5;
-        for (int i = 1; i <= NUMBER_WHEELS_TO_ADD; i++) {
+        final int numberWheelsToAdd = 5;
+        for (int i = 1; i <= numberWheelsToAdd; i++) {
             slmch.addWheel(i);
             slmch.addSymbol(i, "magenta");
             slmch.addSymbol(i, "blue");
@@ -133,8 +132,8 @@ public class SlotMachineAceptanceTest {
     
     @Test
     public void shouldPlaceSymbols() throws InterruptedException {
-        int NUMBER_WHEELS_TO_PLACE = 5;
-        for (int i = 1; i <= NUMBER_WHEELS_TO_PLACE; i++) {
+        final int numberWheelsToPlace = 5;
+        for (int i = 1; i <= numberWheelsToPlace; i++) {
             slmch.addWheel(i);
             slmch.addSymbol(i, "magenta");
             slmch.placeSymbol(i, "magenta");
@@ -142,7 +141,7 @@ public class SlotMachineAceptanceTest {
             Thread.sleep(500);
         }
         Thread.sleep(1500);
-        for (int i = 1; i <= NUMBER_WHEELS_TO_PLACE; i++) {
+        for (int i = 1; i <= numberWheelsToPlace; i++) {
             slmch.addSymbol(i, "blue");
             slmch.spin();
             assertTrue(slmch.ok());
@@ -153,8 +152,8 @@ public class SlotMachineAceptanceTest {
     
     @Test
     public void shouldSpinSpecificWheel() throws InterruptedException {
-        int NUMBER_WHEELS_TO_ADD = 5;
-        for (int i = 1; i <= NUMBER_WHEELS_TO_ADD; i++) {
+        final int numberWheelsToAdd = 5;
+        for (int i = 1; i <= numberWheelsToAdd; i++) {
             slmch.addWheel(i);
             slmch.addSymbol(i, "magenta");
             slmch.addSymbol(i, "blue");
@@ -164,18 +163,18 @@ public class SlotMachineAceptanceTest {
         }
         Thread.sleep(1000);
         
-        slmch.spin(2); //Solo debería de cambiar la 2da rueda
+        slmch.spin(2);
         assertTrue(slmch.ok());
         
-        slmch.spin(5); //Solo debería de cambiar la última rueda
+        slmch.spin(5);
         assertTrue(slmch.ok());
         Thread.sleep(1500);
     }
     
     @Test 
     public void shouldSpinAllWheels() throws InterruptedException {
-        int NUMBER_WHEELS_TO_ADD = 5;
-        for (int i = 1; i <= NUMBER_WHEELS_TO_ADD; i++) {
+        final int numberWheelsToAdd = 5;
+        for (int i = 1; i <= numberWheelsToAdd; i++) {
             slmch.addWheel(i);
             slmch.addSymbol(i, "magenta");
             slmch.addSymbol(i, "blue");
@@ -192,8 +191,8 @@ public class SlotMachineAceptanceTest {
     
     @Test
     public void shouldSwapTwoWheels() throws InterruptedException {
-        int NUMBER_WHEELS_TO_ADD = 4;
-        for (int i = 1; i <= NUMBER_WHEELS_TO_ADD; i++) {
+        final int numberWheelsToAdd = 4;
+        for (int i = 1; i <= numberWheelsToAdd; i++) {
             slmch.addWheel(i);
         }
         slmch.addSymbol(1, "yellow");
@@ -213,8 +212,8 @@ public class SlotMachineAceptanceTest {
     
     @Test 
     public void shouldLockAndUnlockSomeWheelsSpin() throws InterruptedException {
-        int NUMBER_WHEELS_TO_ADD = 5;
-        for (int i = 1; i <= NUMBER_WHEELS_TO_ADD; i++) {
+        final int numberWheelsToAdd = 5;
+        for (int i = 1; i <= numberWheelsToAdd; i++) {
             slmch.addWheel(i);
             slmch.addSymbol(i, "magenta");
             slmch.addSymbol(i, "blue");
@@ -227,27 +226,25 @@ public class SlotMachineAceptanceTest {
         slmch.lock(1);
         slmch.lock(3);
         
-        slmch.spin(); // El giro global retorna false si alguna no puede girar
+        slmch.spin();
         assertFalse(slmch.ok()); 
         Thread.sleep(2000);
         
         slmch.unlock(1);
         slmch.unlock(3);
-        slmch.spin(); // Giran todas
+        slmch.spin();
         assertTrue(slmch.ok());
         Thread.sleep(2500);
     }
     
-    
     @Test
     public void shouldntSwapWheelWhenIsLocked() throws InterruptedException{
-        int NUMBER_WHEELS_TO_ADD = 5;
-        for (int i = 1; i <= NUMBER_WHEELS_TO_ADD; i++) {
+        final int numberWheelsToAdd = 5;
+        for (int i = 1; i <= numberWheelsToAdd; i++) {
             slmch.addWheel(i);
         }
         Thread.sleep(500);
         
-        // Se corrige el acceso directo a los símbolos para usar la interfaz de la máquina
         slmch.addSymbol(2, "yellow");
         slmch.addSymbol(4, "magenta");
         slmch.addSymbol(5, "blue");
@@ -273,8 +270,8 @@ public class SlotMachineAceptanceTest {
     
     @Test
     public void shouldMoveSlowlyWhenSpinWithSteps() throws InterruptedException {
-        int NUMBER_WHEELS_TO_ADD = 5;
-        for (int i = 1; i <= NUMBER_WHEELS_TO_ADD; i++) {
+        final int numberWheelsToAdd = 5;
+        for (int i = 1; i <= numberWheelsToAdd; i++) {
             slmch.addWheel(i);
             slmch.addSymbol(i, "yellow");
             slmch.addSymbol(i, "magenta");
@@ -282,7 +279,7 @@ public class SlotMachineAceptanceTest {
             slmch.addSymbol(i, "cyan");
         }
         Thread.sleep(500);
-        // Si el simulador está visible, este método internamente visualizará paso a paso[cite: 5].
+        
         slmch.spin(1, 2); 
         assertTrue(slmch.ok());
         Thread.sleep(2000);
@@ -303,7 +300,6 @@ public class SlotMachineAceptanceTest {
         slmch = null;
     }
     
-
     @AfterClass
     public static void tearDownClass() {
     }

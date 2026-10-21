@@ -22,3 +22,5 @@
 
 # temp astah
 *.asta.lock
+
+*.class
