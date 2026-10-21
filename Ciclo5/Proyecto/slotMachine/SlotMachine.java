@@ -102,7 +102,7 @@ public class SlotMachine{
         }
         
         try {
-        String packageName = this.getClass().getPackageName();
+        String packageName = this.getClass().getPackage().getName();
         Class<?> wheelClass = Class.forName(packageName + "." + type);
         Wheel newWheelToAdd = (Wheel) wheelClass.getDeclaredConstructor().newInstance();        
         newWheelToAdd.setPositionWheel(pos); 
