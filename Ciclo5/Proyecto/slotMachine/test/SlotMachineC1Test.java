@@ -18,8 +18,7 @@ public class SlotMachineC1Test {
     private SlotMachine sltmchn;
     
     @Before
-    void setUp() {
-        // La máquina inicia en modo invisible por defecto, cumpliendo con los requisitos de las pruebas[cite: 5].
+    public void setUp() {
         sltmchn = new SlotMachine();
     }
     
@@ -138,11 +137,11 @@ public class SlotMachineC1Test {
         sltmchn.placeSymbol(1, "yellow");
         
         String[] currentConfig = sltmchn.configuration();
-        assertEquals("magenta", currentConfig[0], "El símbolo no debió cambiar porque la rueda está bloqueada");
+        assertEquals("magenta", currentConfig[0]);
     }
     
     @After
-    void tearDown() {
+    public void tearDown() {
         sltmchn.exit();
     }
 }

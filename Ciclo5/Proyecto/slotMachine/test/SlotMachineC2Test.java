@@ -18,7 +18,7 @@ public class SlotMachineC2Test {
     private SlotMachine sltmchn;
     
     @Before
-    void setUp() {
+    public void setUp() {
 
         sltmchn = new SlotMachine();
     }
@@ -125,7 +125,7 @@ public class SlotMachineC2Test {
     }
     
     @After
-    void tearDown() {
+    public void tearDown() {
         sltmchn.exit();
     }
 }

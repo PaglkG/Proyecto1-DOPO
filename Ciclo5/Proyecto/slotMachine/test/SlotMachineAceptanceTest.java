@@ -4,10 +4,10 @@ import slotMachine.*;
 
 import static org.junit.Assert.*;
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 
-import shapes.Canvas;
 
 /**
  * The test class SlotMachineAceptanceTest.
@@ -22,7 +22,6 @@ public class SlotMachineAceptanceTest {
     @Before
     public void setUp() {
         slmch = new SlotMachine();
-        // Se usa el método oficial de la interfaz pública para hacer visible el simulador en las pruebas de aceptación preparadas para presentación[cite: 5].
         slmch.makeVisible(); 
     }
     
@@ -298,14 +297,14 @@ public class SlotMachineAceptanceTest {
     }
     
     @After
-    void tearDown() {
+    public void tearDown() {
         slmch.makeInvisible();
         slmch.exit();
         slmch = null;
     }
     
-    @After
-    static void tearDownClass() {
-        Canvas.getCanvas().close();
+
+    @AfterClass
+    public static void tearDownClass() {
     }
 }

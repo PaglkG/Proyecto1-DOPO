@@ -18,7 +18,7 @@ public class WheelTest
 {
     private Wheel wheel;
     @Before
-    void setUp() {
+    public void setUp() {
         wheel = new Wheel();
     }
 
@@ -28,7 +28,7 @@ public class WheelTest
         wheel.changeColor("blue");
         wheel.changeColor("white");
         wheel.changePosition(120, 40);
-        assertEquals("white", wheel.getColor(), "The color of the wheel should be 'white'");
+        assertEquals("white", wheel.getColor());
         assertEquals(120, wheel.getXPosition());
         assertEquals(40, wheel.getYPosition());
     
