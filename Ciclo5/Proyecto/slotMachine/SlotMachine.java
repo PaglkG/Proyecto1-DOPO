@@ -41,28 +41,18 @@ public class SlotMachine{
         isVisible = false;
         bodySlotMachine = new Rectangle(10, 10, 270, 273*(n/5), "pink");
         
-        Canvas.getCanvas().resizeAndRefresh(60*n, 283);
-        
-        for (int i = 0; i < n; i++) {
-            int requestedPos = i; 
-            addWheel(requestedPos);
-            int correctedPos = adjustPosition(requestedPos, true);
-            for (int u = 0; u < n; u++) {
-                addSymbol(correctedPos, COLORS_HEX[u]);
-            }
-        }
-        spin();
+        addSlotMachine(n);
         isOk = true;
 
     }
-    
+
     /**
      * Add a wheel to this slot machine, place the roulette wheel on the left or right side.
      * @param pos pos is the position of wheel that is added to this object.
      */
     public void addWheel(int pos) { 
         isOk = false;
-        pos = adjustPosition(pos, true); 
+        int newPos = adjustPosition(pos, true); 
         NavigableMap<Integer, Wheel> cutMapWheel = wheels.tailMap(pos, true);
         List<Integer> keysToShift = new ArrayList<>(cutMapWheel.keySet());
         Collections.reverse(keysToShift); 
@@ -72,8 +62,8 @@ public class SlotMachine{
             wheels.put(key + 1, wheelToMove);
         }
         Wheel newWheelToAdd = new Wheel();
-        newWheelToAdd.setPositionWheel(pos);
-        wheels.put(pos, newWheelToAdd);
+        newWheelToAdd.setPositionWheel(newPos);
+        wheels.put(newPos, newWheelToAdd);
         
         adjustWheels(); 
         if (isVisible) {
@@ -91,8 +81,8 @@ public class SlotMachine{
      */
     public void addWheel(String type, int pos) { 
         isOk = false;
-        pos = adjustPosition(pos, true); 
-        NavigableMap<Integer, Wheel> tailWheels = wheels.tailMap(pos, true);
+        int newPos = adjustPosition(pos, true); 
+        NavigableMap<Integer, Wheel> tailWheels = wheels.tailMap(newPos, true);
         List<Integer> keysToShift = new ArrayList<>(tailWheels.keySet());
         Collections.reverse(keysToShift); 
         for (Integer key : keysToShift) {
@@ -105,9 +95,9 @@ public class SlotMachine{
         String packageName = this.getClass().getPackage().getName();
         Class<?> wheelClass = Class.forName(packageName + "." + type);
         Wheel newWheelToAdd = (Wheel) wheelClass.getDeclaredConstructor().newInstance();        
-        newWheelToAdd.setPositionWheel(pos); 
+        newWheelToAdd.setPositionWheel(newPos); 
         
-        wheels.put(pos, newWheelToAdd);
+        wheels.put(newPos, newWheelToAdd);
         
         adjustWheels(); 
         if (isVisible) {
@@ -250,13 +240,13 @@ public class SlotMachine{
         isOk = false;
         boolean isAprovedInvariant = proofInvariant(wheel, false);
         if (!isAprovedInvariant) return;
-        wheel = adjustPosition(wheel, false); 
+        int newWheel = adjustPosition(wheel, false); 
         Wheel wheelToSpin = wheels.get(wheel);
         
         boolean canWheelSpin = wheelToSpin.canSpin();
         if (wheelToSpin instanceof Lefty && canWheelSpin) {
             Lefty leftyWheel = (Lefty) wheelToSpin;
-            leftyWheel.spin(wheels.get(wheel - 1));
+            leftyWheel.spin(wheels.get(newWheel - 1));
         }
         else if (canWheelSpin) {
             wheelToSpin.spin();
@@ -539,4 +529,18 @@ public class SlotMachine{
         "#000000", "#2F4F4F", "#696969", "#808080", "#A9A9A9", "#C0C0C0", "#DCDCDC",
         "#F5F5DC"
     };
+
+    private void addSlotMachine(int n) {
+        Canvas.getCanvas().resizeAndRefresh(60*n, 283);
+        
+        for (int i = 0; i < n; i++) {
+            int requestedPos = i; 
+            addWheel(requestedPos);
+            int correctedPos = adjustPosition(requestedPos, true);
+            for (int u = 0; u < n; u++) {
+                addSymbol(correctedPos, COLORS_HEX[u]);
+            }
+        }
+        spin();
+    }
 }

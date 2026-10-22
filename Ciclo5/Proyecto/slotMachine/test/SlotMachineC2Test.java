@@ -45,8 +45,8 @@ public class SlotMachineC2Test {
     
     @Test
     public void shouldUnlockSpecificWheel() {
-        int NUMBER_WHEELS_TO_ADD = 5;
-        for (int i = 1; i <= NUMBER_WHEELS_TO_ADD; i++) {
+        int newAddWheel = 5;
+        for (int i = 1; i <= newAddWheel; i++) {
             sltmchn.addWheel(i);
             sltmchn.addSymbol(i, "magenta");
             sltmchn.addSymbol(i, "blue");
@@ -67,8 +67,8 @@ public class SlotMachineC2Test {
     
     @Test
     public void shouldntDeleteWheelWhenIsLocked() {
-        int NUMBER_WHEELS_TO_ADD = 5;
-        for (int i = 1; i <= NUMBER_WHEELS_TO_ADD; i++) {
+        int newAddWheel = 5;
+        for (int i = 1; i <= newAddWheel; i++) {
             sltmchn.addWheel(i);
         }
         
@@ -80,8 +80,8 @@ public class SlotMachineC2Test {
     
     @Test
     public void shouldntSwapWheelWhenIsLocked() {
-        int NUMBER_WHEELS_TO_ADD = 5;
-        for (int i = 1; i <= NUMBER_WHEELS_TO_ADD; i++) {
+        int newAddWheel = 5;
+        for (int i = 1; i <= newAddWheel; i++) {
             sltmchn.addWheel(i);
             sltmchn.addSymbol(i, "color" + i);
         }
@@ -103,8 +103,8 @@ public class SlotMachineC2Test {
     
     @Test
     public void shouldSpinToObtainASpecificConfigurationOfSymbols() {
-        int NUMBER_WHEELS_TO_ADD = 5;
-        for (int i = 1; i <= NUMBER_WHEELS_TO_ADD; i++) {
+        int newAddWheel = 5;
+        for (int i = 1; i <= newAddWheel; i++) {
             sltmchn.addWheel(i);
             sltmchn.addSymbol(i, "magenta");
             sltmchn.addSymbol(i, "blue");

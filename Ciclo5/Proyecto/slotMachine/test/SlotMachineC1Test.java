@@ -33,8 +33,8 @@ public class SlotMachineC1Test {
     
     @Test
     public void shouldGiveSymbols() {
-        int NUMBER_WHEELS_TO_ADD = 5;
-        for (int i = 1; i <= NUMBER_WHEELS_TO_ADD; i++) {
+        int newAddWheel= 5;
+        for (int i = 1; i <= newAddWheel; i++) {
             sltmchn.addWheel(i);
         }
         sltmchn.addSymbol(1, "magenta");
@@ -49,8 +49,8 @@ public class SlotMachineC1Test {
     
     @Test
     public void shouldGiveConfiguration() {
-        int NUMBER_WHEELS_TO_ADD = 5;
-        for (int i = 1; i <= NUMBER_WHEELS_TO_ADD; i++) {
+        int newAddWheel = 5;
+        for (int i = 1; i <= newAddWheel; i++) {
             sltmchn.addWheel(i);
         }
         sltmchn.addSymbol(1, "magenta");
@@ -65,8 +65,8 @@ public class SlotMachineC1Test {
     
     @Test
     public void shouldGiveNumberDistingSymbols() {
-        int NUMBER_WHEELS_TO_ADD = 5;
-        for (int i = 1; i <= NUMBER_WHEELS_TO_ADD; i++) {
+        int newAddWheel = 5;
+        for (int i = 1; i <= newAddWheel; i++) {
             sltmchn.addWheel(i);
         }
         sltmchn.addSymbol(1, "magenta");
@@ -81,9 +81,8 @@ public class SlotMachineC1Test {
     
     @Test
     public void shouldBeJackpot() {
-        int NUMBER_WHEELS_TO_ADD = 5;
-        // Los índices de las posiciones se enumeran a partir de 1 según los requisitos[cite: 2].
-        for (int i = 1; i <= NUMBER_WHEELS_TO_ADD; i++) {
+        int newAddWheel = 5;
+        for (int i = 1; i <= newAddWheel; i++) {
             sltmchn.addWheel(i);
             sltmchn.addSymbol(i, "magenta");
             sltmchn.addSymbol(i, "red");
@@ -96,8 +95,8 @@ public class SlotMachineC1Test {
         
     @Test
     public void shouldExitTheProgram() {
-        int NUMBER_WHEELS_TO_ADD = 5;
-        for (int i = 1; i <= NUMBER_WHEELS_TO_ADD; i++) {
+        int newAddWheel = 5;
+        for (int i = 1; i <= newAddWheel; i++) {
             sltmchn.addWheel(i);
         }
         sltmchn.exit();
