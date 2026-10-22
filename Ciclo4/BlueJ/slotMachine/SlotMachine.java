@@ -109,8 +109,9 @@ public class SlotMachine{
             newWheelToAdd.setPositionWheel(pos); 
         
             wheels.put(pos, newWheelToAdd);
-        
+            
             adjustWheels(); 
+            
             if (isVisible) {
                 newWheelToAdd.makeVisible();
             }
