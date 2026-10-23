@@ -256,14 +256,3 @@ Primero, acomodé la máquina para que mostrara los colores que yo quería: mage
 
 34) **Pasar a modo invisible y repetir una acción inválida:** `makeInvisible()` y `addSymbol(9, "red")`. → Todo desaparece del canvas; `ok()` es `false` pero no aparece ningún mensaje.
 35) **Terminar el simulador:** `exit()`. → Se cierra la ventana y se eliminan todas las ruedas.
-
-### Pruebas de aceptación automatizadas
-
-La clase `SlotMachineAceptanceTest` (13 pruebas, simulador visible y con pausas para verlas) automatiza los ciclos 1 y 2 del recorrido anterior.
-
-| Ciclo | Pruebas |
-|---|---|
-| 1 | `shouldAddWheelsCorrectly`, `shouldDeleteWheelsCorrectly`, `shouldAddSymbolEveryWheel`, `shouldSymbolsEveryWheel`, `shouldDelSpecificSymbolWheel`, `shouldDelSpecificSymbolWheelAndSpin`, `shouldPlaceSymbols`, `shouldSpinSpecificWheel`, `shouldSpinAllWheels` |
-| 2 | `shouldSwapTwoWheels`, `shouldLockAndUnlockSomeWheelsSpin`, `shouldntSwapWheelWhenIsLocked`, `shouldMoveSlowlyWhenSpinWithSteps` |
-
-Los pasos 19 a 29 (ciclos 3 y 4) se ejecutan a mano o con sus pruebas de unidad (`WheelLeftyTest`, `WheelRebelTest` y las de los símbolos).
