@@ -171,15 +171,7 @@ mvn pmd:pmd           # genera el informe de análisis estático
 | `SymbolEphemeralTest`, `SymbolShyTest`, `SymbolRotetionTest` | 2 + 1 + 1 | Efecto de cada símbolo especial |
 | `SlotMachineAceptanceTest` | 13 | Pruebas de aceptación (ver sección 9) |
 
-**Análisis dinámico (JaCoCo).** La meta era superar el 75 % de cubrimiento y ya se cumplía al empezar el ciclo.
 
-| Paquete | Instrucciones | Ramas |
-|---|---|---|
-| `slotMachine` | 70 % | 48 % |
-| `shapes` | 85 % | 70 % |
-| `slotMachine.test` | 99 % | 100 % |
-| `default` (clase del problema de consola) | 0 % | — |
-| **Total** | **79 %** | **51 %** |
 
 **Análisis estático (PMD)** con los conjuntos de reglas `bestpractices`, `codestyle` y `errorprone`. La meta era cumplir todas las reglas de prioridad alta. Se corrigieron las de prioridad 1 que no alteraban el código ni la lógica, entre ellas:
 
