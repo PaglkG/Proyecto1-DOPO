@@ -220,6 +220,8 @@ public class SlotMachine{
         wheelToAddSymbol.addSymbol(symbolToAdd);
         isOk = true;
     }
+    
+    
 
     /** The symbol; on each wheel is removed, object is deleted.
      * @param symbol symbol is the type of symbol that going to be deleted.
@@ -231,7 +233,36 @@ public class SlotMachine{
         }
         isOk = true;
     }
+    
+     /**
+     * The symbol object is created at a specific position, specifying its type and color.
+     * @param type type is the specific kind of symbol to add (e.g., "Wildcard", "Fruit").
+     * @param pos pos is the position of wheel going to add symbol.
+     * @param color color is the color of symbol that going to be created.
+     */
+    public void addSymbol(String type, int pos, String color) {
+        isOk = false;
+        boolean isAprovedInvariant = proofInvariant(pos, false);
+        if (!isAprovedInvariant) return;
+        Wheel wheelToAddSymbol = wheels.get(pos);
+        try {
+            String packageName = this.getClass().getPackageName();
+            Class<?> symbolClass = Class.forName(packageName + "." + type);            
+            Symbol newSymbolToAdd = (Symbol) symbolClass.getDeclaredConstructor(String.class).newInstance(color); 
+            
+            wheelToAddSymbol.addSymbol(newSymbolToAdd);
+            isOk = true;
+        }
+        catch (ClassNotFoundException e) {
+            System.out.println("Error: The class '" + type + "' does not exist in the project.");
+        } catch (NoSuchMethodException e) {
+            System.out.println("Error: The class '" + type + "' does not have a constructor that takes a String.");
+        } catch (Exception e) {
+            System.out.println("Error while attempting to create the symbol instance: " + e.getMessage());
+        }
+    }
 
+    
     /** The symbol is added to each wheel; shape and wheel number are requested.
      * @param wheel wheel is the number (integer) of wheel that will add the symbol. 
      * @param symbol symbol is the type of symbol that will be added at the specific number wheel.
@@ -300,17 +331,14 @@ public class SlotMachine{
         isOk = false;
         int lengthArray = setSymbols.length;
         boolean specificInvariant = lengthArray == wheels.size();
-        if (!specificInvariant) { 
-            ok();
-            return;
-        } 
-        boolean allPlaced = true;
-        String specificSymbolToPut = null;
-        for (int i = 0; i < lengthArray; i++) {
-            specificSymbolToPut = setSymbols[i];
-            placeSymbol(i+1, specificSymbolToPut); 
-        }
-        isOk = true;
+            boolean allPlaced = true;
+            String specificSymbolToPut = null;
+            for (int i = 0; i < lengthArray; i++) {
+                specificSymbolToPut = setSymbols[i];
+                placeSymbol(i+1, specificSymbolToPut); 
+            }
+            isOk = true;
+
     }
 
     /**Moves each of the wheels.
@@ -544,7 +572,7 @@ public class SlotMachine{
             currentX += 50;
         }
     }
-    
+        
     // Ajusta la posición para cumplir con los límites descritos en el documento
     private int adjustPosition(int pos, boolean isAdding) { // Ayudado a hacer por Gemini IA
         int max = wheels.size() + (isAdding ? 1 : 0);

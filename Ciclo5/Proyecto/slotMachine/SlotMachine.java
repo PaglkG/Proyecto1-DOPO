@@ -209,6 +209,34 @@ public class SlotMachine{
         isOk = true;
     }
 
+    /**
+     * The symbol object is created at a specific position, specifying its type and color.
+     * @param type type is the specific kind of symbol to add (e.g., "Wildcard", "Fruit").
+     * @param pos pos is the position of wheel going to add symbol.
+     * @param color color is the color of symbol that going to be created.
+     */
+    public void addSymbol(String type, int pos, String color) {
+        isOk = false;
+        boolean isAprovedInvariant = proofInvariant(pos, false);
+        if (!isAprovedInvariant) return;
+        Wheel wheelToAddSymbol = wheels.get(pos);
+        try {
+            String packageName = this.getClass().getPackageName();
+            Class<?> symbolClass = Class.forName(packageName + "." + type);            
+            Symbol newSymbolToAdd = (Symbol) symbolClass.getDeclaredConstructor(String.class).newInstance(color); 
+            
+            wheelToAddSymbol.addSymbol(newSymbolToAdd);
+            isOk = true;
+        }
+        catch (ClassNotFoundException e) {
+            System.out.println("Error: The class '" + type + "' does not exist in the project.");
+        } catch (NoSuchMethodException e) {
+            System.out.println("Error: The class '" + type + "' does not have a constructor that takes a String (color).");
+        } catch (Exception e) {
+            System.out.println("Error while attempting to create the symbol instance: " + e.getMessage());
+        }
+    }
+
     /** The symbol; on each wheel is removed, object is deleted.
      * @param symbol symbol is the type of symbol that going to be deleted.
      */
