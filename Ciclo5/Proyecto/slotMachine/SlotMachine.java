@@ -221,10 +221,9 @@ public class SlotMachine{
         if (!isAprovedInvariant) return;
         Wheel wheelToAddSymbol = wheels.get(pos);
         try {
-            String packageName = this.getClass().getPackageName();
+            String packageName = this.getClass().getPackage().getName();
             Class<?> symbolClass = Class.forName(packageName + "." + type);            
             Symbol newSymbolToAdd = (Symbol) symbolClass.getDeclaredConstructor(String.class).newInstance(color); 
-            
             wheelToAddSymbol.addSymbol(newSymbolToAdd);
             isOk = true;
         }

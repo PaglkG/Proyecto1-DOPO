@@ -5,6 +5,7 @@ slotMachine\Symbol.class
 slotMachine\test\WheelTest.class
 shapes\Canvas$CanvasPane.class
 shapes\Canvas.class
+slotMachine\test\SlotMachineTest.class
 slotMachine\Rotation.class
 slotMachine\SymbolShyTest.class
 slotMachine\test\SlotMachineC1Test.class
@@ -23,5 +24,4 @@ shapes\Triangle.class
 slotMachine\SymbolRotetionTest.class
 slotMachine\test\WheelLeftyTest.class
 slotMachine\Ephemeral.class
-slotMachine\test\SlotMachineAceptanceTest.class
 slotmachine.class
