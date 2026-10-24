@@ -1,0 +1,50 @@
+package shapes;
+
+/**
+ * A rectangle that can be manipulated and that draws itself on a canvas.
+ *
+ * @author  Michael Kolling and David J. Barnes (Modified)
+ * @version 1.0  (15 July 2000)()
+ */
+public class Rectangle extends Polygon2D {
+    
+    /**
+     * The number of edges a rectangle has.
+     */
+    public static final int EDGES = 4;
+    
+    /**
+     * Create a new rectangle at default position with default color.
+     */
+    public Rectangle(){
+        super(70, 15, "green");
+        height = 30;
+        width = 40;
+    }
+    
+    /**
+     * Create a new rectangle with custom position, size, and color.
+     * @param xPosition the initial X position of the rectangle.
+     * @param yPosition the initial Y position of the rectangle.
+     * @param height the initial height of the rectangle.
+     * @param width the initial width of the rectangle.
+     * @param color the initial color of the rectangle.
+     */
+    public Rectangle(int xPosition, int yPosition, int height, int width, String color) {
+        super(xPosition, yPosition, color);
+        this.height = height;
+        this.width = width;
+    }
+    
+    /**
+     * Draw the rectangle on the canvas.
+     */
+    @Override
+    public void draw() {
+        if(isVisible) {
+            Canvas canvas = Canvas.getCanvas();
+            canvas.draw(this, color, new java.awt.Rectangle(xPosition, yPosition, width, height));
+            canvas.wait(10);
+        }
+    }
+}
