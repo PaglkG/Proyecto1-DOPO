@@ -6,7 +6,17 @@ https://pruebacorreoescuelaingeduco-my.sharepoint.com/:f:/r/personal/pablo_guald
 =======
 >>>>>>> 12f6933b140ee25f2fab97781eb6fe67b2ecd77f
 
+<<<<<<< HEAD
 # 🎰 slotMachine
+=======
+| | |
+|---|---|
+| **Curso** | Desarrollo Orientado por Objetos (DOPO-POOB) — Escuela Colombiana de Ingeniería Julio Garavito |
+| **Autores** | Pablo Andrés Gualdrón Lindo Samuel Villagran |
+| **Repositorio** | https://github.com/PaglkG/Proyecto1-DOPO |
+| **Tecnología** | Java 8, JUnit 4.13.2, Maven, JaCoCo 0.8.10, PMD 3.21.2, VS Code (los ciclos 1 a 4 se hicieron en BlueJ) |
+| **Estado** | Ciclos 1 a 5 completos |
+>>>>>>> develop
 
 ### Simulador de Máquina Tragamonedas — DOPO-POOB 2026-2
 
@@ -140,6 +150,105 @@ classDiagram
     SlotMachine "1" o-- "*" Symbol : contiene
 ```
 
+<<<<<<< HEAD
+=======
+| Clase | Responsabilidad |
+|---|---|
+| `SlotMachine` | Clase principal. Administra las ruedas (un `TreeMap` por posición), valida posiciones, lleva el estado de `ok()` y muestra los errores |
+| `Wheel` | Una rueda: guarda sus símbolos, el símbolo seleccionado y si está fija (`lock`). Gira al azar, por pasos o lentamente, y se intercambia con otra |
+| `Symbol` | Un símbolo de color (triángulo de 30 × 30) con su posición dentro de la rueda y el método `efect()` que las clases hijas sobrescriben |
+| `SlotMachineContest` | Solución del problema de la maratón (`solve`) y su versión visible (`simulate`) |
+
+## 4. Tipos de ruedas y símbolos (Ciclo 4)
+
+| Tipo | Clase | Comportamiento |
+|---|---|---|
+| Rueda normal | `Wheel` | Gira al azar, se puede fijar, intercambiar y eliminar |
+| Rueda **lefty** | `Lefty` | Si hay una rueda a su izquierda, al girar copia sus símbolos y su símbolo seleccionado; si no la hay, gira normal |
+| Rueda **rebel** | `Rebel` | No se deja fijar (`lock` no hace nada), ni intercambiar ni eliminar (lanza `UnsupportedOperationException`) |
+| Símbolo normal | `Symbol` | Triángulo de color |
+| Símbolo **ephemeral** | `Ephemeral` | Con cada efecto reduce su tamaño (30 px, de 4 en 4) hasta quedar casi como un punto |
+| Símbolo **shy** | `Shy` | Con cada efecto alterna entre visible e invisible |
+| Símbolo **rotation** *(propuesto por el equipo)* | `Rotation` | Con cada efecto sube y baja 20 px |
+
+Se crean con `addWheel("Lefty", pos)`, `addWheel("Rebel", pos)` y `addSymbol("Ephemeral" | "Shy" | "Rotation", pos, color)`. El efecto de cada símbolo especial (`efect()`) se verifica con sus pruebas de unidad.
+
+## 5. Estructura del repositorio
+
+```
+Proyecto1-DOPO/
+├── Ciclo1/ … Ciclo4/        Entrega de cada ciclo (enunciado, código en BlueJ y diseño en astah)
+├── Ciclo5/                  Entrega final, abre esta carpeta en VS Code
+│   ├── pom.xml              Maven: JUnit, JaCoCo y PMD
+│   ├── Proyecto/
+│   │   ├── lib/             junit-4.13.2.jar y hamcrest-core-1.3.jar
+│   │   ├── shapes/          Canvas, Figure, Rectangle, Triangle, Polygon2D
+│   │   └── slotMachine/     SlotMachine, Wheel, Lefty, Rebel, Symbol, Ephemeral, Shy,
+│   │       │                Rotation, SlotMachineContest y pruebas de los símbolos
+│   │       └── test/        SlotMachineAceptanceTest, SlotMachineC1Test, SlotMachineC2Test,
+│   │                        WheelTest, WheelLeftyTest, WheelRebelTest
+│   ├── ProblemSlotMachine/  Versión de consola del problema, test.txt y reulstado.txt
+│   ├── target/              Reportes generados (surefire y JaCoCo)
+│   ├── pmdAntesCorrecion.html   Informe PMD inicial
+│   └── SlotMachineDesing.asta   Diseño completo en astah
+└── proyecto inicial.pdf     Documento de entrega (ciclos 1 a 5 y retrospectiva)
+```
+
+## 6. Cómo ejecutarlo
+
+**Requisitos:** JDK 8 o superior, Maven y VS Code con la *Extension Pack for Java*.
+
+```bash
+git clone https://github.com/PaglkG/Proyecto1-DOPO.git
+cd Proyecto1-DOPO/Ciclo5
+
+mvn clean test        # compila, corre las pruebas y genera el informe de JaCoCo
+mvn pmd:pmd           # genera el informe de análisis estático
+```
+
+- Informe de cobertura: `Ciclo5/target/site/jacoco/index.html`.
+- Para probar el simulador a mano, crea un `SlotMachine` en una clase de prueba o en el terminal de Java de VS Code. Las pruebas de aceptación (sección 9) abren la ventana gráfica del simulador.
+
+## 7. Calidad: pruebas, JaCoCo y PMD (Ciclo 5)
+
+**Pruebas de unidad (última ejecución registrada: 39 pruebas, 0 fallos, 0 errores)**
+
+| Clase de prueba | Pruebas | Qué verifica |
+|---|---|---|
+| `SlotMachineC1Test` | 9 | Ciclo 1: ruedas, símbolos, configuración, jackpot, `placeSymbol`, `exit` |
+| `SlotMachineC2Test` | 5 | Ciclo 2: `swap`, `lock`/`unlock`, configuración dada |
+| `WheelTest` | 3 | Comportamiento de `Wheel` |
+| `WheelLeftyTest` | 1 | La Lefty copia a su vecina de la izquierda |
+| `WheelRebelTest` | 4 | La Rebel no se bloquea, no se intercambia ni se elimina |
+| `SymbolEphemeralTest`, `SymbolShyTest`, `SymbolRotetionTest` | 2 + 1 + 1 | Efecto de cada símbolo especial |
+| `SlotMachineAceptanceTest` | 13 | Pruebas de aceptación (ver sección 9) |
+
+**Análisis dinámico (JaCoCo).** La meta era superar el 75 % de cubrimiento y ya se cumplía al empezar el ciclo.
+
+| Paquete | Instrucciones | Ramas |
+|---|---|---|
+| `slotMachine` | 70 % | 48 % |
+| `shapes` | 85 % | 70 % |
+| `slotMachine.test` | 99 % | 100 % |
+| `default` (clase del problema de consola) | 0 % | — |
+| **Total** | **79 %** | **51 %** |
+
+**Análisis estático (PMD)** con los conjuntos de reglas `bestpractices`, `codestyle` y `errorprone`. La meta era cumplir todas las reglas de prioridad alta. Se corrigieron las de prioridad 1 que no alteraban el código ni la lógica, entre ellas:
+
+- No llamar a métodos sobrescribibles (`addWheel`, `addSymbol`, `spin`) dentro del constructor de `SlotMachine`.
+- Nombres de variables locales en `camelCase` en lugar de `MAYÚSCULAS_CON_GUION`.
+- Además, se atendieron avisos de prioridad 2 a 5: no reasignar parámetros, evitar `System.out.println`, usar llaves en los `if`, usar `final`, quitar importaciones sin usar y preferir interfaces (`Map`, `List`) sobre implementaciones concretas.
+
+## 8. Retrospectiva
+
+- **Tiempo invertido:** 15 h por integrante en el ciclo 1 y 18 h por integrante en los ciclos 2 y 3.
+- **Mayores logros:** aplicar *Pair Programming* (ciclo 1) y *TDD* (ciclo 2), que dio seguridad de que cada funcionalidad exigida se cumplía.
+- **Mayores problemas técnicos:** aprender GitHub a medida que se usaba (ciclo 1) y entender los requisitos (ciclo 2), que se resolvió hablando con la profesora para confirmar cada uno.
+- **Qué se hizo bien como equipo:** comunicación, redistribución del trabajo y explicarse de forma sencilla lo que hizo cada uno.
+- **Prácticas XP más útiles:** simplicidad (programar solo lo esencial y luego extender) y comunicación constante con el cliente.
+- **Referencias:** Martin, R. C. (2012). *Código limpio: manual de estilo para el desarrollo ágil de software* (2.ª ed.). Anaya Multimedia. Google (2026). Gemini [modelo de lenguaje]. Anthropic (2026). Claude [modelo de lenguaje].
+
+>>>>>>> develop
 ---
 
 ## 🚀 Guía de Inicio Rápido
