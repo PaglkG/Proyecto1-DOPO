@@ -192,7 +192,7 @@ public class SlotMachine {
      * @param pos pos is the position of wheel going to add symbol.
      * @param color color is the color of symbol that going to be created.
      */
-    public void addSymbol(int pos, String color) throws SlotMachineException {
+    public void addSymbol(int pos, String color)  throws SlotMachineException {
         isOk = false;
         boolean isAprovedInvariant = proofInvariant(pos, false);
         if (!isAprovedInvariant) return;
@@ -263,7 +263,7 @@ public class SlotMachine {
      * Moves a specific number of wheel.
      * @param wheel wheel indicates the number (integer) of wheel that going to be moved.
      */
-    public void spin(int wheel) throws SlotMachineException {
+    public void spin(int wheel)  throws SlotMachineException {
         isOk = false;
         boolean isAprovedInvariant = proofInvariant(wheel, false);
         if (!isAprovedInvariant) {
@@ -338,7 +338,7 @@ public class SlotMachine {
     /**
      * Moves each of the wheels.
      */
-    public void spin() throws SlotMachineException {
+    public void spin()  throws SlotMachineException{
         isOk = false;
         boolean allCanSpin = true;
         for (Integer pos : wheels.keySet()) {
@@ -598,7 +598,7 @@ public class SlotMachine {
      * Adds n wheels and symbols based on the predefined hex colors array to this slot machine.
      * @param n the number of wheels and symbols to generate.
      */
-    private void addSlotMachine(int n) throws SlotMachineException {
+    private void addSlotMachine(int n)  throws SlotMachineException{
         Canvas.getCanvas().resizeAndRefresh(70*n, 283);
         for (int i = 0; i < n; i++) {
             int requestedPos = i;
