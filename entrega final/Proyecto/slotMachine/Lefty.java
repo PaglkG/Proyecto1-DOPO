@@ -23,7 +23,7 @@ public class Lefty extends Wheel {
     /**
      * Clears its current symbols and copies the symbols and selected state from the left wheel.
      */
-    private void copy(Wheel leftWheel) {
+    private void copy(Wheel leftWheel) throws SlotMachineException {
         if (!isLocked() && leftWheel != null) {
             
             for (Symbol s : this.symbols.values()) {
@@ -74,7 +74,7 @@ public class Lefty extends Wheel {
      * Overrides the spin method to perform a copy if a left wheel exists, 
      * otherwise it spins normally.
      */
-    public void spin(Wheel leftWheel) {
+    public void spin(Wheel leftWheel) throws SlotMachineException {
         if (!isLocked() && leftWheel != null) {
             copy(leftWheel);
         } else {

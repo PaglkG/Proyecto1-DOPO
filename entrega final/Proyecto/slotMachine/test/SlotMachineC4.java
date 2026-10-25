@@ -94,7 +94,7 @@ public class SlotMachineC4 {
      */
     // Prueba que la rueda zurda gire de forma normal (girando sus propios símbolos) cuando no tiene una rueda a la izquierda.
     @Test
-    public void testLeftySpinWithoutLeftWheel() {
+    public void testLeftySpinWithoutLeftWheel() throws SlotMachineException {
         Lefty lefty = new Lefty();
         // Add a symbol so the wheel is not empty when spin() calculates the random bound
         lefty.addSymbol(new Symbol("red"));
@@ -111,8 +111,6 @@ public class SlotMachineC4 {
     public void testLeftyPrivateCopyMethod() throws Exception {
         Lefty lefty = new Lefty();
         Wheel leftWheel = new Wheel();
-        
-        // Uso de Reflection para probar el método private "copy" directamente
         Method copyMethod = Lefty.class.getDeclaredMethod("copy", Wheel.class);
         copyMethod.setAccessible(true);
         assertDoesNotThrow(() -> {
@@ -125,11 +123,11 @@ public class SlotMachineC4 {
      */
     // Prueba que el símbolo tímido (Shy) pueda alternar su estado entre visible e invisible correctamente.
     @Test
-    public void testShyVisible() {
+    public void testShyVisible() throws SlotMachineException {
         Shy shy = new Shy("black");
         assertDoesNotThrow(() -> {
-            shy.visible(); // Toggle 1
-            shy.visible(); // Toggle 2
+            shy.visible(); 
+            shy.visible(); 
         });
     }
 
@@ -140,8 +138,6 @@ public class SlotMachineC4 {
     @Test
     public void testShyEfectMethod() throws Exception {
         Shy shy = new Shy("black");
-        
-        // Uso de Reflection para probar el método protected "efect"
         Method efectMethod = Shy.class.getDeclaredMethod("efect");
         efectMethod.setAccessible(true);
         assertDoesNotThrow(() -> {
@@ -154,10 +150,10 @@ public class SlotMachineC4 {
      */
     // Prueba que el símbolo de rotación pueda cambiar y actualizar su posición base en la pantalla sin fallar.
     @Test
-    public void testRotationChangePosition() {
+    public void testRotationChangePosition() throws SlotMachineException {
         Rotation rotation = new Rotation("pink");
         assertDoesNotThrow(() -> {
-            rotation.changePosition(50, 50); // Prueba la sobreescritura de changePosition
+            rotation.changePosition(50, 50); 
         });
     }
 
@@ -166,13 +162,13 @@ public class SlotMachineC4 {
      */
     // Prueba la lógica del símbolo de rotación verificando que pueda moverse hacia arriba y volver a su lugar original.
     @Test
-    public void testRotationMovementMethods() {
+    public void testRotationMovementMethods() throws SlotMachineException {
         Rotation rotation = new Rotation("pink");
         rotation.changePosition(100, 100);
         
         assertDoesNotThrow(() -> {
-            rotation.rotating(); // Flujo sube (isUp = true)
-            rotation.rotation(); // Flujo baja (Llama a rotating, isUp = false)
+            rotation.rotating(); 
+            rotation.rotation(); 
         });
     }
 
@@ -195,10 +191,9 @@ public class SlotMachineC4 {
      */
     // Prueba que el símbolo efímero reduzca su tamaño gradualmente múltiples veces hasta alcanzar su tamaño mínimo sin desbordamientos.
     @Test
-    public void testEphemeralReduce() {
+    public void testEphemeralReduce() throws SlotMachineException {
         Ephemeral ephemeral = new Ephemeral("green");
         assertDoesNotThrow(() -> {
-            // Ciclo para asegurar que el tamaño baja a 2x2 y active los validadores del IF
             for(int i = 0; i < 15; i++) {
                 ephemeral.reduce();
             }
@@ -224,7 +219,7 @@ public class SlotMachineC4 {
      */
     // Prueba general de la máquina tragamonedas para verificar que la rueda zurda efectúa la copia de símbolos y estados correctamente en un giro completo.
     @Test
-    public void shouldCopy() {
+    public void shouldCopy() throws SlotMachineException {
         SlotMachine machine = new SlotMachine();
         machine.addWheel(1);
         machine.addWheel("Lefty", 2);

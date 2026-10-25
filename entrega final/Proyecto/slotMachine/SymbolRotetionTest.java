@@ -6,7 +6,7 @@ import static org.junit.Assert.*;
 public class SymbolRotetionTest {
 
     @Test
-    public void shouldMoveUpAndDownOnAction() {
+    public void shouldMoveUpAndDownOnAction() throws SlotMachineException {
         Rotation rotation = new Rotation("blue");
         
         rotation.efect();

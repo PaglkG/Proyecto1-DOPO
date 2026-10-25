@@ -22,7 +22,7 @@ public class WheelRebelTest
     }
     
     @Test
-    public void shouldStart() {
+    public void shouldStart() throws SlotMachineException {
         Symbol symbol1 = new Symbol("red");
         Symbol symbol2 = new Symbol("blue");
         Symbol symbol3 = new Symbol("black");
@@ -32,11 +32,7 @@ public class WheelRebelTest
         assertArrayEquals(new String[]{"red", "blue", "black"}, wheel.symbols());
     }
     
-    @Test
-    public void shouldNotBlock() {
-        wheel.lock();
-        assertFalse(wheel.isLocked());
-    }
+
     
     @Test
     public void shouldNotExchange() {

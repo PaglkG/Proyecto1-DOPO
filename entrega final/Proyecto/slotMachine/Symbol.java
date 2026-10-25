@@ -21,7 +21,10 @@ public class Symbol {
     /**Constructor symbol, dyadic method class
      * @param color color is the color of this symbol.
      */
-    public Symbol(String color) {
+    public Symbol(String color) throws SlotMachineException {
+        if (color == null || color.trim().isEmpty()) {
+            throw new SlotMachineException(SlotMachineException.INVALID_COLOR);
+        }
         symbolShape = new Triangle();
         symbolShape.changeColor(color);
         symbolShape.changeSize(30, 30);
@@ -37,7 +40,7 @@ public class Symbol {
      * @param color color is the color of this symbol.
      * @param pos pos is the position of this symbol at the wheel.
      */
-    public Symbol(String color, int pos) {
+    public Symbol(String color, int pos) throws SlotMachineException {
         this(color);
         positionAtTheWheel = pos;
     }

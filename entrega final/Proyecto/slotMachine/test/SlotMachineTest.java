@@ -53,7 +53,7 @@ public class SlotMachineTest {
      * Helper: adds a wheel at the end and adds the indicated symbols to it,
      * in that order. The first one gets selected.
      */
-    private void wheel(String... colors) {
+    private void wheel(String... colors) throws SlotMachineException {
         wheelCount++;
         machine.addWheel(wheelCount);
         for (String color : colors) {
@@ -89,7 +89,7 @@ public class SlotMachineTest {
      */
     // Prueba que el constructor con parámetro 'n' cree 'n' ruedas con 'n' símbolos de colores distintos cada una.
     @Test
-    public void shouldCreateNWheelsWithNSymbolsEach() {
+    public void shouldCreateNWheelsWithNSymbolsEach() throws SlotMachineException {
         SlotMachine big = new SlotMachine(4);
         try {
             assertTrue(big.ok());
@@ -110,7 +110,7 @@ public class SlotMachineTest {
      */
     // Prueba que las ruedas se agreguen en orden de izquierda a derecha.
     @Test
-    public void shouldAddWheelsInOrder() {
+    public void shouldAddWheelsInOrder() throws SlotMachineException {
         wheel("red");
         wheel("blue");
         wheel("green");
@@ -127,7 +127,7 @@ public class SlotMachineTest {
      */
     // Prueba que al insertar una rueda en una posición ocupada, las ruedas existentes se desplacen hacia la derecha.
     @Test
-    public void shouldShiftWheelsRightWhenInsertingInTheMiddle() {
+    public void shouldShiftWheelsRightWhenInsertingInTheMiddle() throws SlotMachineException {
         wheel("red");
         wheel("blue");
         machine.addWheel(2);
@@ -145,7 +145,7 @@ public class SlotMachineTest {
      */
     // Prueba que las posiciones fuera de rango se ajusten al límite más cercano al agregar una rueda.
     @Test
-    public void shouldAdjustOutOfRangePositionsWhenAddingWheel() {
+    public void shouldAdjustOutOfRangePositionsWhenAddingWheel() throws SlotMachineException {
         wheel("red");
         machine.addWheel(0);
         assertTrue(machine.ok());
@@ -165,7 +165,7 @@ public class SlotMachineTest {
      */
     // Prueba que la rueda Lefty copie el estado de la rueda a su izquierda al girar.
     @Test
-    public void shouldAddLeftyWheelThatCopiesItsLeftNeighbor() {
+    public void shouldAddLeftyWheelThatCopiesItsLeftNeighbor() throws SlotMachineException {
         wheel("red", "blue");
         machine.placeSymbol(1, "blue");
         machine.addWheel("Lefty", 2);
@@ -184,7 +184,7 @@ public class SlotMachineTest {
      */
     // Prueba que la máquina rechace la creación de una rueda si el tipo especificado no existe.
     @Test
-    public void shouldFailWhenWheelTypeDoesNotExist() {
+    public void shouldFailWhenWheelTypeDoesNotExist() throws SlotMachineException {
         wheel("red");
         machine.addWheel("NoExiste", 2);
         assertFalse(machine.ok());
@@ -204,7 +204,7 @@ public class SlotMachineTest {
     // Prueba que al intentar agregar un tipo de rueda inexistente no se alteren las posiciones de las ruedas actuales.
     @Ignore("Known bug: addWheel(type, pos) shifts wheels before validating the type")
     @Test
-    public void shouldNotCorruptPositionsWhenWheelTypeDoesNotExist() {
+    public void shouldNotCorruptPositionsWhenWheelTypeDoesNotExist() throws SlotMachineException {
         wheel("red");
         wheel("blue");
         machine.addWheel("NoExiste", 1);
@@ -221,7 +221,7 @@ public class SlotMachineTest {
      */
     // Prueba que al eliminar una rueda, las ruedas a su derecha se desplacen hacia la izquierda.
     @Test
-    public void shouldDeleteWheelAndShiftLeft() {
+    public void shouldDeleteWheelAndShiftLeft() throws SlotMachineException {
         wheel("red");
         wheel("blue");
         wheel("green");
@@ -251,7 +251,7 @@ public class SlotMachineTest {
      */
     // Prueba que una rueda bloqueada (fija) no pueda ser eliminada.
     @Test
-    public void shouldNotDeleteLockedWheel() {
+    public void shouldNotDeleteLockedWheel() throws SlotMachineException {
         wheel("red");
         wheel("blue");
         machine.lock(1);
@@ -267,7 +267,7 @@ public class SlotMachineTest {
      */
     // Prueba que se puedan intercambiar de posición dos ruedas correctamente.
     @Test
-    public void shouldSwapTwoWheels() {
+    public void shouldSwapTwoWheels() throws SlotMachineException {
         wheel("red");
         wheel("blue");
         wheel("green");
@@ -283,7 +283,7 @@ public class SlotMachineTest {
      */
     // Prueba que el intercambio falle si alguna de las posiciones especificadas no existe.
     @Test
-    public void shouldFailToSwapInvalidPosition() {
+    public void shouldFailToSwapInvalidPosition() throws SlotMachineException {
         wheel("red");
         wheel("blue");
         machine.swap(1, 9);
@@ -299,7 +299,7 @@ public class SlotMachineTest {
      */
     // Prueba que el intercambio falle si alguna de las dos ruedas está bloqueada.
     @Test
-    public void shouldNotSwapLockedWheel() {
+    public void shouldNotSwapLockedWheel() throws SlotMachineException {
         wheel("red");
         wheel("blue");
         machine.lock(1);
@@ -321,7 +321,7 @@ public class SlotMachineTest {
     // Prueba que se rechace el intercambio si la segunda rueda es de tipo Rebel.
     @Ignore("Known bug: IsSwap() returns false in Lefty, should be in Rebel")
     @Test
-    public void shouldRejectSwapWhenRebelIsSecond() {
+    public void shouldRejectSwapWhenRebelIsSecond() throws SlotMachineException {
         wheel("red");
         machine.addWheel("Rebel", 2);
         machine.addSymbol(2, "blue");
@@ -345,7 +345,7 @@ public class SlotMachineTest {
     // Prueba que una rueda Lefty permita ser intercambiada de posición.
     @Ignore("Known bug: IsSwap() returns false in Lefty")
     @Test
-    public void shouldAllowSwapWithLeftyWheel() {
+    public void shouldAllowSwapWithLeftyWheel() throws SlotMachineException {
         wheel("red");
         machine.addWheel("Lefty", 2);
         machine.addSymbol(2, "blue");
@@ -362,7 +362,7 @@ public class SlotMachineTest {
      */
     // Prueba que al bloquear una rueda, esta no cambie de símbolo al girar.
     @Test
-    public void shouldLockWheelSoItCannotSpin() {
+    public void shouldLockWheelSoItCannotSpin() throws SlotMachineException {
         wheel("red", "blue");
         machine.placeSymbol(1, "red");
         machine.lock(1);
@@ -381,7 +381,7 @@ public class SlotMachineTest {
      */
     // Prueba que falle el intento de bloquear una rueda que no existe.
     @Test
-    public void shouldFailToLockInvalidWheel() {
+    public void shouldFailToLockInvalidWheel() throws SlotMachineException  {
         wheel("red");
         machine.lock(5);
         assertFalse(machine.ok());
@@ -395,7 +395,7 @@ public class SlotMachineTest {
      */
     // Prueba que al desbloquear una rueda, esta pueda volver a girar normalmente.
     @Test
-    public void shouldUnlockWheelSoItCanSpinAgain() {
+    public void shouldUnlockWheelSoItCanSpinAgain() throws SlotMachineException {
         wheel("red", "blue");
         machine.lock(1);
         machine.spin();
@@ -414,7 +414,7 @@ public class SlotMachineTest {
      */
     // Prueba que los símbolos se agreguen a la rueda y el primero quede seleccionado.
     @Test
-    public void shouldAddSymbolsAndSelectTheFirstOne() {
+    public void shouldAddSymbolsAndSelectTheFirstOne() throws SlotMachineException {
         machine.addWheel(1);
         machine.addSymbol(1, "red");
         machine.addSymbol(1, "blue");
@@ -431,7 +431,7 @@ public class SlotMachineTest {
      */
     // Prueba que falle el intento de agregar un símbolo a una rueda que no existe.
     @Test
-    public void shouldFailToAddSymbolToInvalidWheel() {
+    public void shouldFailToAddSymbolToInvalidWheel() throws SlotMachineException {
         machine.addWheel(1);
         machine.addSymbol(3, "red");
         assertFalse(machine.ok());
@@ -484,7 +484,7 @@ public class SlotMachineTest {
      */
     // Prueba que al eliminar un color, se borren los símbolos de ese color en todas las ruedas.
     @Test
-    public void shouldDeleteSymbolColorFromEveryWheel() {
+    public void shouldDeleteSymbolColorFromEveryWheel() throws SlotMachineException {
         wheel("red", "blue");
         wheel("red", "green");
         machine.delSymbol("red");
@@ -500,7 +500,7 @@ public class SlotMachineTest {
      */
     // Prueba que los símbolos de una rueda bloqueada no se eliminen al borrar un color de la máquina.
     @Test
-    public void shouldKeepSymbolsOfLockedWheelWhenDeletingColor() {
+    public void shouldKeepSymbolsOfLockedWheelWhenDeletingColor() throws SlotMachineException {
         wheel("red", "blue");
         wheel("red", "green");
         machine.lock(1);
@@ -517,7 +517,7 @@ public class SlotMachineTest {
      */
     // Prueba que se pueda seleccionar (hacer visible) un símbolo específico en la máquina.
     @Test
-    public void shouldPlaceSymbolAsSelected() {
+    public void shouldPlaceSymbolAsSelected() throws SlotMachineException {
         wheel("red", "blue");
         machine.placeSymbol(1, "blue");
         assertTrue(machine.ok());
@@ -532,7 +532,7 @@ public class SlotMachineTest {
      */
     // Prueba que falle la selección de un símbolo si la rueda especificada no existe.
     @Test
-    public void shouldFailToPlaceSymbolOnInvalidWheel() {
+    public void shouldFailToPlaceSymbolOnInvalidWheel() throws SlotMachineException {
         wheel("red", "blue");
         machine.placeSymbol(4, "red");
         assertFalse(machine.ok());
@@ -549,7 +549,7 @@ public class SlotMachineTest {
     // Prueba que falle la selección si la rueda no contiene un símbolo con el color indicado.
     @Ignore("Known bug: placeSymbol with a non-existent color leaves ok() in true")
     @Test
-    public void shouldFailWhenColorIsNotInTheWheel() {
+    public void shouldFailWhenColorIsNotInTheWheel() throws SlotMachineException {
         wheel("red", "blue");
         machine.placeSymbol(1, "pink");
         assertFalse(machine.ok());
@@ -564,7 +564,7 @@ public class SlotMachineTest {
      */
     // Prueba que al girar una sola rueda, esta seleccione uno de sus propios símbolos.
     @Test
-    public void shouldSpinWheelAndSelectOneOfItsSymbols() {
+    public void shouldSpinWheelAndSelectOneOfItsSymbols() throws SlotMachineException {
         wheel("red", "blue");
         wheel("green");
         for (int i = 0; i < 30; i++) {
@@ -586,7 +586,7 @@ public class SlotMachineTest {
     // Prueba que una rueda bloqueada no gire y la operación reporte un fallo.
     @Ignore("Known bug: spin(int) leaves ok() in true with a locked wheel")
     @Test
-    public void shouldFailWhenSpinningLockedWheel() {
+    public void shouldFailWhenSpinningLockedWheel() throws SlotMachineException {
         wheel("red", "blue");
         machine.placeSymbol(1, "red");
         machine.lock(1);
@@ -639,7 +639,7 @@ public class SlotMachineTest {
      */
     // Prueba que la máquina muestre exactamente la configuración de colores pasada por arreglo.
     @Test
-    public void shouldSetConfigurationFromArray() {
+    public void shouldSetConfigurationFromArray() throws SlotMachineException {
         wheel("red", "green", "blue");
         wheel("red", "green", "blue");
         wheel("red", "green", "blue");
@@ -656,7 +656,7 @@ public class SlotMachineTest {
      */
     // Prueba que falle configurar la máquina si la cantidad de colores en el arreglo no coincide con la cantidad de ruedas.
     @Test
-    public void shouldFailWhenArrayLengthDiffersFromWheels() {
+    public void shouldFailWhenArrayLengthDiffersFromWheels() throws SlotMachineException {
         wheel("red", "green", "blue");
         wheel("red", "green", "blue");
         wheel("red", "green", "blue");
@@ -675,7 +675,7 @@ public class SlotMachineTest {
     // Prueba que falle configurar la máquina si algún color del arreglo no existe en su respectiva rueda.
     @Ignore("Known bug: spin(String[]) leaves ok() in true if a color does not exist on the wheel")
     @Test
-    public void shouldFailWhenArrayHasColorNotInWheel() {
+    public void shouldFailWhenArrayHasColorNotInWheel() throws SlotMachineException {
         wheel("red", "blue");
         wheel("red", "blue");
         machine.spin(colors("red", "pink"));
@@ -691,7 +691,7 @@ public class SlotMachineTest {
      */
     // Prueba que al girar toda la máquina, cada rueda muestre uno de sus propios símbolos.
     @Test
-    public void shouldSpinAllWheelsKeepingEachOwnSymbols() {
+    public void shouldSpinAllWheelsKeepingEachOwnSymbols() throws SlotMachineException {
         wheel("red");
         wheel("green");
         wheel("blue");
@@ -708,7 +708,7 @@ public class SlotMachineTest {
      */
     // Prueba que al girar toda la máquina, las ruedas bloqueadas no se muevan y se reporte el fallo.
     @Test
-    public void shouldReportFailureAndKeepLockedWheelWhenSpinningAll() {
+    public void shouldReportFailureAndKeepLockedWheelWhenSpinningAll() throws SlotMachineException {
         wheel("red", "blue");
         wheel("green");
         machine.placeSymbol(1, "red");
@@ -726,7 +726,7 @@ public class SlotMachineTest {
      */
     // Prueba que la rueda Lefty copie el símbolo de la rueda a su izquierda cuando se giran todas las ruedas.
     @Test
-    public void shouldCopyLeftNeighborWhenLeftyWheelSpinsWithAll() {
+    public void shouldCopyLeftNeighborWhenLeftyWheelSpinsWithAll() throws SlotMachineException {
         wheel("red", "blue");
         machine.addWheel("Lefty", 2);
         machine.addSymbol(2, "green");
@@ -746,7 +746,7 @@ public class SlotMachineTest {
      */
     // Prueba que devuelva los colores de todos los símbolos, ordenados por rueda y por inserción.
     @Test
-    public void shouldListSymbolsOfAllWheelsInOrder() {
+    public void shouldListSymbolsOfAllWheelsInOrder() throws SlotMachineException {
         wheel("red", "blue");
         wheel("green");
         assertArrayEquals(colors("red", "blue", "green"), machine.symbols());
@@ -761,7 +761,7 @@ public class SlotMachineTest {
      */
     // Prueba que devuelva un arreglo vacío si la máquina no tiene símbolos.
     @Test
-    public void shouldReturnNoSymbolsWhenThereAreNoWheels() {
+    public void shouldReturnNoSymbolsWhenThereAreNoWheels() throws SlotMachineException {
         wheel("red");
         machine.delWheel(1);
         assertEquals(0, machine.symbols().length);
@@ -774,7 +774,7 @@ public class SlotMachineTest {
      */
     // Prueba que cuente correctamente la cantidad de colores diferentes visibles en la configuración actual.
     @Test
-    public void shouldCountDistinctVisibleColors() {
+    public void shouldCountDistinctVisibleColors() throws SlotMachineException {
         assertEquals(0, machine.distinctSymbols());
         wheel("red", "green");
         wheel("blue", "green");
@@ -792,7 +792,7 @@ public class SlotMachineTest {
      */
     // Prueba que devuelva un arreglo con el color visible actual de cada rueda.
     @Test
-    public void shouldReturnConfigurationOneColorPerWheel() {
+    public void shouldReturnConfigurationOneColorPerWheel() throws SlotMachineException {
         wheel("red", "blue");
         wheel("green");
         wheel("blue", "red");
@@ -809,7 +809,7 @@ public class SlotMachineTest {
      */
     // Prueba que detecte un Jackpot (premio) cuando todas las ruedas muestran el mismo color.
     @Test
-    public void shouldDetectJackpotWhenAllColorsAreEqual() {
+    public void shouldDetectJackpotWhenAllColorsAreEqual() throws SlotMachineException {
         wheel("red", "blue");
         wheel("red", "green");
         wheel("red");
@@ -825,7 +825,7 @@ public class SlotMachineTest {
      */
     // Prueba que no haya Jackpot si los colores de las ruedas son diferentes o si no hay ruedas.
     @Test
-    public void shouldNotDetectJackpotWhenColorsDiffer() {
+    public void shouldNotDetectJackpotWhenColorsDiffer() throws SlotMachineException {
         assertFalse(machine.isJackpot());
         wheel("red", "blue");
         wheel("blue", "red");
@@ -842,7 +842,7 @@ public class SlotMachineTest {
      */
     // Prueba que los métodos de visibilidad gráfica no alteren el estado lógico de la máquina.
     @Test
-    public void shouldMakeVisibleAndInvisibleKeepingState() {
+    public void shouldMakeVisibleAndInvisibleKeepingState() throws SlotMachineException  {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         wheel("red", "blue");
         machine.placeSymbol(1, "blue");
@@ -862,7 +862,7 @@ public class SlotMachineTest {
      */
     // Prueba que al salir del simulador, se eliminen todas las ruedas y configuraciones.
     @Test
-    public void shouldClearWheelsOnExit() {
+    public void shouldClearWheelsOnExit() throws SlotMachineException {
         wheel("red", "blue");
         machine.exit();
         assertTrue(machine.ok());
@@ -878,7 +878,7 @@ public class SlotMachineTest {
      */
     // Prueba que ok() reporte correctamente el estado de éxito o fracaso de la última operación realizada.
     @Test
-    public void shouldReportOkAccordingToLastOperation() {
+    public void shouldReportOkAccordingToLastOperation() throws SlotMachineException {
         assertTrue(machine.ok());
         machine.addSymbol(5, "red");
         assertFalse(machine.ok());
@@ -893,7 +893,7 @@ public class SlotMachineTest {
      */
     // Verifica que se puedan agregar y eliminar ruedas y símbolos manteniendo el orden y la configuración del resto de la máquina.
     @Test
-    public void shouldManageWheelsAndSymbolsDuringAUserSession() {
+    public void shouldManageWheelsAndSymbolsDuringAUserSession() throws SlotMachineException {
         SlotMachine machine = new SlotMachine();
         try {
             machine.addWheel(1);
@@ -947,7 +947,7 @@ public class SlotMachineTest {
      */
     // Verifica que el solucionador del concurso para 5 ruedas devuelva los pasos correctos dentro del límite permitido para llegar a una configuración uniforme.
     @Test
-    public void shouldSolveContestForFiveWheels() {
+    public void shouldSolveContestForFiveWheels() throws SlotMachineException {
         int numberOfWheels = 5;
         int[][] moves = SlotMachineContest.solve(numberOfWheels);
         assertNotNull("The solver must return a sequence of moves", moves);
@@ -968,7 +968,7 @@ public class SlotMachineTest {
      */
     // Verifica que la simulación visual del concurso termine con un solo símbolo distinto seleccionado.
     @Test
-    public void shouldSimulateContestSolutionVisibly() {
+    public void shouldSimulateContestSolutionVisibly() throws SlotMachineException {
         SlotMachineContest.simulate(5);
         assertEquals(
             "The visible simulation should finish with one distinct selected symbol",
@@ -981,7 +981,7 @@ public class SlotMachineTest {
      */
     // Verifica el comportamiento del solucionador con el caso base de tamaño mínimo (1 rueda).
     @Test
-    public void shouldSolveContestWithOneWheel() {
+    public void shouldSolveContestWithOneWheel() throws SlotMachineException {
         int[][] moves = SlotMachineContest.solve(1);
         assertNotNull(moves);
         assertEquals("One wheel is already a uniform configuration", 1, new SlotMachineContest().getDistincSymbols());
@@ -1013,7 +1013,7 @@ public class SlotMachineTest {
      * @param machine the slot machine to populate.
      */
     // Método auxiliar para inicializar tres ruedas predeterminadas con los mismos tres colores.
-    private void addThreeWheelsWithCommonSymbols(SlotMachine machine) {
+    private void addThreeWheelsWithCommonSymbols(SlotMachine machine) throws SlotMachineException {
         for (int position = 1; position <= 3; position++) {
             machine.addWheel(position);
             machine.addSymbol(position, "red");

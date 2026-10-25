@@ -16,7 +16,7 @@ public class WheelLeftyTest
 {
     
     @Test
-    public void shouldCopy() {
+    public void shouldCopy() throws SlotMachineException {
         SlotMachine machine = new SlotMachine();
         machine.addWheel(1);
         machine.addWheel("Lefty",2);

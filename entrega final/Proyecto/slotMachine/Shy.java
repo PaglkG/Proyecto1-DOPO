@@ -14,7 +14,7 @@ public class Shy extends Symbol {
      * Constructor for objects of class Shy.
      * @param color The color of the shy symbol.
      */
-    public Shy(String color) {
+    public Shy(String color) throws SlotMachineException{
         super("orange"); 
         super.changeToSquare();
         this.isCurrentlyVisible = false;

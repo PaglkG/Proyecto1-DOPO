@@ -19,14 +19,14 @@ import org.junit.Test;
 public class SlotMachineC3Test {
     
     @Test
-    public void shouldSolutionProblem() {
+    public void shouldSolutionProblem() throws SlotMachineException {
         SlotMachineContest machine = new SlotMachineContest();
         machine.solve(5);
         assertEquals(1, machine.getDistincSymbols());
         machine.solve(30);
         assertEquals(1, machine.getDistincSymbols());    }
      @Test 
-     public void shouldNotMaxSteps() {
+     public void shouldNotMaxSteps()  throws SlotMachineException {
         SlotMachineContest machine = new SlotMachineContest();
         int result = machine.solve(50).length;
         assertTrue(10000 > result);

@@ -19,7 +19,7 @@ public class SlotMachineContest {
      * @param n n is the number of reels and symbols.
      * @return moves made to reach k = 1.
      */
-    public static int[][] solve(int n) {
+    public static int[][] solve(int n) throws SlotMachineException {
         SlotMachineContest.n = n;
         steps = new ArrayList<>();
         SlotMachine machine = new SlotMachine(n);
@@ -51,7 +51,7 @@ public class SlotMachineContest {
      * Simulates the solving process but making the machine visible on the canvas.
      * @param n n is the number of reels and symbols.
      */
-    public static void simulate(int n) {
+    public static void simulate(int n) throws SlotMachineException {
         SlotMachineContest.n = n;
         steps = new ArrayList<>();
         SlotMachine machine = new SlotMachine(n);

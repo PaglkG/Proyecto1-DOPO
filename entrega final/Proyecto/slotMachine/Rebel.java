@@ -22,8 +22,8 @@ public class Rebel extends Wheel {
      * method to do nothing.
      */
     @Override
-    public void lock() {
-        return;
+    public void lock() throws SlotMachineException {
+    throw new SlotMachineException(SlotMachineException.WHEEL_OPERATION_NOT_SUPPORTED);
     }
 
     /**

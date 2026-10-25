@@ -45,7 +45,7 @@ public class Wheel {
      * Add a specific symbol with its color.
      * @param color color is the color of symbol to add.
      */
-    public void addSymbol(String color) {
+    public void addSymbol(String color) throws SlotMachineException {
         Symbol symbolToAdd = new Symbol(color);
         addSymbol(symbolToAdd);
     }
@@ -249,7 +249,7 @@ public class Wheel {
     /**
      * This locks this wheel so it can´t spin, delete and swap.
      */
-    public void lock() {
+    public void lock() throws SlotMachineException {
         isLocked = true;
     }
     

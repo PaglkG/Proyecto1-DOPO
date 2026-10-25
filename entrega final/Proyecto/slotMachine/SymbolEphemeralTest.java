@@ -6,7 +6,7 @@ import static org.junit.Assert.*;
 public class SymbolEphemeralTest {
 
     @Test
-    public void shouldDecreaseSizeOnSpin() {
+    public void shouldDecreaseSizeOnSpin() throws SlotMachineException {
         Ephemeral ephemeral = new Ephemeral("red");
         
         ephemeral.efect();
@@ -16,7 +16,7 @@ public class SymbolEphemeralTest {
     }
 
     @Test
-    public void shouldStopDecreasingWhenBecomesAPoint() {
+    public void shouldStopDecreasingWhenBecomesAPoint() throws SlotMachineException {
         Ephemeral ephemeral = new Ephemeral("red");
         
         for (int i = 0; i < 50; i++) {

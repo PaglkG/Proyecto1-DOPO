@@ -36,7 +36,7 @@ public class SlotMachine {
      * This constructor generates n wheels and n symbols.
      * @param n the number of wheels and symbols to generate.
      */
-    public SlotMachine(int n) {
+    public SlotMachine(int n) throws SlotMachineException {
         isOk = false;
         wheels = new TreeMap<>();
         isVisible = false;
@@ -167,7 +167,7 @@ public class SlotMachine {
      * This locked a specific wheel to this wheel can't spin.
      * @param wheel wheel is an integer that means the number of this slotmachine; That wheel will be locked.
      */
-    public void lock(int wheel) {
+    public void lock(int wheel) throws SlotMachineException {
         isOk = false;
         if (!proofInvariant(wheel, false)) return;
         Wheel wheelToLock = wheels.get(wheel);
@@ -192,7 +192,7 @@ public class SlotMachine {
      * @param pos pos is the position of wheel going to add symbol.
      * @param color color is the color of symbol that going to be created.
      */
-    public void addSymbol(int pos, String color) {
+    public void addSymbol(int pos, String color) throws SlotMachineException {
         isOk = false;
         boolean isAprovedInvariant = proofInvariant(pos, false);
         if (!isAprovedInvariant) return;
@@ -263,7 +263,7 @@ public class SlotMachine {
      * Moves a specific number of wheel.
      * @param wheel wheel indicates the number (integer) of wheel that going to be moved.
      */
-    public void spin(int wheel) {
+    public void spin(int wheel) throws SlotMachineException {
         isOk = false;
         boolean isAprovedInvariant = proofInvariant(wheel, false);
         if (!isAprovedInvariant) {
@@ -291,7 +291,7 @@ public class SlotMachine {
      * @param steps steps is the number of symbols the specific wheel will be moved.
      * @throws InterruptedException if the thread is interrupted during the spin delay.
      */
-    public void spin(int wheel, int steps) throws InterruptedException {
+    public void spin(int wheel, int steps) throws InterruptedException, SlotMachineException {
         isOk = false;
         if (!proofInvariant(wheel, false)){
             isOk = false;
@@ -338,7 +338,7 @@ public class SlotMachine {
     /**
      * Moves each of the wheels.
      */
-    public void spin() {
+    public void spin() throws SlotMachineException {
         isOk = false;
         boolean allCanSpin = true;
         for (Integer pos : wheels.keySet()) {
@@ -598,7 +598,7 @@ public class SlotMachine {
      * Adds n wheels and symbols based on the predefined hex colors array to this slot machine.
      * @param n the number of wheels and symbols to generate.
      */
-    private void addSlotMachine(int n) {
+    private void addSlotMachine(int n) throws SlotMachineException {
         Canvas.getCanvas().resizeAndRefresh(70*n, 283);
         for (int i = 0; i < n; i++) {
             int requestedPos = i;

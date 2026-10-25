@@ -34,7 +34,7 @@ public class WheelTest
     
     }   
     @Test
-    public void addSymbols(){
+    public void addSymbols() throws SlotMachineException{
         Symbol triangle1 = new Symbol("black");
         Symbol triangle2 = new Symbol("blue");
         Symbol triangle3 = new Symbol("white");
@@ -47,7 +47,7 @@ public class WheelTest
     }
     
     @Test
-    public void deleteSymbols() {
+    public void deleteSymbols() throws SlotMachineException {
         Symbol triangle1 = new Symbol("black");
         Symbol triangle2 = new Symbol("blue");
         Symbol triangle3 = new Symbol("white");

@@ -32,7 +32,7 @@ public class SlotMachineC1Test {
     
     
     @Test
-    public void shouldGiveSymbols() {
+    public void shouldGiveSymbols() throws SlotMachineException {
         int newAddWheel= 5;
         for (int i = 1; i <= newAddWheel; i++) {
             sltmchn.addWheel(i);
@@ -48,7 +48,7 @@ public class SlotMachineC1Test {
     }
     
     @Test
-    public void shouldGiveConfiguration() {
+    public void shouldGiveConfiguration() throws SlotMachineException{
         int newAddWheel = 5;
         for (int i = 1; i <= newAddWheel; i++) {
             sltmchn.addWheel(i);
@@ -64,7 +64,7 @@ public class SlotMachineC1Test {
     }
     
     @Test
-    public void shouldGiveNumberDistingSymbols() {
+    public void shouldGiveNumberDistingSymbols() throws SlotMachineException {
         int newAddWheel = 5;
         for (int i = 1; i <= newAddWheel; i++) {
             sltmchn.addWheel(i);
@@ -80,7 +80,7 @@ public class SlotMachineC1Test {
     
     
     @Test
-    public void shouldBeJackpot() {
+    public void shouldBeJackpot() throws SlotMachineException {
         int newAddWheel = 5;
         for (int i = 1; i <= newAddWheel; i++) {
             sltmchn.addWheel(i);
@@ -104,14 +104,14 @@ public class SlotMachineC1Test {
     }
     
     @Test
-    public void shouldFailWhenAddingSymbolToNonexistentWheel() { 
+    public void shouldFailWhenAddingSymbolToNonexistentWheel() throws SlotMachineException { 
         sltmchn.addWheel(1);
         sltmchn.addSymbol(5, "red"); 
         assertFalse(sltmchn.ok());
     }
     
     @Test
-    public void shouldPlaceSymbolCorrectly() {
+    public void shouldPlaceSymbolCorrectly() throws SlotMachineException {
         sltmchn.addWheel(1);
         sltmchn.addSymbol(1, "red");
         sltmchn.addSymbol(1, "blue");
@@ -125,7 +125,7 @@ public class SlotMachineC1Test {
     }
 
     @Test
-    public void shouldNotPlaceSymbolWhenWheelIsLocked() {
+    public void shouldNotPlaceSymbolWhenWheelIsLocked() throws SlotMachineException {
         sltmchn.addWheel(1);
         sltmchn.addSymbol(1, "magenta");
         sltmchn.addSymbol(1, "yellow");

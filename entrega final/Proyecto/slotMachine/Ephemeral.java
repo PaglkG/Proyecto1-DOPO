@@ -15,7 +15,7 @@ public class Ephemeral extends Symbol {
      * Constructor for objects of class Ephemeral
      * @param color The color of the ephemeral symbol.
      */
-    public Ephemeral(String color) {
+    public Ephemeral(String color) throws SlotMachineException {
         super("green");
         super.changeToSquare();
         this.currentHeight = 30;

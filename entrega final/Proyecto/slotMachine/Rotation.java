@@ -16,7 +16,7 @@ public class Rotation extends Symbol {
      * Constructor for objects of class Rotation
      * @param color The color of the rotation symbol.
      */
-    public Rotation(String color) {
+    public Rotation(String color) throws SlotMachineException {
         super("pink");
         super.changeToSquare();
         this.isUp = false;

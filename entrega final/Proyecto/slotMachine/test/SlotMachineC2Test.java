@@ -24,7 +24,7 @@ public class SlotMachineC2Test {
     }
     
     @Test
-    public void shouldSwapTwoWheels() {
+    public void shouldSwapTwoWheels() throws SlotMachineException {
         for (int i = 1; i <= 4; i++) {
             sltmchn.addWheel(i);
         }
@@ -45,7 +45,7 @@ public class SlotMachineC2Test {
     
     
     @Test
-    public void shouldntDeleteWheelWhenIsLocked() {
+    public void shouldntDeleteWheelWhenIsLocked() throws SlotMachineException {
         int newAddWheel = 5;
         for (int i = 1; i <= newAddWheel; i++) {
             sltmchn.addWheel(i);
@@ -61,9 +61,9 @@ public class SlotMachineC2Test {
     
     
     @Test
-    public void shouldSpinToObtainASpecificConfigurationOfSymbols() {
+    public void shouldSpinToObtainASpecificConfigurationOfSymbols()  throws SlotMachineException{
         int newAddWheel = 5;
-        for (int i = 1; i <= newAddWheel; i++) {
+        for (int i = 1; i <= newAddWheel; i++)  {
             sltmchn.addWheel(i);
             sltmchn.addSymbol(i, "magenta");
             sltmchn.addSymbol(i, "blue");
