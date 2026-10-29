@@ -21,6 +21,7 @@ Simulador orientado a objetos de una máquina tragamonedas, inspirado en el **Pr
 7. [Calidad: pruebas, JaCoCo y PMD](#7-calidad-pruebas-jacoco-y-pmd-ciclo-5)
 8. [Retrospectiva](#8-retrospectiva)
 9. [Prueba de aceptación](#9-prueba-de-aceptación)
+10. [Diagrama de secuencia](#10-diagrama-de-secuencia)
 
 ---
 
@@ -123,7 +124,7 @@ Se crean con `addWheel("Lefty", pos)`, `addWheel("Rebel", pos)` y `addSymbol("Ep
 
 ## 5. Estructura del repositorio
 
-```
+```text
 Proyecto1-DOPO/
 ├── Ciclo1/ … Ciclo4/        Entrega de cada ciclo (enunciado, código en BlueJ y diseño en astah)
 ├── Ciclo5/                  Entrega final, abre esta carpeta en VS Code
@@ -200,59 +201,54 @@ mvn pmd:pmd           # genera el informe de análisis estático
 
 ## 9. Prueba de aceptación
 
-Primero, acomodé la máquina para que mostrara los colores que yo quería: magenta, verde y azul, y comprobé que quedaran exactamente en ese orden. Luego, cambié de posición la primera y la tercera rueda, y al hacer eso, vi que los colores ahora estaban al revés: azul, verde y magenta. Después de esto, bloqueé la primera y la tercera rueda para probar qué pasaba. Cuando hice esto e intenté darle un giro completo a la máquina, me di cuenta de que solo dio vueltas la rueda del medio; las que había bloqueado ni se movieron, y me saltó una ventanita de error en la pantalla. Para estar seguro de que de verdad estaban trabadas, intenté cambiarlas de lugar de nuevo y hasta traté de eliminar la tercera rueda, pero el programa no me dejó hacer absolutamente nada. Las ruedas se quedaron ahí quietas, intactas, y me volvió a salir el mensaje de que no estaba permitido hacer eso.
+Jaimito es un estudiante apasionado por las apuestas digitales y escuchó sobre una nueva máquina de apuestas. La SlotMachine de la Escuela Colombiana de Ingeniería Julio Garavito. Entonces fue a mirar qué tan buena es.
 
-### Paso a paso
+**1) Funciones básicas:**
+Jaimito crea su primera SlotMachine (`SlotMachine()`) pero él no ve nada, quiere saber si la máquina se creó, escuchó que si la máquina funcionaba bien, la máquina devuelve "True" (`ok()`). Después vio la opción de hacer visible (`makeVisible()`), ve que está vacía y decide crear una rueda con un símbolo azul (`addWheel(1)`, `addSymbol(1, "blue")`). Se arrepiente de su decisión y crea otra rueda en la posición inicial (`addWheel(1)`). Ahora él quiere jugar con las dos ruedas, entonces decide agregar símbolos rojos y amarillos a las ruedas (`addSymbol(1, "red")`, `addSymbol(2, "red")`, `addSymbol(1, "orange")`, `addSymbol(1, "orange")`), juega 2 veces (`spin()`, `spin()`) (deben quedar desiguales). Quería ganar y decidió trucar la máquina (`placeSymbol(#, "")`) y lo confirmó con la respuesta de la máquina (`isJackpot()`), no le gustó el color entonces lo eliminó y después a las ruedas y después salir (`delSymbol("")`, `delWheel(1)`, `exit()`).
 
-**Ciclo 1 — Simulador base**
+**2) Maratón**
+Él escuchó que esta máquina tenía una particular implementación, podía resolver el problema de la maratón mundial de programación "Slot Machine", lo prueba con una máquina de tamaño 4 y 10 (`simulate(4)`, `simulate(10)`), después quiere ver los pasos de 5 (`solve(5)`), no entiende nada y lo cierra.
 
-1) **Crear la máquina:** `new SlotMachine()`. → `ok()` es `true` y la máquina no tiene ruedas.
-2) **Hacerla visible:** `makeVisible()`. → Aparece el cuerpo rosado de la máquina en el canvas.
-3) **Adjuntar tres ruedas:** `addWheel(1)`, `addWheel(2)` y `addWheel(3)`. → Se ven tres ruedas grises de izquierda a derecha; `ok()` es `true` tras cada una.
-4) **Adjuntar símbolos a cada rueda:** `addSymbol(rueda, color)` con los colores de la tabla anterior. → Cada rueda muestra su primer símbolo (`magenta`, `red`, `blue`); `ok()` es `true`.
-5) **Consultar todos los símbolos:** `symbols()`. → `[magenta, red, cyan, red, green, orange, blue, red, yellow]`.
-6) **Consultar lo que muestra la máquina:** `configuration()`, `distinctSymbols()` e `isJackpot()`. → `[magenta, red, blue]`, `3` y `false`.
-7) **Eliminar un símbolo de todas las ruedas:** `delSymbol("yellow")`. → `yellow` desaparece de la rueda 3 y de `symbols()`; lo que se ve en la máquina no cambia.
-8) **Adjuntar y eliminar una rueda:** `addWheel(4)` y después `delWheel(4)`. → La máquina vuelve a tener tres ruedas; `ok()` es `true` en ambas operaciones.
-9) **Dejar el mismo color en todas las ruedas:** `placeSymbol(1, "red")`, `placeSymbol(2, "red")` y `placeSymbol(3, "red")`. → `configuration()` es `[red, red, red]`, `distinctSymbols()` es `1` e `isJackpot()` es `true`.
-10) **Girar una rueda y luego todas:** `spin(2)` y `spin()`. → Cada rueda elige un símbolo al azar; `ok()` es `true` y `configuration()` devuelve tres colores.
-11) **Provocar una acción inválida:** `addSymbol(9, "red")` (la rueda 9 no existe). → `ok()` es `false` y aparece un mensaje de error (`JOptionPane`); se cierra el mensaje.
+**3) Funciones especiales**
+Jaimito escuchó que esta SlotMachine tenía herramientas especiales para que se quedara más tiempo jugando. Él creó una rueda especial de cada tipo (`addWheel("Lefty", 1)`, `addWheel("Rebel", 2)`), también quería probar los símbolos especiales, escuchó que tienen una forma diferente y colores únicos, pero se acordó que son 3 símbolos y solo tiene 2 ruedas, entonces decidió agregar otra al inicio (`addWheel(1)`) y agregó todos los símbolos nuevos (`addSymbol("Rotation", 1, "blue")`, `addSymbol("Shy", 2, "blue")`, `addSymbol("Ephemeral", 3, "blue")`) y los probó (`spin(3)x3`, `spin(2)x2`, `spin(1)x2`), después quiso eliminar la última rueda (`delWheel(3)`), le salió algo raro, se asustó y se fue.
 
-**Ciclo 2 — Intercambio, bloqueo y giros controlados**
+---
 
-12) **Dejar la máquina en una configuración dada:** `spin(new String[]{"magenta", "green", "blue"})`. → `configuration()` es `[magenta, green, blue]`; `ok()` es `true`.
-13) **Intercambiar dos ruedas:** `swap(1, 3)`. → Las ruedas 1 y 3 cambian de lugar; `configuration()` es `[blue, green, magenta]`.
-14) **Rotar una rueda un número de pasos:** `spin(2, 2)`. → La rueda 2 avanza paso a paso, con una pausa entre símbolos, y queda en `red`; `configuration()` es `[blue, red, magenta]`.
-15) **Fijar dos ruedas:** `lock(1)` y `lock(3)`. → `ok()` es `true`.
-16) **Girar con ruedas fijas:** `spin()`. → Solo gira la rueda 2; las ruedas 1 y 3 conservan su símbolo; `ok()` es `false` y aparece el mensaje de error.
-17) **Intentar intercambiar y eliminar una rueda fija:** `swap(1, 3)` y `delWheel(3)`. → Las dos operaciones se rechazan (`ok()` es `false`) y las ruedas quedan en su lugar.
-18) **Soltar las ruedas y girar:** `unlock(1)`, `unlock(3)` y `spin()`. → Las tres ruedas giran; `ok()` es `true`.
+## 10. Diagrama de secuencia
 
-**Ciclo 3 — Problema de la maratón**
+Diagrama de secuencia correspondiente a la creación y adición de un nuevo símbolo a una rueda en la máquina tragamonedas.
 
-19) **Resolver el problema con 3 ruedas:** `SlotMachineContest.solve(3)`. → Devuelve la secuencia de movimientos `{rueda, giros}` que se aplica hasta lograr `k = 1` (jackpot).
-20) **Ver la solución en pantalla:** `SlotMachineContest.simulate(3)`. → Se muestra una máquina visible y se observa cómo los giros llevan al jackpot.
-
-**Ciclo 4 — Tipos de ruedas y de símbolos**
-
-21) **Adjuntar una rueda Lefty a la derecha:** `addWheel("Lefty", 4)`. → Aparece la rueda 4; `ok()` es `true`.
-22) **Adjuntar una rueda Rebel con símbolos:** `addWheel("Rebel", 5)`, `addSymbol(5, "red")`, `addSymbol(5, "green")` y `addSymbol(5, "blue")`. → Aparece la rueda 5 con tres símbolos; `ok()` es `true`.
-23) **Adjuntar un símbolo especial a las ruedas 1, 2 y 3:** `addSymbol("Ephemeral", 1, "gray")`, `addSymbol("Shy", 2, "black")` y `addSymbol("Rotation", 3, "magenta")`. → Cada rueda recibe un símbolo más; `ok()` es `true`.
-24) **Girar la rueda Lefty:** `spin(4)`. → La rueda 4 copia los símbolos y el estado de la rueda 3; `configuration()` muestra el mismo color en las posiciones 3 y 4.
-25) **Girar todas las ruedas:** `spin()`. → Las ruedas 3 y 4 siguen mostrando el mismo color (la Lefty copia a su vecina); las demás giran al azar; `ok()` es `true`.
-26) **Comprobar que la Rebel no se deja fijar:** `lock(5)` y `spin()`. → La rueda 5 no queda fija y el giro de toda la máquina funciona; `ok()` es `true`.
-27) **Comprobar que la Rebel no se elimina:** `delWheel(5)`. → Se rechaza con `UnsupportedOperationException` ("A rebel wheel cannot be deleted.") y la rueda 5 sigue en la máquina.
-28) **Comprobar que la Rebel no se intercambia:** `swap(5, 1)`. → Se rechaza con `UnsupportedOperationException` ("A rebel wheel cannot be swap.") y el orden de las ruedas no cambia.
-29) **Verificar los efectos de los símbolos especiales:** ejecutar `SymbolEphemeralTest`, `SymbolShyTest` y `SymbolRotetionTest`. → Pasan: Ephemeral se encoge, Shy alterna visible e invisible y Rotation sube y baja.
-
-**Ciclo 5 — Calidad con herramientas modernas**
-
-30) **Abrir el proyecto en VS Code:** abrir la carpeta `Ciclo5` con la extensión de Java. → El proyecto se reconoce con `pom.xml` y las clases de prueba no marcan errores de importación.
-31) **Ejecutar todas las pruebas:** `mvn clean test`. → 39 pruebas sin fallos ni errores, incluidas las 13 de `SlotMachineAceptanceTest`.
-32) **Abrir el informe de cobertura:** `target/site/jacoco/index.html`. → La cobertura total ronda el 79 % de instrucciones, por encima de la meta del 75 %.
-33) **Generar y abrir el informe de PMD:** `mvn pmd:pmd` y abrir el `pmd.html` resultante. → Las violaciones de prioridad 1 que no afectaban el código ni la lógica aparecen corregidas respecto de `pmdAntesCorrecion.html`.
-
-**Cierre**
-
-34) **Pasar a modo invisible y repetir una acción inválida:** `makeInvisible()` y `addSymbol(9, "red")`. → Todo desaparece del canvas; `ok()` es `false` pero no aparece ningún mensaje.
-35) **Terminar el simulador:** `exit()`. → Se cierra la ventana y se eliminan todas las ruedas.
+```mermaid
+sequenceDiagram
+    actor system as : system
+    participant SlotMachine as : SlotMachine
+    participant Wheel as wheelToAddSymbol : Wheel
+    participant Symbol as symbolToAdd : Symbol
+    
+    system->>SlotMachine: 1: addSymbol(type:String, pos:int, color:String) : void
+    activate SlotMachine
+    
+    SlotMachine->>SlotMachine: 1.1: isAprovedInvariant = proofInvariant(pos, false) : boolean
+    
+    alt isAprovedInvariant
+        SlotMachine->>SlotMachine: 1.2: wheelToAddSymbol = getWheels(pos) : Wheel
+        
+        SlotMachine->>SlotMachine: 1.3: packageName = getPackageName() : String
+        Note left of SlotMachine: L<br/>NoSuchMethodException
+        
+        SlotMachine->>SlotMachine: 1.4: symbolClass = forName(packageName + "." + type) : Class
+        Note left of SlotMachine: L<br/>ClassNotFoundException
+        
+        SlotMachine->>SlotMachine: 1.5: newSymbolToAdd = newInstance(color) : Symbol
+        Note left of SlotMachine: L<br/>Exception
+        
+        SlotMachine-->>Symbol: <<create>> <br> 1.6: symbolToAdd = Symbol(color)
+        
+        SlotMachine->>Wheel: 1.7: addSymbol(symbolToAdd) : void
+        activate Wheel
+        deactivate Wheel
+    end
+    
+    Note left of SlotMachine: A<br/>ClassNotFoundException<br/>NoSuchMethodException<br/>Exception
+    deactivate SlotMachine
+```
